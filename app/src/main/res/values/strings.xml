@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Voice Assistant</string>
+    <string name="hint_listening">Listening...</string>
+    <string name="hint_idle">Tap mic to speak</string>
+    <string name="hint_wake_word">Say \"Hey Assistant\" or tap mic</string>
+
+    <string name="error_permission_denied">Audio permission is required for the assistant to work.</string>
+    <string name="error_no_match">I didn\'t catch that. Could you repeat?</string>
+    <string name="error_network">Network error. Please check your connection.</string>
+    <string name="error_unknown">Something went wrong. Please try again.</string>
+
+    <string name="resp_youtube">Opening YouTube for you.</string>
+    <string name="resp_music">Starting your music player.</string>
+    <string name="resp_search">Searching the web for %s.</string>
+    <string name="resp_unknown">I\'m sorry, I don\'t know how to do that yet.</string>
+    <string name="resp_ai_fallback">I\'m a local assistant. You asked: %s. Integration with AI APIs can be added here.</string>
+</resources>
