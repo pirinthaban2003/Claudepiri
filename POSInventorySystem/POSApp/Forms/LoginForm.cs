@@ -1,20 +1,17 @@
 using System;
-using System.Data;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
-using POSApp.Data;
-using POSApp.Utilities;
+using POSApp.Services;
 
 namespace POSApp.Forms
 {
     public partial class LoginForm : Form
     {
-        private DatabaseHelper dbHelper;
+        private readonly AuthService _authService;
 
         public LoginForm()
         {
             InitializeComponent();
-            dbHelper = new DatabaseHelper();
+            _authService = new AuthService();
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -30,35 +27,17 @@ namespace POSApp.Forms
 
             try
             {
-                MySqlParameter[] parameters = { new MySqlParameter("@username", username) };
-                DataTable dt = dbHelper.ExecuteQuery("SELECT u.*, r.RoleName FROM Users u JOIN Roles r ON u.RoleID = r.RoleID WHERE u.Username = @username AND u.IsActive = 1", parameters);
+                var user = _authService.Authenticate(username, password);
 
-                if (dt.Rows.Count > 0)
+                if (user != null)
                 {
-                    string storedHash = dt.Rows[0]["PasswordHash"].ToString() ?? "";
-                    if (SecurityHelper.VerifyPassword(password, storedHash))
-                    {
-                        // Successful login
-                        Session.CurrentUser = new Models.User
-                        {
-                            UserID = Convert.ToInt32(dt.Rows[0]["UserID"]),
-                            Username = dt.Rows[0]["Username"].ToString() ?? "",
-                            RoleID = Convert.ToInt32(dt.Rows[0]["RoleID"]),
-                            RoleName = dt.Rows[0]["RoleName"].ToString() ?? "",
-                            FullName = dt.Rows[0]["FullName"].ToString()
-                        };
-
-                        this.DialogResult = DialogResult.OK;
-                        this.Close();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Invalid password.", "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    Session.CurrentUser = user;
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
                 }
                 else
                 {
-                    MessageBox.Show("User not found or inactive.", "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Invalid username or password.", "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)

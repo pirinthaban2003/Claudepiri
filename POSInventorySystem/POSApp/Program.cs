@@ -18,7 +18,7 @@ static class Program
         {
             if (loginForm.ShowDialog() == DialogResult.OK)
             {
-                Application.Run(new Form1());
+                Application.Run(new DashboardForm());
             }
             else
             {

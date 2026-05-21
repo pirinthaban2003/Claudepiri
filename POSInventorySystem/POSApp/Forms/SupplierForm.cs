@@ -1,20 +1,20 @@
 using System;
 using System.Data;
 using System.Windows.Forms;
-using POSApp.Data;
 using POSApp.Models;
+using POSApp.Services;
 
 namespace POSApp.Forms
 {
     public partial class SupplierForm : Form
     {
-        private DatabaseHelper dbHelper;
+        private readonly SupplierService _supplierService;
         private int selectedSupplierId = -1;
 
         public SupplierForm()
         {
             InitializeComponent();
-            dbHelper = new DatabaseHelper();
+            _supplierService = new SupplierService();
         }
 
         private void SupplierForm_Load(object sender, EventArgs e)
@@ -26,7 +26,7 @@ namespace POSApp.Forms
         {
             try
             {
-                dgvSuppliers.DataSource = dbHelper.GetAllSuppliers();
+                dgvSuppliers.DataSource = _supplierService.GetAllSuppliers();
             }
             catch (Exception ex)
             {
@@ -54,15 +54,7 @@ namespace POSApp.Forms
                     Address = txtAddress.Text.Trim()
                 };
 
-                if (selectedSupplierId == -1)
-                {
-                    dbHelper.AddSupplier(supplier);
-                }
-                else
-                {
-                    dbHelper.UpdateSupplier(supplier);
-                }
-
+                _supplierService.SaveSupplier(supplier);
                 ClearFields();
                 LoadSuppliers();
             }
@@ -80,7 +72,7 @@ namespace POSApp.Forms
             {
                 try
                 {
-                    dbHelper.DeleteSupplier(selectedSupplierId);
+                    _supplierService.DeleteSupplier(selectedSupplierId);
                     ClearFields();
                     LoadSuppliers();
                 }

@@ -75,43 +75,5 @@ namespace POSApp.Data
                 }
             }
         }
-
-        // Supplier specific methods
-        public DataTable GetAllSuppliers()
-        {
-            return ExecuteQuery("SELECT * FROM Suppliers");
-        }
-
-        public int AddSupplier(Supplier supplier)
-        {
-            string query = "INSERT INTO Suppliers (SupplierName, ContactPerson, Phone, Email, Address) VALUES (@name, @contact, @phone, @email, @address)";
-            MySqlParameter[] parameters = {
-                new MySqlParameter("@name", supplier.SupplierName),
-                new MySqlParameter("@contact", (object?)supplier.ContactPerson ?? DBNull.Value),
-                new MySqlParameter("@phone", (object?)supplier.Phone ?? DBNull.Value),
-                new MySqlParameter("@email", (object?)supplier.Email ?? DBNull.Value),
-                new MySqlParameter("@address", (object?)supplier.Address ?? DBNull.Value)
-            };
-            return ExecuteNonQuery(query, parameters);
-        }
-
-        public int UpdateSupplier(Supplier supplier)
-        {
-            string query = "UPDATE Suppliers SET SupplierName=@name, ContactPerson=@contact, Phone=@phone, Email=@email, Address=@address WHERE SupplierID=@id";
-            MySqlParameter[] parameters = {
-                new MySqlParameter("@name", supplier.SupplierName),
-                new MySqlParameter("@contact", (object?)supplier.ContactPerson ?? DBNull.Value),
-                new MySqlParameter("@phone", (object?)supplier.Phone ?? DBNull.Value),
-                new MySqlParameter("@email", (object?)supplier.Email ?? DBNull.Value),
-                new MySqlParameter("@address", (object?)supplier.Address ?? DBNull.Value),
-                new MySqlParameter("@id", supplier.SupplierID)
-            };
-            return ExecuteNonQuery(query, parameters);
-        }
-
-        public int DeleteSupplier(int supplierId)
-        {
-            return ExecuteNonQuery("DELETE FROM Suppliers WHERE SupplierID=@id", new MySqlParameter[] { new MySqlParameter("@id", supplierId) });
-        }
     }
 }

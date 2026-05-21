@@ -1,0 +1,122 @@
+using System;
+using System.Data;
+using System.Windows.Forms;
+using POSApp.Models;
+using POSApp.Services;
+
+namespace POSApp.Forms
+{
+    public partial class CustomerForm : Form
+    {
+        private readonly CustomerService _customerService;
+        private int selectedCustomerId = -1;
+
+        public CustomerForm()
+        {
+            InitializeComponent();
+            _customerService = new CustomerService();
+        }
+
+        private void CustomerForm_Load(object sender, EventArgs e)
+        {
+            LoadCustomers();
+        }
+
+        private void LoadCustomers()
+        {
+            try
+            {
+                dgvCustomers.DataSource = _customerService.GetAllCustomers();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading customers: " + ex.Message);
+            }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtCustomerName.Text))
+            {
+                MessageBox.Show("Customer Name is required.");
+                return;
+            }
+
+            int points = 0;
+            decimal wallet = 0;
+            int.TryParse(txtPoints.Text, out points);
+            decimal.TryParse(txtWallet.Text, out wallet);
+
+            try
+            {
+                Customer customer = new Customer
+                {
+                    CustomerID = selectedCustomerId,
+                    CustomerName = txtCustomerName.Text.Trim(),
+                    Phone = txtPhone.Text.Trim(),
+                    Email = txtEmail.Text.Trim(),
+                    LoyaltyPoints = points,
+                    WalletBalance = wallet
+                };
+
+                _customerService.SaveCustomer(customer);
+                ClearFields();
+                LoadCustomers();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error saving customer: " + ex.Message);
+            }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (selectedCustomerId == -1) return;
+
+            if (MessageBox.Show("Are you sure you want to delete this customer?", "Confirm Delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                try
+                {
+                    _customerService.DeleteCustomer(selectedCustomerId);
+                    ClearFields();
+                    LoadCustomers();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error deleting customer: " + ex.Message);
+                }
+            }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            ClearFields();
+        }
+
+        private void ClearFields()
+        {
+            txtCustomerName.Clear();
+            txtPhone.Clear();
+            txtEmail.Clear();
+            txtPoints.Clear();
+            txtWallet.Clear();
+            selectedCustomerId = -1;
+            btnSave.Text = "Save";
+        }
+
+        private void dgvCustomers_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dgvCustomers.Rows[e.RowIndex];
+                selectedCustomerId = Convert.ToInt32(row.Cells["CustomerID"].Value);
+                txtCustomerName.Text = row.Cells["CustomerName"].Value?.ToString();
+                txtPhone.Text = row.Cells["Phone"].Value?.ToString();
+                txtEmail.Text = row.Cells["Email"].Value?.ToString();
+                txtPoints.Text = row.Cells["LoyaltyPoints"].Value?.ToString();
+                txtWallet.Text = row.Cells["WalletBalance"].Value?.ToString();
+                btnSave.Text = "Update";
+            }
+        }
+    }
+}

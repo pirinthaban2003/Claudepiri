@@ -1,21 +1,22 @@
 using System;
 using System.Data;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
-using POSApp.Data;
 using POSApp.Models;
+using POSApp.Services;
 
 namespace POSApp.Forms
 {
     public partial class InventoryForm : Form
     {
-        private DatabaseHelper dbHelper;
+        private readonly InventoryService _inventoryService;
+        private readonly SupplierService _supplierService;
         private int selectedProductId = -1;
 
         public InventoryForm()
         {
             InitializeComponent();
-            dbHelper = new DatabaseHelper();
+            _inventoryService = new InventoryService();
+            _supplierService = new SupplierService();
         }
 
         private void InventoryForm_Load(object sender, EventArgs e)
@@ -29,8 +30,7 @@ namespace POSApp.Forms
         {
             try
             {
-                DataTable dt = dbHelper.ExecuteQuery("SELECT * FROM Categories");
-                cmbCategory.DataSource = dt;
+                cmbCategory.DataSource = _inventoryService.GetCategories();
                 cmbCategory.DisplayMember = "CategoryName";
                 cmbCategory.ValueMember = "CategoryID";
             }
@@ -44,8 +44,7 @@ namespace POSApp.Forms
         {
             try
             {
-                DataTable dt = dbHelper.ExecuteQuery("SELECT * FROM Suppliers");
-                cmbSupplier.DataSource = dt;
+                cmbSupplier.DataSource = _supplierService.GetAllSuppliers();
                 cmbSupplier.DisplayMember = "SupplierName";
                 cmbSupplier.ValueMember = "SupplierID";
             }
@@ -59,14 +58,8 @@ namespace POSApp.Forms
         {
             try
             {
-                DataTable dt = dbHelper.ExecuteQuery(@"
-                    SELECT p.*, c.CategoryName, s.SupplierName
-                    FROM Products p
-                    LEFT JOIN Categories c ON p.CategoryID = c.CategoryID
-                    LEFT JOIN Suppliers s ON p.SupplierID = s.SupplierID");
-                dgvProducts.DataSource = dt;
+                dgvProducts.DataSource = _inventoryService.GetAllProducts();
 
-                // Hide ID columns
                 string[] hideCols = { "CategoryID", "SupplierID" };
                 foreach (string col in hideCols)
                 {
@@ -102,31 +95,20 @@ namespace POSApp.Forms
 
             try
             {
-                MySqlParameter[] parameters = {
-                    new MySqlParameter("@name", txtProductName.Text.Trim()),
-                    new MySqlParameter("@sku", txtSKU.Text.Trim()),
-                    new MySqlParameter("@barcode", txtBarcode.Text.Trim()),
-                    new MySqlParameter("@catId", cmbCategory.SelectedValue),
-                    new MySqlParameter("@supId", cmbSupplier.SelectedValue),
-                    new MySqlParameter("@brand", txtBrand.Text.Trim()),
-                    new MySqlParameter("@price", price),
-                    new MySqlParameter("@qty", quantity),
-                    new MySqlParameter("@id", selectedProductId)
+                Product product = new Product
+                {
+                    ProductID = selectedProductId,
+                    ProductName = txtProductName.Text.Trim(),
+                    SKU = txtSKU.Text.Trim(),
+                    Barcode = txtBarcode.Text.Trim(),
+                    CategoryID = Convert.ToInt32(cmbCategory.SelectedValue),
+                    SupplierID = Convert.ToInt32(cmbSupplier.SelectedValue),
+                    Brand = txtBrand.Text.Trim(),
+                    Price = price,
+                    StockQuantity = quantity
                 };
 
-                if (selectedProductId == -1)
-                {
-                    string query = @"INSERT INTO Products (ProductName, SKU, Barcode, CategoryID, SupplierID, Brand, Price, StockQuantity)
-                                   VALUES (@name, @sku, @barcode, @catId, @supId, @brand, @price, @qty)";
-                    dbHelper.ExecuteNonQuery(query, parameters);
-                }
-                else
-                {
-                    string query = @"UPDATE Products SET ProductName=@name, SKU=@sku, Barcode=@barcode, CategoryID=@catId,
-                                   SupplierID=@supId, Brand=@brand, Price=@price, StockQuantity=@qty WHERE ProductID=@id";
-                    dbHelper.ExecuteNonQuery(query, parameters);
-                }
-
+                _inventoryService.SaveProduct(product);
                 ClearFields();
                 LoadProducts();
             }
@@ -144,8 +126,7 @@ namespace POSApp.Forms
             {
                 try
                 {
-                    MySqlParameter[] parameters = { new MySqlParameter("@id", selectedProductId) };
-                    dbHelper.ExecuteNonQuery("DELETE FROM Products WHERE ProductID=@id", parameters);
+                    _inventoryService.DeleteProduct(selectedProductId);
                     ClearFields();
                     LoadProducts();
                 }
