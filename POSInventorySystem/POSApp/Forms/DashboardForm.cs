@@ -10,11 +10,13 @@ namespace POSApp.Forms
     public partial class DashboardForm : Form
     {
         private readonly DatabaseHelper _dbHelper;
+        private readonly NotificationService _notificationService;
 
         public DashboardForm()
         {
             InitializeComponent();
             _dbHelper = new DatabaseHelper();
+            _notificationService = new NotificationService();
             this.KeyPreview = true;
             this.KeyDown += new KeyEventHandler(DashboardForm_KeyDown);
             ThemeHelper.ApplyTheme(this);
@@ -26,8 +28,9 @@ namespace POSApp.Forms
             pnlSidebar.BackColor = ThemeHelper.PrimaryDark;
             pnlHeader.BackColor = ThemeHelper.SecondaryDark;
             lblTitle.ForeColor = ThemeHelper.AccentBlue;
+            lstAlerts.BackColor = ThemeHelper.PrimaryDark;
+            lstAlerts.ForeColor = ThemeHelper.TextWhite;
 
-            // Sidebar buttons hover effect could be added here in a real environment
             foreach (Control ctrl in pnlSidebar.Controls)
             {
                 if (ctrl is Button btn)
@@ -36,41 +39,55 @@ namespace POSApp.Forms
                     btn.Padding = new Padding(20, 0, 0, 0);
                 }
             }
+
+            ApplyAccessControl();
+        }
+
+        private void ApplyAccessControl()
+        {
+            string role = Session.CurrentUser?.RoleName ?? "";
+            btnPOS.Visible = AccessControl.CanAccess(role, "POS");
+            btnInventory.Visible = AccessControl.CanAccess(role, "Inventory");
+            btnSuppliers.Visible = AccessControl.CanAccess(role, "Suppliers");
+            btnCustomers.Visible = AccessControl.CanAccess(role, "Customers");
+            btnReports.Visible = AccessControl.CanAccess(role, "Reports");
+            btnExpenses.Visible = AccessControl.CanAccess(role, "Expenses");
+            btnReturns.Visible = AccessControl.CanAccess(role, "Returns");
         }
 
         private void DashboardForm_KeyDown(object? sender, KeyEventArgs e)
         {
-            if (e.Alt && e.KeyCode == Keys.P)
+            if (e.Alt && e.KeyCode == Keys.P && btnPOS.Visible)
             {
                 btnPOS.PerformClick();
                 e.Handled = true;
             }
-            else if (e.Alt && e.KeyCode == Keys.I)
+            else if (e.Alt && e.KeyCode == Keys.I && btnInventory.Visible)
             {
                 btnInventory.PerformClick();
                 e.Handled = true;
             }
-            else if (e.Alt && e.KeyCode == Keys.S)
+            else if (e.Alt && e.KeyCode == Keys.S && btnSuppliers.Visible)
             {
                 btnSuppliers.PerformClick();
                 e.Handled = true;
             }
-            else if (e.Alt && e.KeyCode == Keys.C)
+            else if (e.Alt && e.KeyCode == Keys.C && btnCustomers.Visible)
             {
                 btnCustomers.PerformClick();
                 e.Handled = true;
             }
-            else if (e.Alt && e.KeyCode == Keys.R)
+            else if (e.Alt && e.KeyCode == Keys.R && btnReports.Visible)
             {
                 btnReports.PerformClick();
                 e.Handled = true;
             }
-            else if (e.Alt && e.KeyCode == Keys.E)
+            else if (e.Alt && e.KeyCode == Keys.E && btnExpenses.Visible)
             {
                 btnExpenses.PerformClick();
                 e.Handled = true;
             }
-            else if (e.Alt && e.KeyCode == Keys.F)
+            else if (e.Alt && e.KeyCode == Keys.F && btnReturns.Visible)
             {
                 btnReturns.PerformClick();
                 e.Handled = true;
@@ -80,40 +97,45 @@ namespace POSApp.Forms
         private void DashboardForm_Load(object sender, EventArgs e)
         {
             lblWelcome.Text = $"Welcome, {Session.CurrentUser?.FullName ?? Session.CurrentUser?.Username ?? "User"}!";
+            RefreshDashboard();
+        }
+
+        private void RefreshDashboard()
+        {
             LoadStats();
-            CheckExpiries();
+            LoadLiveAlerts();
         }
 
         private void LoadStats()
         {
             try
             {
-                // Sales Today
                 var salesToday = _dbHelper.ExecuteScalar("SELECT SUM(FinalAmount) FROM Sales WHERE DATE(SaleDate) = CURDATE()");
                 lblSalesTodayAmount.Text = (salesToday != DBNull.Value ? Convert.ToDecimal(salesToday) : 0).ToString("C");
 
-                // Low Stock Items
                 var lowStock = _dbHelper.ExecuteScalar("SELECT COUNT(*) FROM Products WHERE StockQuantity <= MinStockLevel AND IsActive = 1");
                 lblLowStockCount.Text = (lowStock != DBNull.Value ? Convert.ToInt32(lowStock) : 0).ToString();
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error loading dashboard stats: " + ex.Message);
-            }
+            catch { /* Silent stats error */ }
         }
 
-        private void CheckExpiries()
+        private void LoadLiveAlerts()
         {
             try
             {
-                var expiringSoon = _dbHelper.ExecuteScalar("SELECT COUNT(*) FROM InventoryBatches WHERE ExpiryDate BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY) AND Quantity > 0");
-                int count = (expiringSoon != DBNull.Value ? Convert.ToInt32(expiringSoon) : 0);
-                if (count > 0)
+                lstAlerts.Items.Clear();
+                var alerts = _notificationService.GetLiveAlerts();
+                foreach (var alert in alerts)
                 {
-                    MessageBox.Show($"{count} product(s) are expiring within the next 7 days!", "Expiry Alert", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    lstAlerts.Items.Add(alert);
                 }
             }
-            catch { /* Ignore alert errors */ }
+            catch { /* Silent alerts error */ }
+        }
+
+        private void refreshTimer_Tick(object sender, EventArgs e)
+        {
+            RefreshDashboard();
         }
 
         private void btnPOS_Click(object sender, EventArgs e)

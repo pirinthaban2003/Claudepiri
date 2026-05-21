@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using POSApp.Models;
@@ -40,6 +41,13 @@ namespace POSApp.Forms
 
             // Set AcceptButton so Enter key triggers Checkout
             this.AcceptButton = btnCheckout;
+
+            dgvCart.CellFormatting += DgvCart_CellFormatting;
+        }
+
+        private void DgvCart_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
+        {
+            // Visual feedback for items in cart could be added here
         }
 
         private void POSForm_KeyDown(object? sender, KeyEventArgs e)
@@ -130,7 +138,7 @@ namespace POSApp.Forms
 
             if (quantity > stock)
             {
-                MessageBox.Show("Not enough stock available.");
+                MessageBox.Show("Not enough stock available.", "Low Stock", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -139,7 +147,7 @@ namespace POSApp.Forms
             {
                 if (existingItem.Quantity + quantity > stock)
                 {
-                    MessageBox.Show("Total quantity in cart exceeds available stock.");
+                    MessageBox.Show("Total quantity in cart exceeds available stock.", "Low Stock", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 existingItem.Quantity += quantity;

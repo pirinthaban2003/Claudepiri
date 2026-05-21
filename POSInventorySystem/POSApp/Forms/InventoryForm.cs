@@ -1,5 +1,6 @@
 using System;
 using System.Data;
+using System.Drawing;
 using System.Windows.Forms;
 using POSApp.Models;
 using POSApp.Services;
@@ -28,6 +29,25 @@ namespace POSApp.Forms
         {
             btnSave.BackColor = ThemeHelper.AccentBlue;
             btnDelete.BackColor = ThemeHelper.AccentRed;
+            dgvProducts.CellFormatting += DgvProducts_CellFormatting;
+        }
+
+        private void DgvProducts_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dgvProducts.Columns[e.ColumnIndex].Name == "StockQuantity")
+            {
+                if (e.Value != null && int.TryParse(e.Value.ToString(), out int stock))
+                {
+                    int minStock = Convert.ToInt32(dgvProducts.Rows[e.RowIndex].Cells["MinStockLevel"].Value);
+
+                    if (stock <= 0)
+                        dgvProducts.Rows[e.RowIndex].DefaultCellStyle.BackColor = ThemeHelper.LevelCritical;
+                    else if (stock <= minStock)
+                        dgvProducts.Rows[e.RowIndex].DefaultCellStyle.BackColor = ThemeHelper.LevelWarning;
+                    else
+                        dgvProducts.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(50, 50, 50);
+                }
+            }
         }
 
         private void InventoryForm_KeyDown(object? sender, KeyEventArgs e)

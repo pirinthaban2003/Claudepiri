@@ -14,6 +14,11 @@ namespace POSApp.Utilities
         public static readonly Color TextWhite = Color.White;
         public static readonly Color TextLightGray = Color.FromArgb(200, 200, 200);
 
+        // Level-based Colors
+        public static readonly Color LevelCritical = Color.FromArgb(120, 0, 0); // Deep Red
+        public static readonly Color LevelWarning = Color.FromArgb(120, 80, 0); // Dark Orange
+        public static readonly Color LevelSafe = Color.FromArgb(0, 80, 0);     // Dark Green
+
         public static void ApplyTheme(Form form)
         {
             form.BackColor = SecondaryDark;
@@ -63,7 +68,7 @@ namespace POSApp.Utilities
                 else if (control is DataGridView dgv)
                 {
                     dgv.BackgroundColor = PrimaryDark;
-                    dgv.ForeColor = Color.Black; // Text in cells usually looks better in black on light background or white on dark
+                    dgv.ForeColor = Color.Black;
                     dgv.BorderStyle = BorderStyle.None;
                     dgv.ColumnHeadersDefaultCellStyle.BackColor = SecondaryDark;
                     dgv.ColumnHeadersDefaultCellStyle.ForeColor = TextWhite;

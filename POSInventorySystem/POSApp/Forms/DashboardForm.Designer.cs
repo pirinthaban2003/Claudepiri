@@ -17,6 +17,7 @@ namespace POSApp.Forms
 
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pnlSidebar = new System.Windows.Forms.Panel();
             this.btnReturns = new System.Windows.Forms.Button();
             this.btnExpenses = new System.Windows.Forms.Button();
@@ -35,11 +36,16 @@ namespace POSApp.Forms
             this.pnlSalesToday = new System.Windows.Forms.Panel();
             this.lblSalesTodayAmount = new System.Windows.Forms.Label();
             this.lblSalesTodayTitle = new System.Windows.Forms.Label();
+            this.pnlAlerts = new System.Windows.Forms.Panel();
+            this.lstAlerts = new System.Windows.Forms.ListBox();
+            this.lblAlertsTitle = new System.Windows.Forms.Label();
+            this.refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.pnlSidebar.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             this.pnlContent.SuspendLayout();
             this.pnlLowStock.SuspendLayout();
             this.pnlSalesToday.SuspendLayout();
+            this.pnlAlerts.SuspendLayout();
             this.SuspendLayout();
             //
             // pnlSidebar
@@ -183,6 +189,7 @@ namespace POSApp.Forms
             //
             // pnlContent
             //
+            this.pnlContent.Controls.Add(this.pnlAlerts);
             this.pnlContent.Controls.Add(this.pnlLowStock);
             this.pnlContent.Controls.Add(this.pnlSalesToday);
             this.pnlContent.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -253,6 +260,46 @@ namespace POSApp.Forms
             this.lblSalesTodayTitle.TabIndex = 0;
             this.lblSalesTodayTitle.Text = "Sales (Today)";
             //
+            // pnlAlerts
+            //
+            this.pnlAlerts.Controls.Add(this.lstAlerts);
+            this.pnlAlerts.Controls.Add(this.lblAlertsTitle);
+            this.pnlAlerts.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlAlerts.Location = new System.Drawing.Point(0, 180);
+            this.pnlAlerts.Name = "pnlAlerts";
+            this.pnlAlerts.Padding = new System.Windows.Forms.Padding(20);
+            this.pnlAlerts.Size = new System.Drawing.Size(780, 360);
+            this.pnlAlerts.TabIndex = 2;
+            //
+            // lstAlerts
+            //
+            this.lstAlerts.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lstAlerts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstAlerts.FormattingEnabled = true;
+            this.lstAlerts.ItemHeight = 15;
+            this.lstAlerts.Location = new System.Drawing.Point(20, 52);
+            this.lstAlerts.Name = "lstAlerts";
+            this.lstAlerts.Size = new System.Drawing.Size(740, 288);
+            this.lstAlerts.TabIndex = 1;
+            //
+            // lblAlertsTitle
+            //
+            this.lblAlertsTitle.AutoSize = true;
+            this.lblAlertsTitle.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblAlertsTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblAlertsTitle.Location = new System.Drawing.Point(20, 20);
+            this.lblAlertsTitle.Name = "lblAlertsTitle";
+            this.lblAlertsTitle.Padding = new System.Windows.Forms.Padding(0, 0, 0, 7);
+            this.lblAlertsTitle.Size = new System.Drawing.Size(117, 32);
+            this.lblAlertsTitle.TabIndex = 0;
+            this.lblAlertsTitle.Text = "Live Alerts";
+            //
+            // refreshTimer
+            //
+            this.refreshTimer.Enabled = true;
+            this.refreshTimer.Interval = 30000;
+            this.refreshTimer.Tick += new System.EventHandler(this.refreshTimer_Tick);
+            //
             // DashboardForm
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -274,6 +321,8 @@ namespace POSApp.Forms
             this.pnlLowStock.PerformLayout();
             this.pnlSalesToday.ResumeLayout(false);
             this.pnlSalesToday.PerformLayout();
+            this.pnlAlerts.ResumeLayout(false);
+            this.pnlAlerts.PerformLayout();
             this.ResumeLayout(false);
         }
 
@@ -295,5 +344,9 @@ namespace POSApp.Forms
         private System.Windows.Forms.Label lblSalesTodayTitle;
         private System.Windows.Forms.Button btnExpenses;
         private System.Windows.Forms.Button btnReturns;
+        private System.Windows.Forms.Panel pnlAlerts;
+        private System.Windows.Forms.ListBox lstAlerts;
+        private System.Windows.Forms.Label lblAlertsTitle;
+        private System.Windows.Forms.Timer refreshTimer;
     }
 }
