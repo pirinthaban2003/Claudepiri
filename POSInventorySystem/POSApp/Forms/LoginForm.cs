@@ -31,9 +31,12 @@ namespace POSApp.Forms
 
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                MessageBox.Show("Please enter username and password.", "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please enter both username and password.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            this.Cursor = Cursors.WaitCursor;
+            btnLogin.Enabled = false;
 
             try
             {
@@ -47,12 +50,21 @@ namespace POSApp.Forms
                 }
                 else
                 {
-                    MessageBox.Show("Invalid username or password.", "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Access Denied: Invalid username or password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
+            }
+            catch (MySql.Data.MySqlClient.MySqlException mex)
+            {
+                MessageBox.Show($"Database Connection Error: {mex.Message}\n\nPlease ensure your MySQL server is running and the connection string in Data/Configuration.cs is correct.", "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error during login: " + ex.Message, "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"An unexpected error occurred during login: {ex.Message}", "System Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+                btnLogin.Enabled = true;
             }
         }
     }

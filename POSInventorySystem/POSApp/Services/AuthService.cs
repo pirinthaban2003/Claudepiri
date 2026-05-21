@@ -19,33 +19,50 @@ namespace POSApp.Services
 
         public User? Authenticate(string username, string password)
         {
-            MySqlParameter[] parameters = { new MySqlParameter("@username", username) };
-            DataTable dt = _dbHelper.ExecuteQuery("SELECT u.*, r.RoleName FROM Users u JOIN Roles r ON u.RoleID = r.RoleID WHERE u.Username = @username AND u.IsActive = 1", parameters);
-
-            if (dt.Rows.Count > 0)
+            try
             {
-                string storedHash = dt.Rows[0]["PasswordHash"].ToString() ?? "";
-                if (SecurityHelper.VerifyPassword(password, storedHash))
+                MySqlParameter[] parameters = { new MySqlParameter("@username", username.ToLower()) };
+                string query = @"
+                    SELECT u.*, r.RoleName, b.BranchName
+                    FROM Users u
+                    JOIN Roles r ON u.RoleID = r.RoleID
+                    LEFT JOIN Branches b ON u.BranchID = b.BranchID
+                    WHERE LOWER(u.Username) = @username AND u.IsActive = 1";
+
+                DataTable dt = _dbHelper.ExecuteQuery(query, parameters);
+
+                if (dt.Rows.Count > 0)
                 {
-                    var user = new User
+                    string storedHash = dt.Rows[0]["PasswordHash"].ToString() ?? "";
+                    if (SecurityHelper.VerifyPassword(password, storedHash))
                     {
-                        UserID = Convert.ToInt32(dt.Rows[0]["UserID"]),
-                        Username = dt.Rows[0]["Username"].ToString() ?? "",
-                        RoleID = Convert.ToInt32(dt.Rows[0]["RoleID"]),
-                        RoleName = dt.Rows[0]["RoleName"].ToString() ?? "",
-                        FullName = dt.Rows[0]["FullName"]?.ToString(),
-                        Email = dt.Rows[0]["Email"]?.ToString(),
-                        IsActive = Convert.ToBoolean(dt.Rows[0]["IsActive"]),
-                        CreatedAt = Convert.ToDateTime(dt.Rows[0]["CreatedAt"])
-                    };
+                        var user = new User
+                        {
+                            UserID = Convert.ToInt32(dt.Rows[0]["UserID"]),
+                            Username = dt.Rows[0]["Username"].ToString() ?? "",
+                            RoleID = Convert.ToInt32(dt.Rows[0]["RoleID"]),
+                            RoleName = dt.Rows[0]["RoleName"].ToString() ?? "",
+                            BranchID = dt.Rows[0]["BranchID"] != DBNull.Value ? Convert.ToInt32(dt.Rows[0]["BranchID"]) : (int?)null,
+                            BranchName = dt.Rows[0]["BranchName"]?.ToString(),
+                            FullName = dt.Rows[0]["FullName"]?.ToString(),
+                            Email = dt.Rows[0]["Email"]?.ToString(),
+                            IsActive = Convert.ToBoolean(dt.Rows[0]["IsActive"]),
+                            CreatedAt = Convert.ToDateTime(dt.Rows[0]["CreatedAt"])
+                        };
 
-                    _auditService.LogAction("User Login", "Authentication");
-                    return user;
+                        _auditService.LogAction("User Login", "Authentication");
+                        return user;
+                    }
                 }
-            }
 
-            _auditService.LogAction($"Failed Login Attempt: {username}", "Authentication");
-            return null;
+                _auditService.LogAction($"Failed Login Attempt: {username}", "Authentication");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _auditService.LogAction($"Login Error for {username}: {ex.Message}", "Authentication");
+                throw; // Rethrow to let UI handle the specific error
+            }
         }
     }
 }
