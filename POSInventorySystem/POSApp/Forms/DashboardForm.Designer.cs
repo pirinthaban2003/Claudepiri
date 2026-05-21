@@ -30,22 +30,25 @@ namespace POSApp.Forms
             this.pnlHeader = new System.Windows.Forms.Panel();
             this.lblWelcome = new System.Windows.Forms.Label();
             this.pnlContent = new System.Windows.Forms.Panel();
+            this.pnlChart = new System.Windows.Forms.Panel();
+            this.lblChartTitle = new System.Windows.Forms.Label();
+            this.pnlAlerts = new System.Windows.Forms.Panel();
+            this.lstAlerts = new System.Windows.Forms.ListBox();
+            this.lblAlertsTitle = new System.Windows.Forms.Label();
             this.pnlLowStock = new System.Windows.Forms.Panel();
             this.lblLowStockCount = new System.Windows.Forms.Label();
             this.lblLowStockTitle = new System.Windows.Forms.Label();
             this.pnlSalesToday = new System.Windows.Forms.Panel();
             this.lblSalesTodayAmount = new System.Windows.Forms.Label();
             this.lblSalesTodayTitle = new System.Windows.Forms.Label();
-            this.pnlAlerts = new System.Windows.Forms.Panel();
-            this.lstAlerts = new System.Windows.Forms.ListBox();
-            this.lblAlertsTitle = new System.Windows.Forms.Label();
             this.refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.pnlSidebar.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             this.pnlContent.SuspendLayout();
+            this.pnlChart.SuspendLayout();
+            this.pnlAlerts.SuspendLayout();
             this.pnlLowStock.SuspendLayout();
             this.pnlSalesToday.SuspendLayout();
-            this.pnlAlerts.SuspendLayout();
             this.SuspendLayout();
             //
             // pnlSidebar
@@ -62,7 +65,7 @@ namespace POSApp.Forms
             this.pnlSidebar.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlSidebar.Location = new System.Drawing.Point(0, 0);
             this.pnlSidebar.Name = "pnlSidebar";
-            this.pnlSidebar.Size = new System.Drawing.Size(220, 600);
+            this.pnlSidebar.Size = new System.Drawing.Size(220, 700);
             this.pnlSidebar.TabIndex = 0;
             //
             // btnReturns
@@ -174,7 +177,7 @@ namespace POSApp.Forms
             this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHeader.Location = new System.Drawing.Point(220, 0);
             this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(780, 60);
+            this.pnlHeader.Size = new System.Drawing.Size(980, 60);
             this.pnlHeader.TabIndex = 1;
             //
             // lblWelcome
@@ -189,14 +192,70 @@ namespace POSApp.Forms
             //
             // pnlContent
             //
+            this.pnlContent.Controls.Add(this.pnlChart);
             this.pnlContent.Controls.Add(this.pnlAlerts);
             this.pnlContent.Controls.Add(this.pnlLowStock);
             this.pnlContent.Controls.Add(this.pnlSalesToday);
             this.pnlContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlContent.Location = new System.Drawing.Point(220, 60);
             this.pnlContent.Name = "pnlContent";
-            this.pnlContent.Size = new System.Drawing.Size(780, 540);
+            this.pnlContent.Size = new System.Drawing.Size(980, 640);
             this.pnlContent.TabIndex = 2;
+            //
+            // pnlChart
+            //
+            this.pnlChart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(35)))));
+            this.pnlChart.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlChart.Controls.Add(this.lblChartTitle);
+            this.pnlChart.Location = new System.Drawing.Point(30, 180);
+            this.pnlChart.Name = "pnlChart";
+            this.pnlChart.Size = new System.Drawing.Size(520, 250);
+            this.pnlChart.TabIndex = 3;
+            this.pnlChart.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlChart_Paint);
+            //
+            // lblChartTitle
+            //
+            this.lblChartTitle.AutoSize = true;
+            this.lblChartTitle.ForeColor = System.Drawing.Color.White;
+            this.lblChartTitle.Location = new System.Drawing.Point(10, 10);
+            this.lblChartTitle.Name = "lblChartTitle";
+            this.lblChartTitle.Size = new System.Drawing.Size(121, 15);
+            this.lblChartTitle.TabIndex = 0;
+            this.lblChartTitle.Text = "Sales Trend (7 Days)";
+            //
+            // pnlAlerts
+            //
+            this.pnlAlerts.Controls.Add(this.lstAlerts);
+            this.pnlAlerts.Controls.Add(this.lblAlertsTitle);
+            this.pnlAlerts.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlAlerts.Location = new System.Drawing.Point(0, 440);
+            this.pnlAlerts.Name = "pnlAlerts";
+            this.pnlAlerts.Padding = new System.Windows.Forms.Padding(20);
+            this.pnlAlerts.Size = new System.Drawing.Size(980, 200);
+            this.pnlAlerts.TabIndex = 2;
+            //
+            // lstAlerts
+            //
+            this.lstAlerts.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lstAlerts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstAlerts.FormattingEnabled = true;
+            this.lstAlerts.ItemHeight = 15;
+            this.lstAlerts.Location = new System.Drawing.Point(20, 52);
+            this.lstAlerts.Name = "lstAlerts";
+            this.lstAlerts.Size = new System.Drawing.Size(940, 128);
+            this.lstAlerts.TabIndex = 1;
+            //
+            // lblAlertsTitle
+            //
+            this.lblAlertsTitle.AutoSize = true;
+            this.lblAlertsTitle.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblAlertsTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblAlertsTitle.Location = new System.Drawing.Point(20, 20);
+            this.lblAlertsTitle.Name = "lblAlertsTitle";
+            this.lblAlertsTitle.Padding = new System.Windows.Forms.Padding(0, 0, 0, 7);
+            this.lblAlertsTitle.Size = new System.Drawing.Size(117, 32);
+            this.lblAlertsTitle.TabIndex = 0;
+            this.lblAlertsTitle.Text = "Live Alerts";
             //
             // pnlLowStock
             //
@@ -260,40 +319,6 @@ namespace POSApp.Forms
             this.lblSalesTodayTitle.TabIndex = 0;
             this.lblSalesTodayTitle.Text = "Sales (Today)";
             //
-            // pnlAlerts
-            //
-            this.pnlAlerts.Controls.Add(this.lstAlerts);
-            this.pnlAlerts.Controls.Add(this.lblAlertsTitle);
-            this.pnlAlerts.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlAlerts.Location = new System.Drawing.Point(0, 180);
-            this.pnlAlerts.Name = "pnlAlerts";
-            this.pnlAlerts.Padding = new System.Windows.Forms.Padding(20);
-            this.pnlAlerts.Size = new System.Drawing.Size(780, 360);
-            this.pnlAlerts.TabIndex = 2;
-            //
-            // lstAlerts
-            //
-            this.lstAlerts.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lstAlerts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstAlerts.FormattingEnabled = true;
-            this.lstAlerts.ItemHeight = 15;
-            this.lstAlerts.Location = new System.Drawing.Point(20, 52);
-            this.lstAlerts.Name = "lstAlerts";
-            this.lstAlerts.Size = new System.Drawing.Size(740, 288);
-            this.lstAlerts.TabIndex = 1;
-            //
-            // lblAlertsTitle
-            //
-            this.lblAlertsTitle.AutoSize = true;
-            this.lblAlertsTitle.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblAlertsTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblAlertsTitle.Location = new System.Drawing.Point(20, 20);
-            this.lblAlertsTitle.Name = "lblAlertsTitle";
-            this.lblAlertsTitle.Padding = new System.Windows.Forms.Padding(0, 0, 0, 7);
-            this.lblAlertsTitle.Size = new System.Drawing.Size(117, 32);
-            this.lblAlertsTitle.TabIndex = 0;
-            this.lblAlertsTitle.Text = "Live Alerts";
-            //
             // refreshTimer
             //
             this.refreshTimer.Enabled = true;
@@ -304,7 +329,7 @@ namespace POSApp.Forms
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1000, 600);
+            this.ClientSize = new System.Drawing.Size(1200, 700);
             this.Controls.Add(this.pnlContent);
             this.Controls.Add(this.pnlHeader);
             this.Controls.Add(this.pnlSidebar);
@@ -317,12 +342,14 @@ namespace POSApp.Forms
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             this.pnlContent.ResumeLayout(false);
+            this.pnlChart.ResumeLayout(false);
+            this.pnlChart.PerformLayout();
+            this.pnlAlerts.ResumeLayout(false);
+            this.pnlAlerts.PerformLayout();
             this.pnlLowStock.ResumeLayout(false);
             this.pnlLowStock.PerformLayout();
             this.pnlSalesToday.ResumeLayout(false);
             this.pnlSalesToday.PerformLayout();
-            this.pnlAlerts.ResumeLayout(false);
-            this.pnlAlerts.PerformLayout();
             this.ResumeLayout(false);
         }
 
@@ -348,5 +375,7 @@ namespace POSApp.Forms
         private System.Windows.Forms.ListBox lstAlerts;
         private System.Windows.Forms.Label lblAlertsTitle;
         private System.Windows.Forms.Timer refreshTimer;
+        private System.Windows.Forms.Panel pnlChart;
+        private System.Windows.Forms.Label lblChartTitle;
     }
 }

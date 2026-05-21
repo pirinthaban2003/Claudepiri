@@ -9,17 +9,34 @@ namespace POSApp.Models
         public string Username { get; set; } = string.Empty;
         public string PasswordHash { get; set; } = string.Empty;
         public int RoleID { get; set; }
+        public int? BranchID { get; set; }
         public string? FullName { get; set; }
         public string? Email { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreatedAt { get; set; }
         public string? RoleName { get; set; }
+        public string? BranchName { get; set; }
     }
 
     public class Role
     {
         public int RoleID { get; set; }
         public string RoleName { get; set; } = string.Empty;
+    }
+
+    public class Branch
+    {
+        public int BranchID { get; set; }
+        public string BranchName { get; set; } = string.Empty;
+        public string? Location { get; set; }
+        public bool IsHeadOffice { get; set; }
+    }
+
+    public class TaxCategory
+    {
+        public int TaxCategoryID { get; set; }
+        public string TaxName { get; set; } = string.Empty;
+        public decimal TaxPercentage { get; set; }
     }
 
     public class Supplier
@@ -47,6 +64,8 @@ namespace POSApp.Models
         public string ProductName { get; set; } = string.Empty;
         public int? CategoryID { get; set; }
         public int? SupplierID { get; set; }
+        public int? BranchID { get; set; }
+        public int? TaxCategoryID { get; set; }
         public string? Brand { get; set; }
         public string? UnitType { get; set; }
         public decimal Price { get; set; }
@@ -56,6 +75,7 @@ namespace POSApp.Models
         public bool IsActive { get; set; }
         public string? CategoryName { get; set; }
         public string? SupplierName { get; set; }
+        public string? BranchName { get; set; }
     }
 
     public class InventoryBatch
@@ -66,6 +86,7 @@ namespace POSApp.Models
         public decimal CostPrice { get; set; }
         public decimal SellingPrice { get; set; }
         public int Quantity { get; set; }
+        public int InitialQuantity { get; set; }
         public DateTime? ExpiryDate { get; set; }
         public DateTime ReceivedDate { get; set; }
     }
@@ -86,6 +107,7 @@ namespace POSApp.Models
         public int SaleID { get; set; }
         public int? CustomerID { get; set; }
         public int? UserID { get; set; }
+        public int? BranchID { get; set; }
         public DateTime SaleDate { get; set; }
         public decimal TotalAmount { get; set; }
         public decimal DiscountAmount { get; set; }
@@ -115,5 +137,15 @@ namespace POSApp.Models
         public DateTime Timestamp { get; set; }
         public string? IPAddress { get; set; }
         public string? Username { get; set; }
+    }
+
+    public class Expense
+    {
+        public int ExpenseID { get; set; }
+        public string ExpenseTitle { get; set; } = string.Empty;
+        public string? Category { get; set; }
+        public decimal Amount { get; set; }
+        public DateTime ExpenseDate { get; set; }
+        public string? Description { get; set; }
     }
 }

@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using POSApp.Data;
 using POSApp.Services;
@@ -11,6 +14,7 @@ namespace POSApp.Forms
     {
         private readonly DatabaseHelper _dbHelper;
         private readonly NotificationService _notificationService;
+        private List<decimal> _salesTrend = new List<decimal>();
 
         public DashboardForm()
         {
@@ -104,6 +108,8 @@ namespace POSApp.Forms
         {
             LoadStats();
             LoadLiveAlerts();
+            LoadSalesTrend();
+            pnlChart.Invalidate(); // Redraw chart
         }
 
         private void LoadStats()
@@ -131,6 +137,48 @@ namespace POSApp.Forms
                 }
             }
             catch { /* Silent alerts error */ }
+        }
+
+        private void LoadSalesTrend()
+        {
+            try
+            {
+                _salesTrend.Clear();
+                for (int i = 6; i >= 0; i--)
+                {
+                    var val = _dbHelper.ExecuteScalar($"SELECT SUM(FinalAmount) FROM Sales WHERE DATE(SaleDate) = DATE_SUB(CURDATE(), INTERVAL {i} DAY)");
+                    _salesTrend.Add(val != DBNull.Value ? Convert.ToDecimal(val) : 0);
+                }
+            }
+            catch { }
+        }
+
+        private void pnlChart_Paint(object sender, PaintEventArgs e)
+        {
+            if (_salesTrend.Count == 0) return;
+
+            Graphics g = e.Graphics;
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+            int width = pnlChart.Width - 40;
+            int height = pnlChart.Height - 60;
+            decimal maxSales = _salesTrend.Max();
+            if (maxSales == 0) maxSales = 1000;
+
+            int barWidth = width / 7;
+            for (int i = 0; i < _salesTrend.Count; i++)
+            {
+                int barHeight = (int)((_salesTrend[i] / maxSales) * height);
+                Rectangle rect = new Rectangle(20 + (i * barWidth) + 10, pnlChart.Height - 40 - barHeight, barWidth - 20, barHeight);
+
+                using (var brush = new System.Drawing.Drawing2D.LinearGradientBrush(rect, ThemeHelper.AccentBlue, Color.FromArgb(0, 80, 150), 90F))
+                {
+                    g.FillRectangle(brush, rect);
+                }
+
+                g.DrawString(_salesTrend[i].ToString("N0"), this.Font, Brushes.White, rect.X, rect.Y - 20);
+                g.DrawString(DateTime.Now.AddDays(i - 6).ToString("dd/MM"), this.Font, Brushes.LightGray, rect.X, pnlChart.Height - 20);
+            }
         }
 
         private void refreshTimer_Tick(object sender, EventArgs e)

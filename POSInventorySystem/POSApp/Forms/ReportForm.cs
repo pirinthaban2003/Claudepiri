@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using System.Windows.Forms;
 using POSApp.Data;
+using POSApp.Services;
 using POSApp.Utilities;
 
 namespace POSApp.Forms
@@ -9,29 +10,24 @@ namespace POSApp.Forms
     public partial class ReportForm : Form
     {
         private readonly DatabaseHelper _dbHelper;
+        private readonly ReportService _reportService;
 
         public ReportForm()
         {
             InitializeComponent();
             _dbHelper = new DatabaseHelper();
+            _reportService = new ReportService();
             ThemeHelper.ApplyTheme(this);
-            AddProfitButton();
+            AddExtraButtons();
             CustomizeComponents();
         }
 
         private void CustomizeComponents()
         {
             lblReportTitle.ForeColor = ThemeHelper.AccentBlue;
-            foreach (Control ctrl in this.Controls)
-            {
-                if (ctrl is Button btn)
-                {
-                    btn.BackColor = ThemeHelper.PrimaryDark;
-                }
-            }
         }
 
-        private void AddProfitButton()
+        private void AddExtraButtons()
         {
             Button btnProfit = new Button();
             btnProfit.Location = new System.Drawing.Point(410, 60);
@@ -42,6 +38,17 @@ namespace POSApp.Forms
             btnProfit.UseVisualStyleBackColor = true;
             btnProfit.Click += new System.EventHandler(this.btnProfit_Click);
             this.Controls.Add(btnProfit);
+
+            Button btnExport = new Button();
+            btnExport.Location = new System.Drawing.Point(660, 60);
+            btnExport.Name = "btnExport";
+            btnExport.Size = new System.Drawing.Size(120, 30);
+            btnExport.TabIndex = 6;
+            btnExport.Text = "Export to CSV";
+            btnExport.BackColor = ThemeHelper.AccentGreen;
+            btnExport.UseVisualStyleBackColor = false;
+            btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            this.Controls.Add(btnExport);
         }
 
         private void btnDailySales_Click(object sender, EventArgs e)
@@ -95,7 +102,6 @@ namespace POSApp.Forms
         {
             try
             {
-                // Simple Profit/Loss Analysis
                 string query = @"
                     SELECT
                         (SELECT IFNULL(SUM(FinalAmount), 0) FROM Sales) as TotalRevenue,
@@ -109,6 +115,27 @@ namespace POSApp.Forms
             catch (Exception ex)
             {
                 MessageBox.Show("Error generating Profit/Loss report: " + ex.Message);
+            }
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            if (dgvReports.DataSource == null) return;
+
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.Filter = "CSV files (*.csv)|*.csv";
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    if (_reportService.ExportToCSV((DataTable)dgvReports.DataSource, sfd.FileName))
+                    {
+                        MessageBox.Show("Report exported successfully!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to export report.");
+                    }
+                }
             }
         }
     }

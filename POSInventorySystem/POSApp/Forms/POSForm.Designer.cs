@@ -32,6 +32,8 @@ namespace POSApp.Forms
             this.lblSubtotal = new System.Windows.Forms.Label();
             this.lblSubtotalValue = new System.Windows.Forms.Label();
             this.pnlSearch = new System.Windows.Forms.Panel();
+            this.btnResume = new System.Windows.Forms.Button();
+            this.btnHold = new System.Windows.Forms.Button();
             this.pnlCart = new System.Windows.Forms.Panel();
             this.pnlPayment = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCart)).BeginInit();
@@ -44,6 +46,8 @@ namespace POSApp.Forms
             // pnlSearch
             //
             this.pnlSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlSearch.Controls.Add(this.btnResume);
+            this.pnlSearch.Controls.Add(this.btnHold);
             this.pnlSearch.Controls.Add(this.lblProduct);
             this.pnlSearch.Controls.Add(this.cmbProducts);
             this.pnlSearch.Controls.Add(this.lblQuantity);
@@ -57,13 +61,33 @@ namespace POSApp.Forms
             this.pnlSearch.Size = new System.Drawing.Size(250, 600);
             this.pnlSearch.TabIndex = 17;
             //
+            // btnResume
+            //
+            this.btnResume.Location = new System.Drawing.Point(20, 320);
+            this.btnResume.Name = "btnResume";
+            this.btnResume.Size = new System.Drawing.Size(200, 30);
+            this.btnResume.TabIndex = 14;
+            this.btnResume.Text = "Resume (Ctrl+R)";
+            this.btnResume.UseVisualStyleBackColor = true;
+            this.btnResume.Click += new System.EventHandler(this.btnResume_Click);
+            //
+            // btnHold
+            //
+            this.btnHold.Location = new System.Drawing.Point(20, 280);
+            this.btnHold.Name = "btnHold";
+            this.btnHold.Size = new System.Drawing.Size(200, 30);
+            this.btnHold.TabIndex = 13;
+            this.btnHold.Text = "Hold Sale (Ctrl+H)";
+            this.btnHold.UseVisualStyleBackColor = true;
+            this.btnHold.Click += new System.EventHandler(this.btnHold_Click);
+            //
             // pnlCart
             //
             this.pnlCart.Controls.Add(this.dgvCart);
             this.pnlCart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlCart.Location = new System.Drawing.Point(250, 0);
             this.pnlCart.Name = "pnlCart";
-            this.pnlCart.Size = new System.Drawing.Size(500, 600);
+            this.pnlCart.Size = new System.Drawing.Size(700, 600);
             this.pnlCart.TabIndex = 18;
             //
             // pnlPayment
@@ -78,7 +102,7 @@ namespace POSApp.Forms
             this.pnlPayment.Controls.Add(this.btnCheckout);
             this.pnlPayment.Controls.Add(this.btnClearCart);
             this.pnlPayment.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnlPayment.Location = new System.Drawing.Point(750, 0);
+            this.pnlPayment.Location = new System.Drawing.Point(950, 0);
             this.pnlPayment.Name = "pnlPayment";
             this.pnlPayment.Size = new System.Drawing.Size(250, 600);
             this.pnlPayment.TabIndex = 19;
@@ -92,7 +116,7 @@ namespace POSApp.Forms
             this.dgvCart.Location = new System.Drawing.Point(0, 0);
             this.dgvCart.Name = "dgvCart";
             this.dgvCart.ReadOnly = true;
-            this.dgvCart.Size = new System.Drawing.Size(500, 600);
+            this.dgvCart.Size = new System.Drawing.Size(700, 600);
             this.dgvCart.TabIndex = 0;
             //
             // cmbProducts
@@ -248,7 +272,7 @@ namespace POSApp.Forms
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1000, 600);
+            this.ClientSize = new System.Drawing.Size(1200, 600);
             this.Controls.Add(this.pnlCart);
             this.Controls.Add(this.pnlPayment);
             this.Controls.Add(this.pnlSearch);
@@ -284,5 +308,7 @@ namespace POSApp.Forms
         private System.Windows.Forms.Panel pnlSearch;
         private System.Windows.Forms.Panel pnlCart;
         private System.Windows.Forms.Panel pnlPayment;
+        private System.Windows.Forms.Button btnHold;
+        private System.Windows.Forms.Button btnResume;
     }
 }

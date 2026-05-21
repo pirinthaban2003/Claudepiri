@@ -1,4 +1,5 @@
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace POSApp.Utilities
@@ -91,6 +92,36 @@ namespace POSApp.Utilities
                     ApplyToControls(control.Controls);
                 }
             }
+        }
+
+        public static void DrawStatusBadge(Graphics g, Rectangle rect, string text, Color backColor)
+        {
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            using (GraphicsPath path = GetRoundedRect(rect, 10))
+            {
+                using (SolidBrush brush = new SolidBrush(backColor))
+                {
+                    g.FillPath(brush, path);
+                }
+            }
+            TextRenderer.DrawText(g, text, new Font("Segoe UI", 8F, FontStyle.Bold), rect, Color.White, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter);
+        }
+
+        private static GraphicsPath GetRoundedRect(Rectangle baseRect, int radius)
+        {
+            int diameter = radius * 2;
+            Rectangle arc = new Rectangle(baseRect.Location, new Size(diameter, diameter));
+            GraphicsPath path = new GraphicsPath();
+
+            path.AddArc(arc, 180, 90);
+            arc.X = baseRect.Right - diameter;
+            path.AddArc(arc, 270, 90);
+            arc.Y = baseRect.Bottom - diameter;
+            path.AddArc(arc, 0, 90);
+            arc.X = baseRect.Left;
+            path.AddArc(arc, 90, 90);
+            path.CloseFigure();
+            return path;
         }
     }
 }

@@ -16,6 +16,8 @@ namespace POSApp.Forms
         private readonly CustomerService _customerService;
         private readonly PromotionService _promotionService;
         private List<SaleItem> cart = new List<SaleItem>();
+        private static List<SaleItem>? heldCart = null;
+        private static int? heldCustomerId = null;
         private decimal total = 0;
         private decimal discount = 0;
 
@@ -39,15 +41,14 @@ namespace POSApp.Forms
             btnAddToCart.BackColor = ThemeHelper.AccentGreen;
             lblTotalValue.ForeColor = ThemeHelper.AccentGreen;
 
-            // Set AcceptButton so Enter key triggers Checkout
             this.AcceptButton = btnCheckout;
-
             dgvCart.CellFormatting += DgvCart_CellFormatting;
+
+            btnResume.Enabled = heldCart != null;
         }
 
         private void DgvCart_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
         {
-            // Visual feedback for items in cart could be added here
         }
 
         private void POSForm_KeyDown(object? sender, KeyEventArgs e)
@@ -80,6 +81,11 @@ namespace POSApp.Forms
             else if (e.Control && e.KeyCode == Keys.S)
             {
                 cmbCustomer.Focus();
+                e.Handled = true;
+            }
+            else if (e.Control && e.KeyCode == Keys.H)
+            {
+                btnHold.PerformClick();
                 e.Handled = true;
             }
         }
@@ -181,7 +187,6 @@ namespace POSApp.Forms
             total = cart.Sum(i => i.Subtotal);
             lblSubtotalValue.Text = total.ToString("C");
 
-            // Auto-calculate promotions
             int? customerId = null;
             if (cmbCustomer.SelectedValue != DBNull.Value && cmbCustomer.SelectedValue != null)
                 customerId = Convert.ToInt32(cmbCustomer.SelectedValue);
@@ -209,6 +214,38 @@ namespace POSApp.Forms
             UpdateCartGrid();
         }
 
+        private void btnHold_Click(object sender, EventArgs e)
+        {
+            if (cart.Count == 0) return;
+
+            heldCart = new List<SaleItem>(cart);
+            if (cmbCustomer.SelectedValue != DBNull.Value && cmbCustomer.SelectedValue != null)
+                heldCustomerId = Convert.ToInt32(cmbCustomer.SelectedValue);
+            else
+                heldCustomerId = null;
+
+            cart.Clear();
+            UpdateCartGrid();
+            btnResume.Enabled = true;
+            MessageBox.Show("Sale held successfully.");
+        }
+
+        private void btnResume_Click(object sender, EventArgs e)
+        {
+            if (heldCart == null) return;
+
+            cart = new List<SaleItem>(heldCart);
+            if (heldCustomerId != null)
+                cmbCustomer.SelectedValue = heldCustomerId;
+            else
+                cmbCustomer.SelectedIndex = 0;
+
+            heldCart = null;
+            heldCustomerId = null;
+            UpdateCartGrid();
+            btnResume.Enabled = false;
+        }
+
         private void btnCheckout_Click(object sender, EventArgs e)
         {
             if (cart.Count == 0) return;
@@ -230,13 +267,20 @@ namespace POSApp.Forms
                     Items = cart
                 };
 
-                if (_saleService.ProcessSale(sale))
+                // Open Receipt Preview
+                using (var receipt = new ReceiptForm(sale))
                 {
-                    MessageBox.Show("Sale completed successfully!");
-                    cart.Clear();
-                    txtDiscount.Text = "0";
-                    UpdateCartGrid();
-                    LoadProducts();
+                    if (receipt.ShowDialog() == DialogResult.OK)
+                    {
+                        if (_saleService.ProcessSale(sale))
+                        {
+                            MessageBox.Show("Sale completed successfully!");
+                            cart.Clear();
+                            txtDiscount.Text = "0";
+                            UpdateCartGrid();
+                            LoadProducts();
+                        }
+                    }
                 }
             }
             catch (Exception ex)

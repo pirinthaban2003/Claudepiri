@@ -1,6 +1,21 @@
 CREATE DATABASE IF NOT EXISTS pos_db;
 USE pos_db;
 
+-- Enterprise Scalability: Multi-Branch Support
+CREATE TABLE IF NOT EXISTS Branches (
+    BranchID INT AUTO_INCREMENT PRIMARY KEY,
+    BranchName VARCHAR(100) NOT NULL,
+    Location VARCHAR(255),
+    IsHeadOffice BOOLEAN DEFAULT FALSE
+);
+
+-- Enterprise Scalability: Detailed Tax Management
+CREATE TABLE IF NOT EXISTS TaxCategories (
+    TaxCategoryID INT AUTO_INCREMENT PRIMARY KEY,
+    TaxName VARCHAR(50) NOT NULL,
+    TaxPercentage DECIMAL(5, 2) NOT NULL
+);
+
 -- Authentication & Security Module
 CREATE TABLE IF NOT EXISTS Roles (
     RoleID INT AUTO_INCREMENT PRIMARY KEY,
@@ -12,11 +27,13 @@ CREATE TABLE IF NOT EXISTS Users (
     Username VARCHAR(50) NOT NULL UNIQUE,
     PasswordHash VARCHAR(255) NOT NULL,
     RoleID INT,
+    BranchID INT,
     FullName VARCHAR(100),
     Email VARCHAR(100),
     IsActive BOOLEAN DEFAULT TRUE,
     CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (RoleID) REFERENCES Roles(RoleID)
+    FOREIGN KEY (RoleID) REFERENCES Roles(RoleID),
+    FOREIGN KEY (BranchID) REFERENCES Branches(BranchID)
 );
 
 -- Supplier Management Module
@@ -43,15 +60,18 @@ CREATE TABLE IF NOT EXISTS Products (
     ProductName VARCHAR(255) NOT NULL,
     CategoryID INT,
     SupplierID INT,
+    BranchID INT,
+    TaxCategoryID INT,
     Brand VARCHAR(100),
     UnitType VARCHAR(20), -- e.g., kg, pcs, ltr
     Price DECIMAL(10, 2) NOT NULL,
-    TaxRate DECIMAL(5, 2) DEFAULT 0.00,
     StockQuantity INT NOT NULL DEFAULT 0,
     MinStockLevel INT DEFAULT 10,
     IsActive BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID),
-    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
+    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID),
+    FOREIGN KEY (BranchID) REFERENCES Branches(BranchID),
+    FOREIGN KEY (TaxCategoryID) REFERENCES TaxCategories(TaxCategoryID)
 );
 
 -- Inventory Management Module (Batch Management)
@@ -95,13 +115,15 @@ CREATE TABLE IF NOT EXISTS Sales (
     SaleID INT AUTO_INCREMENT PRIMARY KEY,
     CustomerID INT,
     UserID INT, -- Cashier
+    BranchID INT,
     SaleDate DATETIME DEFAULT CURRENT_TIMESTAMP,
     TotalAmount DECIMAL(10, 2) NOT NULL,
     DiscountAmount DECIMAL(10, 2) DEFAULT 0.00,
     TaxAmount DECIMAL(10, 2) DEFAULT 0.00,
     FinalAmount DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
-    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    FOREIGN KEY (BranchID) REFERENCES Branches(BranchID)
 );
 
 CREATE TABLE IF NOT EXISTS SaleItems (
@@ -184,8 +206,12 @@ CREATE TABLE IF NOT EXISTS AuditLogs (
 -- Initial Data
 INSERT INTO Roles (RoleName) VALUES ('Admin'), ('Manager'), ('Cashier'), ('Inventory Staff');
 
+INSERT INTO Branches (BranchName, Location, IsHeadOffice) VALUES ('Main Branch', 'Colombo', TRUE);
+
 -- Default Admin User (Password: admin123)
-INSERT INTO Users (Username, PasswordHash, RoleID, FullName)
-VALUES ('admin', '240be518ebb2146c006ad83a79c513645a111a87b64f331904a8b79b5c30882e', 1, 'System Administrator');
+INSERT INTO Users (Username, PasswordHash, RoleID, BranchID, FullName)
+VALUES ('admin', '240be518ebb2146c006ad83a79c513645a111a87b64f331904a8b79b5c30882e', 1, 1, 'System Administrator');
 
 INSERT INTO Categories (CategoryName) VALUES ('Beverages'), ('Groceries'), ('Frozen Foods'), ('Cosmetics'), ('Vegetables'), ('Electronics'), ('Bakery'), ('Household');
+
+INSERT INTO TaxCategories (TaxName, TaxPercentage) VALUES ('Standard VAT', 15.00), ('Luxury Tax', 18.00), ('Zero Rated', 0.00);
