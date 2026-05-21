@@ -14,6 +14,8 @@ namespace POSApp.Forms
         {
             InitializeComponent();
             _expenseService = new ExpenseService();
+            this.KeyPreview = true;
+            this.KeyDown += new KeyEventHandler(ExpenseForm_KeyDown);
             ThemeHelper.ApplyTheme(this);
             CustomizeComponents();
         }
@@ -21,6 +23,27 @@ namespace POSApp.Forms
         private void CustomizeComponents()
         {
             btnSave.BackColor = ThemeHelper.AccentBlue;
+        }
+
+        private void ExpenseForm_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F1)
+            {
+                txtTitle.Focus();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.F2)
+            {
+                btnSave.PerformClick();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.F4)
+            {
+                txtTitle.Clear();
+                txtAmount.Clear();
+                txtDescription.Clear();
+                e.Handled = true;
+            }
         }
 
         private void ExpenseForm_Load(object sender, EventArgs e)

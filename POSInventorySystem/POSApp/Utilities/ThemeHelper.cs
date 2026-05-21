@@ -25,6 +25,7 @@ namespace POSApp.Utilities
             form.BackColor = SecondaryDark;
             form.ForeColor = TextWhite;
             form.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            form.StartPosition = FormStartPosition.CenterScreen;
 
             ApplyToControls(form.Controls);
         }
@@ -73,11 +74,15 @@ namespace POSApp.Utilities
                     dgv.BorderStyle = BorderStyle.None;
                     dgv.ColumnHeadersDefaultCellStyle.BackColor = SecondaryDark;
                     dgv.ColumnHeadersDefaultCellStyle.ForeColor = TextWhite;
+                    dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+                    dgv.ColumnHeadersHeight = 35;
+                    dgv.RowTemplate.Height = 30;
                     dgv.EnableHeadersVisualStyles = false;
                     dgv.DefaultCellStyle.BackColor = Color.FromArgb(50, 50, 50);
                     dgv.DefaultCellStyle.ForeColor = TextWhite;
                     dgv.DefaultCellStyle.SelectionBackColor = AccentBlue;
                     dgv.DefaultCellStyle.SelectionForeColor = TextWhite;
+                    dgv.DefaultCellStyle.Padding = new Padding(5, 0, 5, 0);
                     dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(60, 60, 60);
                 }
                 else if (control is Panel pnl)

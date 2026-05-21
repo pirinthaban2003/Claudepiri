@@ -88,7 +88,7 @@ namespace POSApp.Forms
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(80, 30);
             this.btnSave.TabIndex = 6;
-            this.btnSave.Text = "Save";
+            this.btnSave.Text = "Save (F2)";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             //
@@ -108,7 +108,7 @@ namespace POSApp.Forms
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(80, 30);
             this.btnClear.TabIndex = 8;
-            this.btnClear.Text = "Clear";
+            this.btnClear.Text = "Clear (F4)";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             //
@@ -117,9 +117,9 @@ namespace POSApp.Forms
             this.lblCustomerName.AutoSize = true;
             this.lblCustomerName.Location = new System.Drawing.Point(20, 23);
             this.lblCustomerName.Name = "lblCustomerName";
-            this.lblCustomerName.Size = new System.Drawing.Size(97, 15);
+            this.lblCustomerName.Size = new System.Drawing.Size(115, 15);
             this.lblCustomerName.TabIndex = 9;
-            this.lblCustomerName.Text = "Customer Name:";
+            this.lblCustomerName.Text = "Customer Name (F1):";
             //
             // lblPhone
             //

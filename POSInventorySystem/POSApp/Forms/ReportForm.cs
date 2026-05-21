@@ -17,6 +17,8 @@ namespace POSApp.Forms
             InitializeComponent();
             _dbHelper = new DatabaseHelper();
             _reportService = new ReportService();
+            this.KeyPreview = true;
+            this.KeyDown += new KeyEventHandler(ReportForm_KeyDown);
             ThemeHelper.ApplyTheme(this);
             AddExtraButtons();
             CustomizeComponents();
@@ -25,6 +27,32 @@ namespace POSApp.Forms
         private void CustomizeComponents()
         {
             lblReportTitle.ForeColor = ThemeHelper.AccentBlue;
+        }
+
+        private void ReportForm_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F1)
+            {
+                btnDailySales.PerformClick();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.F2)
+            {
+                btnLowStock.PerformClick();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.F3)
+            {
+                btnTopProducts.PerformClick();
+                e.Handled = true;
+            }
+            else if (e.Control && e.KeyCode == Keys.E)
+            {
+                // Trigger Export
+                var btn = this.Controls.Find("btnExport", true).FirstOrDefault() as Button;
+                btn?.PerformClick();
+                e.Handled = true;
+            }
         }
 
         private void AddExtraButtons()
@@ -44,7 +72,7 @@ namespace POSApp.Forms
             btnExport.Name = "btnExport";
             btnExport.Size = new System.Drawing.Size(120, 30);
             btnExport.TabIndex = 6;
-            btnExport.Text = "Export to CSV";
+            btnExport.Text = "Export (Ctrl+E)";
             btnExport.BackColor = ThemeHelper.AccentGreen;
             btnExport.UseVisualStyleBackColor = false;
             btnExport.Click += new System.EventHandler(this.btnExport_Click);

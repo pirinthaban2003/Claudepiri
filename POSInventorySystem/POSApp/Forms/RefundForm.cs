@@ -16,6 +16,8 @@ namespace POSApp.Forms
         {
             InitializeComponent();
             _returnService = new ReturnService();
+            this.KeyPreview = true;
+            this.KeyDown += new KeyEventHandler(RefundForm_KeyDown);
             ThemeHelper.ApplyTheme(this);
             SetupGrid();
             CustomizeComponents();
@@ -24,6 +26,20 @@ namespace POSApp.Forms
         private void CustomizeComponents()
         {
             btnProcessRefund.BackColor = ThemeHelper.AccentRed;
+        }
+
+        private void RefundForm_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F1)
+            {
+                txtSaleID.Focus();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.F2)
+            {
+                btnProcessRefund.PerformClick();
+                e.Handled = true;
+            }
         }
 
         private void SetupGrid()

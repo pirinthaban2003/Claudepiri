@@ -16,6 +16,8 @@ namespace POSApp.Forms
         {
             InitializeComponent();
             _supplierService = new SupplierService();
+            this.KeyPreview = true;
+            this.KeyDown += new KeyEventHandler(SupplierForm_KeyDown);
             ThemeHelper.ApplyTheme(this);
             CustomizeComponents();
         }
@@ -24,6 +26,25 @@ namespace POSApp.Forms
         {
             btnSave.BackColor = ThemeHelper.AccentBlue;
             btnDelete.BackColor = ThemeHelper.AccentRed;
+        }
+
+        private void SupplierForm_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F1)
+            {
+                txtSupplierName.Focus();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.F2)
+            {
+                btnSave.PerformClick();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.F4)
+            {
+                btnClear.PerformClick();
+                e.Handled = true;
+            }
         }
 
         private void SupplierForm_Load(object sender, EventArgs e)
@@ -105,7 +126,7 @@ namespace POSApp.Forms
             txtEmail.Clear();
             txtAddress.Clear();
             selectedSupplierId = -1;
-            btnSave.Text = "Save";
+            btnSave.Text = "Save (F2)";
         }
 
         private void dgvSuppliers_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -119,7 +140,7 @@ namespace POSApp.Forms
                 txtPhone.Text = row.Cells["Phone"].Value?.ToString();
                 txtEmail.Text = row.Cells["Email"].Value?.ToString();
                 txtAddress.Text = row.Cells["Address"].Value?.ToString();
-                btnSave.Text = "Update";
+                btnSave.Text = "Update (F2)";
             }
         }
     }

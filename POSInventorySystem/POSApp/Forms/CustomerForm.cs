@@ -16,6 +16,8 @@ namespace POSApp.Forms
         {
             InitializeComponent();
             _customerService = new CustomerService();
+            this.KeyPreview = true;
+            this.KeyDown += new KeyEventHandler(CustomerForm_KeyDown);
             ThemeHelper.ApplyTheme(this);
             CustomizeComponents();
         }
@@ -24,6 +26,25 @@ namespace POSApp.Forms
         {
             btnSave.BackColor = ThemeHelper.AccentBlue;
             btnDelete.BackColor = ThemeHelper.AccentRed;
+        }
+
+        private void CustomerForm_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F1)
+            {
+                txtCustomerName.Focus();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.F2)
+            {
+                btnSave.PerformClick();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.F4)
+            {
+                btnClear.PerformClick();
+                e.Handled = true;
+            }
         }
 
         private void CustomerForm_Load(object sender, EventArgs e)
@@ -112,7 +133,7 @@ namespace POSApp.Forms
             txtWallet.Clear();
             txtLevel.Clear();
             selectedCustomerId = -1;
-            btnSave.Text = "Save";
+            btnSave.Text = "Save (F2)";
         }
 
         private void dgvCustomers_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -127,7 +148,7 @@ namespace POSApp.Forms
                 txtPoints.Text = row.Cells["LoyaltyPoints"].Value?.ToString();
                 txtWallet.Text = row.Cells["WalletBalance"].Value?.ToString();
                 txtLevel.Text = row.Cells["LoyaltyLevel"].Value?.ToString();
-                btnSave.Text = "Update";
+                btnSave.Text = "Update (F2)";
             }
         }
     }

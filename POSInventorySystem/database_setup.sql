@@ -32,8 +32,8 @@ CREATE TABLE IF NOT EXISTS Users (
     Email VARCHAR(100),
     IsActive BOOLEAN DEFAULT TRUE,
     CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (RoleID) REFERENCES Roles(RoleID),
-    FOREIGN KEY (BranchID) REFERENCES Branches(BranchID)
+    FOREIGN KEY (RoleID) REFERENCES Roles(RoleID) ON DELETE RESTRICT,
+    FOREIGN KEY (BranchID) REFERENCES Branches(BranchID) ON DELETE SET NULL
 );
 
 -- Supplier Management Module
@@ -68,10 +68,10 @@ CREATE TABLE IF NOT EXISTS Products (
     StockQuantity INT NOT NULL DEFAULT 0,
     MinStockLevel INT DEFAULT 10,
     IsActive BOOLEAN DEFAULT TRUE,
-    FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID),
-    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID),
-    FOREIGN KEY (BranchID) REFERENCES Branches(BranchID),
-    FOREIGN KEY (TaxCategoryID) REFERENCES TaxCategories(TaxCategoryID)
+    FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID) ON DELETE SET NULL,
+    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID) ON DELETE SET NULL,
+    FOREIGN KEY (BranchID) REFERENCES Branches(BranchID) ON DELETE SET NULL,
+    FOREIGN KEY (TaxCategoryID) REFERENCES TaxCategories(TaxCategoryID) ON DELETE SET NULL
 );
 
 -- Inventory Management Module (Batch Management)
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS InventoryBatches (
     InitialQuantity INT NOT NULL,
     ExpiryDate DATE,
     ReceivedDate DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS StockHistory (
@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS StockHistory (
     ReferenceID INT, -- SaleID or PurchaseOrderID
     Remarks TEXT,
     CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID) ON DELETE CASCADE
 );
 
 -- Customer Management Module
@@ -122,9 +122,9 @@ CREATE TABLE IF NOT EXISTS Sales (
     DiscountAmount DECIMAL(10, 2) DEFAULT 0.00,
     TaxAmount DECIMAL(10, 2) DEFAULT 0.00,
     FinalAmount DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
-    FOREIGN KEY (UserID) REFERENCES Users(UserID),
-    FOREIGN KEY (BranchID) REFERENCES Branches(BranchID)
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID) ON DELETE SET NULL,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE SET NULL,
+    FOREIGN KEY (BranchID) REFERENCES Branches(BranchID) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS SaleItems (
@@ -135,8 +135,8 @@ CREATE TABLE IF NOT EXISTS SaleItems (
     UnitPrice DECIMAL(10, 2) NOT NULL,
     Discount DECIMAL(10, 2) DEFAULT 0.00,
     Subtotal DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (SaleID) REFERENCES Sales(SaleID),
-    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+    FOREIGN KEY (SaleID) REFERENCES Sales(SaleID) ON DELETE CASCADE,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID) ON DELETE RESTRICT
 );
 
 -- Returns & Refunds
@@ -147,8 +147,8 @@ CREATE TABLE IF NOT EXISTS Returns (
     ReturnDate DATETIME DEFAULT CURRENT_TIMESTAMP,
     TotalRefundAmount DECIMAL(10, 2) NOT NULL,
     Reason TEXT,
-    FOREIGN KEY (SaleID) REFERENCES Sales(SaleID),
-    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+    FOREIGN KEY (SaleID) REFERENCES Sales(SaleID) ON DELETE CASCADE,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS ReturnItems (
@@ -157,8 +157,8 @@ CREATE TABLE IF NOT EXISTS ReturnItems (
     ProductID INT,
     Quantity INT NOT NULL,
     RefundAmount DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (ReturnID) REFERENCES Returns(ReturnID),
-    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+    FOREIGN KEY (ReturnID) REFERENCES Returns(ReturnID) ON DELETE CASCADE,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID) ON DELETE RESTRICT
 );
 
 -- Expenses Module
@@ -179,7 +179,7 @@ CREATE TABLE IF NOT EXISTS Payments (
     Amount DECIMAL(10, 2) NOT NULL,
     TransactionRef VARCHAR(100),
     PaymentDate DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (SaleID) REFERENCES Sales(SaleID)
+    FOREIGN KEY (SaleID) REFERENCES Sales(SaleID) ON DELETE CASCADE
 );
 
 -- Promotions & Offers
@@ -201,7 +201,7 @@ CREATE TABLE IF NOT EXISTS AuditLogs (
     ModuleName VARCHAR(100),
     Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
     IPAddress VARCHAR(45),
-    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE SET NULL
 );
 
 -- Initial Data

@@ -96,6 +96,11 @@ namespace POSApp.Forms
                 btnReturns.PerformClick();
                 e.Handled = true;
             }
+            else if (e.Alt && e.KeyCode == Keys.X)
+            {
+                btnLogout.PerformClick();
+                e.Handled = true;
+            }
         }
 
         private void DashboardForm_Load(object sender, EventArgs e)
@@ -219,6 +224,28 @@ namespace POSApp.Forms
         private void btnReturns_Click(object sender, EventArgs e)
         {
             new RefundForm().Show();
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to logout?", "Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                Session.CurrentUser = null;
+                this.Hide();
+                using (LoginForm login = new LoginForm())
+                {
+                    if (login.ShowDialog() == DialogResult.OK)
+                    {
+                        this.Show();
+                        RefreshDashboard();
+                        ApplyAccessControl();
+                    }
+                    else
+                    {
+                        Application.Exit();
+                    }
+                }
+            }
         }
     }
 }
