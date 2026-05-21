@@ -17,6 +17,32 @@ namespace POSApp.Forms
             InitializeComponent();
             _inventoryService = new InventoryService();
             _supplierService = new SupplierService();
+            this.KeyPreview = true;
+            this.KeyDown += new KeyEventHandler(InventoryForm_KeyDown);
+        }
+
+        private void InventoryForm_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F1)
+            {
+                txtProductName.Focus();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.F2)
+            {
+                btnSave.PerformClick();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.F3)
+            {
+                btnDelete.PerformClick();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.F4)
+            {
+                btnClear.PerformClick();
+                e.Handled = true;
+            }
         }
 
         private void InventoryForm_Load(object sender, EventArgs e)
@@ -151,7 +177,7 @@ namespace POSApp.Forms
             txtPrice.Clear();
             txtQuantity.Clear();
             selectedProductId = -1;
-            btnSave.Text = "Save";
+            btnSave.Text = "Save (F2)";
         }
 
         private void dgvProducts_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -173,7 +199,7 @@ namespace POSApp.Forms
                 if (row.Cells["SupplierID"].Value != DBNull.Value)
                     cmbSupplier.SelectedValue = row.Cells["SupplierID"].Value;
 
-                btnSave.Text = "Update";
+                btnSave.Text = "Update (F2)";
             }
         }
     }

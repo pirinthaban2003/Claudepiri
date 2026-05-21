@@ -108,9 +108,9 @@ namespace POSApp.Forms
             this.lblProduct.AutoSize = true;
             this.lblProduct.Location = new System.Drawing.Point(20, 100);
             this.lblProduct.Name = "lblProduct";
-            this.lblProduct.Size = new System.Drawing.Size(86, 15);
+            this.lblProduct.Size = new System.Drawing.Size(107, 15);
             this.lblProduct.TabIndex = 2;
-            this.lblProduct.Text = "Search Product:";
+            this.lblProduct.Text = "Search Product (F1):";
             //
             // lblQuantity
             //
@@ -140,7 +140,7 @@ namespace POSApp.Forms
             this.btnAddToCart.Name = "btnAddToCart";
             this.btnAddToCart.Size = new System.Drawing.Size(200, 40);
             this.btnAddToCart.TabIndex = 6;
-            this.btnAddToCart.Text = "Add to Cart";
+            this.btnAddToCart.Text = "Add to Cart (F2)";
             this.btnAddToCart.UseVisualStyleBackColor = false;
             this.btnAddToCart.Click += new System.EventHandler(this.btnAddToCart_Click);
             //
@@ -175,7 +175,7 @@ namespace POSApp.Forms
             this.btnCheckout.Name = "btnCheckout";
             this.btnCheckout.Size = new System.Drawing.Size(210, 60);
             this.btnCheckout.TabIndex = 9;
-            this.btnCheckout.Text = "CHECKOUT";
+            this.btnCheckout.Text = "CHECKOUT (F5)";
             this.btnCheckout.UseVisualStyleBackColor = false;
             this.btnCheckout.Click += new System.EventHandler(this.btnCheckout_Click);
             //
@@ -185,7 +185,7 @@ namespace POSApp.Forms
             this.btnClearCart.Name = "btnClearCart";
             this.btnClearCart.Size = new System.Drawing.Size(210, 30);
             this.btnClearCart.TabIndex = 10;
-            this.btnClearCart.Text = "Clear Cart";
+            this.btnClearCart.Text = "Clear Cart (F12)";
             this.btnClearCart.UseVisualStyleBackColor = true;
             this.btnClearCart.Click += new System.EventHandler(this.btnClearCart_Click);
             //
@@ -202,9 +202,9 @@ namespace POSApp.Forms
             this.lblCustomer.AutoSize = true;
             this.lblCustomer.Location = new System.Drawing.Point(20, 30);
             this.lblCustomer.Name = "lblCustomer";
-            this.lblCustomer.Size = new System.Drawing.Size(100, 15);
+            this.lblCustomer.Size = new System.Drawing.Size(130, 15);
             this.lblCustomer.TabIndex = 12;
-            this.lblCustomer.Text = "Select Customer:";
+            this.lblCustomer.Text = "Select Customer (Ctrl+S):";
             //
             // txtDiscount
             //
@@ -221,9 +221,9 @@ namespace POSApp.Forms
             this.lblDiscount.AutoSize = true;
             this.lblDiscount.Location = new System.Drawing.Point(20, 80);
             this.lblDiscount.Name = "lblDiscount";
-            this.lblDiscount.Size = new System.Drawing.Size(57, 15);
+            this.lblDiscount.Size = new System.Drawing.Size(95, 15);
             this.lblDiscount.TabIndex = 14;
-            this.lblDiscount.Text = "Discount:";
+            this.lblDiscount.Text = "Discount (Ctrl+D):";
             //
             // lblSubtotal
             //

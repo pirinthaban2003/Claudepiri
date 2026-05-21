@@ -1,10 +1,8 @@
-using System.ComponentModel;
-
 namespace POSApp.Forms
 {
     partial class InventoryForm
     {
-        private IContainer components = null;
+        private System.ComponentModel.IContainer components = null;
 
         protected override void Dispose(bool disposing)
         {
@@ -117,7 +115,7 @@ namespace POSApp.Forms
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(80, 30);
             this.btnSave.TabIndex = 9;
-            this.btnSave.Text = "Save";
+            this.btnSave.Text = "Save (F2)";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             //
@@ -127,7 +125,7 @@ namespace POSApp.Forms
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(80, 30);
             this.btnDelete.TabIndex = 10;
-            this.btnDelete.Text = "Delete";
+            this.btnDelete.Text = "Delete (F3)";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             //
@@ -137,7 +135,7 @@ namespace POSApp.Forms
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(80, 30);
             this.btnClear.TabIndex = 11;
-            this.btnClear.Text = "Clear";
+            this.btnClear.Text = "Clear (F4)";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             //
@@ -146,9 +144,9 @@ namespace POSApp.Forms
             this.lblProductName.AutoSize = true;
             this.lblProductName.Location = new System.Drawing.Point(20, 23);
             this.lblProductName.Name = "lblProductName";
-            this.lblProductName.Size = new System.Drawing.Size(87, 15);
+            this.lblProductName.Size = new System.Drawing.Size(109, 15);
             this.lblProductName.TabIndex = 12;
-            this.lblProductName.Text = "Product Name:";
+            this.lblProductName.Text = "Product Name (F1):";
             //
             // lblPrice
             //

@@ -14,6 +14,47 @@ namespace POSApp.Forms
         {
             InitializeComponent();
             _dbHelper = new DatabaseHelper();
+            this.KeyPreview = true;
+            this.KeyDown += new KeyEventHandler(DashboardForm_KeyDown);
+        }
+
+        private void DashboardForm_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.Alt && e.KeyCode == Keys.P)
+            {
+                btnPOS.PerformClick();
+                e.Handled = true;
+            }
+            else if (e.Alt && e.KeyCode == Keys.I)
+            {
+                btnInventory.PerformClick();
+                e.Handled = true;
+            }
+            else if (e.Alt && e.KeyCode == Keys.S)
+            {
+                btnSuppliers.PerformClick();
+                e.Handled = true;
+            }
+            else if (e.Alt && e.KeyCode == Keys.C)
+            {
+                btnCustomers.PerformClick();
+                e.Handled = true;
+            }
+            else if (e.Alt && e.KeyCode == Keys.R)
+            {
+                btnReports.PerformClick();
+                e.Handled = true;
+            }
+            else if (e.Alt && e.KeyCode == Keys.E)
+            {
+                btnExpenses.PerformClick();
+                e.Handled = true;
+            }
+            else if (e.Alt && e.KeyCode == Keys.F)
+            {
+                btnReturns.PerformClick();
+                e.Handled = true;
+            }
         }
 
         private void DashboardForm_Load(object sender, EventArgs e)

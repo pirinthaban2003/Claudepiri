@@ -68,7 +68,7 @@ namespace POSApp.Forms
             this.btnReturns.Name = "btnReturns";
             this.btnReturns.Size = new System.Drawing.Size(200, 40);
             this.btnReturns.TabIndex = 7;
-            this.btnReturns.Text = "Returns & Refunds";
+            this.btnReturns.Text = "Returns & Refunds (Alt+F)";
             this.btnReturns.UseVisualStyleBackColor = true;
             this.btnReturns.Click += new System.EventHandler(this.btnReturns_Click);
             //
@@ -81,7 +81,7 @@ namespace POSApp.Forms
             this.btnExpenses.Name = "btnExpenses";
             this.btnExpenses.Size = new System.Drawing.Size(200, 40);
             this.btnExpenses.TabIndex = 6;
-            this.btnExpenses.Text = "Expenses";
+            this.btnExpenses.Text = "Expenses (Alt+E)";
             this.btnExpenses.UseVisualStyleBackColor = true;
             this.btnExpenses.Click += new System.EventHandler(this.btnExpenses_Click);
             //
@@ -94,7 +94,7 @@ namespace POSApp.Forms
             this.btnReports.Name = "btnReports";
             this.btnReports.Size = new System.Drawing.Size(200, 40);
             this.btnReports.TabIndex = 5;
-            this.btnReports.Text = "Reports & Analytics";
+            this.btnReports.Text = "Reports & Analytics (Alt+R)";
             this.btnReports.UseVisualStyleBackColor = true;
             this.btnReports.Click += new System.EventHandler(this.btnReports_Click);
             //
@@ -107,7 +107,7 @@ namespace POSApp.Forms
             this.btnCustomers.Name = "btnCustomers";
             this.btnCustomers.Size = new System.Drawing.Size(200, 40);
             this.btnCustomers.TabIndex = 4;
-            this.btnCustomers.Text = "Customers";
+            this.btnCustomers.Text = "Customers (Alt+C)";
             this.btnCustomers.UseVisualStyleBackColor = true;
             this.btnCustomers.Click += new System.EventHandler(this.btnCustomers_Click);
             //
@@ -120,7 +120,7 @@ namespace POSApp.Forms
             this.btnSuppliers.Name = "btnSuppliers";
             this.btnSuppliers.Size = new System.Drawing.Size(200, 40);
             this.btnSuppliers.TabIndex = 3;
-            this.btnSuppliers.Text = "Suppliers";
+            this.btnSuppliers.Text = "Suppliers (Alt+S)";
             this.btnSuppliers.UseVisualStyleBackColor = true;
             this.btnSuppliers.Click += new System.EventHandler(this.btnSuppliers_Click);
             //
@@ -133,7 +133,7 @@ namespace POSApp.Forms
             this.btnInventory.Name = "btnInventory";
             this.btnInventory.Size = new System.Drawing.Size(200, 40);
             this.btnInventory.TabIndex = 2;
-            this.btnInventory.Text = "Inventory";
+            this.btnInventory.Text = "Inventory (Alt+I)";
             this.btnInventory.UseVisualStyleBackColor = true;
             this.btnInventory.Click += new System.EventHandler(this.btnInventory_Click);
             //
@@ -146,7 +146,7 @@ namespace POSApp.Forms
             this.btnPOS.Name = "btnPOS";
             this.btnPOS.Size = new System.Drawing.Size(200, 40);
             this.btnPOS.TabIndex = 1;
-            this.btnPOS.Text = "POS Terminal";
+            this.btnPOS.Text = "POS Terminal (Alt+P)";
             this.btnPOS.UseVisualStyleBackColor = true;
             this.btnPOS.Click += new System.EventHandler(this.btnPOS_Click);
             //

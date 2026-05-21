@@ -23,6 +23,42 @@ namespace POSApp.Forms
             _saleService = new SaleService();
             _customerService = new CustomerService();
             _promotionService = new PromotionService();
+            this.KeyPreview = true;
+            this.KeyDown += new KeyEventHandler(POSForm_KeyDown);
+        }
+
+        private void POSForm_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F1)
+            {
+                cmbProducts.Focus();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.F2)
+            {
+                btnAddToCart.PerformClick();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.F5)
+            {
+                btnCheckout.PerformClick();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.F12)
+            {
+                btnClearCart.PerformClick();
+                e.Handled = true;
+            }
+            else if (e.Control && e.KeyCode == Keys.D)
+            {
+                txtDiscount.Focus();
+                e.Handled = true;
+            }
+            else if (e.Control && e.KeyCode == Keys.S)
+            {
+                cmbCustomer.Focus();
+                e.Handled = true;
+            }
         }
 
         private void POSForm_Load(object sender, EventArgs e)
