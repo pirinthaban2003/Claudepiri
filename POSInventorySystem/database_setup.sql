@@ -209,9 +209,10 @@ INSERT INTO Roles (RoleName) VALUES ('Admin'), ('Manager'), ('Cashier'), ('Inven
 
 INSERT INTO Branches (BranchName, Location, IsHeadOffice) VALUES ('Main Branch', 'Colombo', TRUE);
 
--- Default Admin User (Password: admin123)
+-- Default Admin User (Username: admin, Password: admin)
+-- SHA256 of 'admin' is 8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
 INSERT INTO Users (Username, PasswordHash, RoleID, BranchID, FullName, IsActive)
-VALUES ('admin', '240be518ebb2146c006ad83a79c513645a111a87b64f331904a8b79b5c30882e', 1, 1, 'System Administrator', 1);
+VALUES ('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 1, 1, 'System Administrator', 1);
 
 INSERT INTO Categories (CategoryName) VALUES ('Beverages'), ('Groceries'), ('Frozen Foods'), ('Cosmetics'), ('Vegetables'), ('Electronics'), ('Bakery'), ('Household');
 

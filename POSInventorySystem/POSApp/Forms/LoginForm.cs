@@ -50,7 +50,12 @@ namespace POSApp.Forms
                 }
                 else
                 {
-                    MessageBox.Show("Access Denied: Invalid username or password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    string message = "Access Denied: Invalid username or password.\n\n" +
+                                   "Note: If this is your first time, the default credentials are:\n" +
+                                   "Username: admin\n" +
+                                   "Password: admin\n\n" +
+                                   "Please ensure you have run 'database_setup.sql' in your MySQL server.";
+                    MessageBox.Show(message, "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
             }
             catch (MySql.Data.MySqlClient.MySqlException mex)

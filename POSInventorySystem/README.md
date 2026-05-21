@@ -32,7 +32,7 @@ SOURCE path/to/database_setup.sql;
 Use the following credentials to access the system after setup:
 
 - **Username**: `admin`
-- **Password**: `admin123`
+- **Password**: `admin`
 
 ## Configuration
 
@@ -59,6 +59,21 @@ public static string Password { get; set; } = "password";
    ```bash
    dotnet run
    ```
+
+## Keyboard Shortcuts
+
+- **F1**: Show All Shortcuts
+- **F2**: Focus Barcode Input (POS)
+- **F3**: Cash Payment & Checkout (POS)
+- **F4**: Hold Sale (POS)
+- **F5**: Resume Sale (POS)
+- **F10**: Card Payment (POS)
+- **F12**: Refresh Data
+- **Alt+P**: Go to POS
+- **Alt+I**: Go to Inventory
+- **Alt+D**: Go to Dashboard
+- **Ctrl+F**: Search
+- **Enter**: Add Product / Process Payment (Contextual)
 
 ## Project Structure
 

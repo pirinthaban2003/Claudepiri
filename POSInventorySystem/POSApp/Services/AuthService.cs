@@ -19,9 +19,16 @@ namespace POSApp.Services
 
         public User? Authenticate(string username, string password)
         {
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+                return null;
+
             try
             {
-                MySqlParameter[] parameters = { new MySqlParameter("@username", username.ToLower()) };
+                // Trim inputs to handle accidental spaces
+                string cleanUsername = username.Trim().ToLower();
+                string cleanPassword = password.Trim();
+
+                MySqlParameter[] parameters = { new MySqlParameter("@username", cleanUsername) };
                 string query = @"
                     SELECT u.*, r.RoleName, b.BranchName
                     FROM Users u
@@ -34,7 +41,7 @@ namespace POSApp.Services
                 if (dt.Rows.Count > 0)
                 {
                     string storedHash = dt.Rows[0]["PasswordHash"].ToString() ?? "";
-                    if (SecurityHelper.VerifyPassword(password, storedHash))
+                    if (SecurityHelper.VerifyPassword(cleanPassword, storedHash))
                     {
                         var user = new User
                         {
@@ -55,13 +62,13 @@ namespace POSApp.Services
                     }
                 }
 
-                _auditService.LogAction($"Failed Login Attempt: {username}", "Authentication");
+                _auditService.LogAction($"Failed Login Attempt: {cleanUsername}", "Authentication");
                 return null;
             }
             catch (Exception ex)
             {
                 _auditService.LogAction($"Login Error for {username}: {ex.Message}", "Authentication");
-                throw; // Rethrow to let UI handle the specific error
+                throw;
             }
         }
     }
