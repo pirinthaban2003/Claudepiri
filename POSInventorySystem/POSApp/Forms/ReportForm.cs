@@ -13,6 +13,20 @@ namespace POSApp.Forms
         {
             InitializeComponent();
             _dbHelper = new DatabaseHelper();
+            AddProfitButton();
+        }
+
+        private void AddProfitButton()
+        {
+            Button btnProfit = new Button();
+            btnProfit.Location = new System.Drawing.Point(410, 60);
+            btnProfit.Name = "btnProfit";
+            btnProfit.Size = new System.Drawing.Size(120, 30);
+            btnProfit.TabIndex = 5;
+            btnProfit.Text = "Profit/Loss";
+            btnProfit.UseVisualStyleBackColor = true;
+            btnProfit.Click += new System.EventHandler(this.btnProfit_Click);
+            this.Controls.Add(btnProfit);
         }
 
         private void btnDailySales_Click(object sender, EventArgs e)
@@ -59,6 +73,27 @@ namespace POSApp.Forms
             catch (Exception ex)
             {
                 MessageBox.Show("Error generating Top Products report: " + ex.Message);
+            }
+        }
+
+        private void btnProfit_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Simple Profit/Loss Analysis
+                string query = @"
+                    SELECT
+                        (SELECT IFNULL(SUM(FinalAmount), 0) FROM Sales) as TotalRevenue,
+                        (SELECT IFNULL(SUM(CostPrice * InitialQuantity), 0) FROM InventoryBatches) as TotalCOGS,
+                        (SELECT IFNULL(SUM(Amount), 0) FROM Expenses) as TotalExpenses,
+                        ((SELECT IFNULL(SUM(FinalAmount), 0) FROM Sales) -
+                         (SELECT IFNULL(SUM(CostPrice * InitialQuantity), 0) FROM InventoryBatches) -
+                         (SELECT IFNULL(SUM(Amount), 0) FROM Expenses)) as NetProfit";
+                dgvReports.DataSource = _dbHelper.ExecuteQuery(query);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error generating Profit/Loss report: " + ex.Message);
             }
         }
     }

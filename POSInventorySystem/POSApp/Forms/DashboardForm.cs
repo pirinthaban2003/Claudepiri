@@ -20,6 +20,7 @@ namespace POSApp.Forms
         {
             lblWelcome.Text = $"Welcome, {Session.CurrentUser?.FullName ?? Session.CurrentUser?.Username ?? "User"}!";
             LoadStats();
+            CheckExpiries();
         }
 
         private void LoadStats()
@@ -38,6 +39,20 @@ namespace POSApp.Forms
             {
                 MessageBox.Show("Error loading dashboard stats: " + ex.Message);
             }
+        }
+
+        private void CheckExpiries()
+        {
+            try
+            {
+                var expiringSoon = _dbHelper.ExecuteScalar("SELECT COUNT(*) FROM InventoryBatches WHERE ExpiryDate BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY) AND Quantity > 0");
+                int count = (expiringSoon != DBNull.Value ? Convert.ToInt32(expiringSoon) : 0);
+                if (count > 0)
+                {
+                    MessageBox.Show($"{count} product(s) are expiring within the next 7 days!", "Expiry Alert", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch { /* Ignore alert errors */ }
         }
 
         private void btnPOS_Click(object sender, EventArgs e)
@@ -63,6 +78,16 @@ namespace POSApp.Forms
         private void btnReports_Click(object sender, EventArgs e)
         {
             new ReportForm().Show();
+        }
+
+        private void btnExpenses_Click(object sender, EventArgs e)
+        {
+            new ExpenseForm().Show();
+        }
+
+        private void btnReturns_Click(object sender, EventArgs e)
+        {
+            new RefundForm().Show();
         }
     }
 }

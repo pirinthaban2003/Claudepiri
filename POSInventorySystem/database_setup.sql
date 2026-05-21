@@ -62,6 +62,7 @@ CREATE TABLE IF NOT EXISTS InventoryBatches (
     CostPrice DECIMAL(10, 2) NOT NULL,
     SellingPrice DECIMAL(10, 2) NOT NULL,
     Quantity INT NOT NULL,
+    InitialQuantity INT NOT NULL,
     ExpiryDate DATE,
     ReceivedDate DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
@@ -115,6 +116,39 @@ CREATE TABLE IF NOT EXISTS SaleItems (
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
 );
 
+-- Returns & Refunds
+CREATE TABLE IF NOT EXISTS Returns (
+    ReturnID INT AUTO_INCREMENT PRIMARY KEY,
+    SaleID INT,
+    UserID INT,
+    ReturnDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    TotalRefundAmount DECIMAL(10, 2) NOT NULL,
+    Reason TEXT,
+    FOREIGN KEY (SaleID) REFERENCES Sales(SaleID),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
+
+CREATE TABLE IF NOT EXISTS ReturnItems (
+    ReturnItemID INT AUTO_INCREMENT PRIMARY KEY,
+    ReturnID INT,
+    ProductID INT,
+    Quantity INT NOT NULL,
+    RefundAmount DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (ReturnID) REFERENCES Returns(ReturnID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+
+-- Expenses Module
+CREATE TABLE IF NOT EXISTS Expenses (
+    ExpenseID INT AUTO_INCREMENT PRIMARY KEY,
+    ExpenseTitle VARCHAR(255) NOT NULL,
+    Category VARCHAR(100), -- Rent, Utilities, Salary, etc.
+    Amount DECIMAL(10, 2) NOT NULL,
+    ExpenseDate DATE,
+    Description TEXT,
+    CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE IF NOT EXISTS Payments (
     PaymentID INT AUTO_INCREMENT PRIMARY KEY,
     SaleID INT,
@@ -150,8 +184,7 @@ CREATE TABLE IF NOT EXISTS AuditLogs (
 -- Initial Data
 INSERT INTO Roles (RoleName) VALUES ('Admin'), ('Manager'), ('Cashier'), ('Inventory Staff');
 
--- Default Admin User (Password: admin123 - hashed using simple SHA256 for now)
--- SHA256 of 'admin123' is 240be518ebb2146c006ad83a79c513645a111a87b64f331904a8b79b5c30882e
+-- Default Admin User (Password: admin123)
 INSERT INTO Users (Username, PasswordHash, RoleID, FullName)
 VALUES ('admin', '240be518ebb2146c006ad83a79c513645a111a87b64f331904a8b79b5c30882e', 1, 'System Administrator');
 

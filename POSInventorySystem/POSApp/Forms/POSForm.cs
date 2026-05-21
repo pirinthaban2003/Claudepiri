@@ -12,6 +12,7 @@ namespace POSApp.Forms
     {
         private readonly SaleService _saleService;
         private readonly CustomerService _customerService;
+        private readonly PromotionService _promotionService;
         private List<SaleItem> cart = new List<SaleItem>();
         private decimal total = 0;
         private decimal discount = 0;
@@ -21,6 +22,7 @@ namespace POSApp.Forms
             InitializeComponent();
             _saleService = new SaleService();
             _customerService = new CustomerService();
+            _promotionService = new PromotionService();
         }
 
         private void POSForm_Load(object sender, EventArgs e)
@@ -120,7 +122,17 @@ namespace POSApp.Forms
             total = cart.Sum(i => i.Subtotal);
             lblSubtotalValue.Text = total.ToString("C");
 
-            decimal.TryParse(txtDiscount.Text, out discount);
+            // Auto-calculate promotions
+            int? customerId = null;
+            if (cmbCustomer.SelectedValue != DBNull.Value && cmbCustomer.SelectedValue != null)
+                customerId = Convert.ToInt32(cmbCustomer.SelectedValue);
+
+            decimal autoDiscount = _promotionService.CalculateDiscount(cart, customerId);
+            decimal manualDiscount = 0;
+            decimal.TryParse(txtDiscount.Text, out manualDiscount);
+
+            discount = autoDiscount + manualDiscount;
+
             decimal finalTotal = total - discount;
             if (finalTotal < 0) finalTotal = 0;
 

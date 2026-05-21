@@ -69,5 +69,52 @@ namespace POSApp.Services
             _auditService.LogAction($"Deleted Product ID: {productId}", "Inventory");
             return result;
         }
+
+        // Batch Management
+        public int AddBatch(InventoryBatch batch)
+        {
+            using (var conn = _dbHelper.GetConnection())
+            {
+                conn.Open();
+                using (var trans = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        string query = @"INSERT INTO InventoryBatches (ProductID, BatchNumber, CostPrice, SellingPrice, Quantity, InitialQuantity, ExpiryDate)
+                                       VALUES (@prodId, @batchNum, @cost, @selling, @qty, @qty, @expiry)";
+                        MySqlCommand cmd = new MySqlCommand(query, conn, trans);
+                        cmd.Parameters.AddWithValue("@prodId", batch.ProductID);
+                        cmd.Parameters.AddWithValue("@batchNum", batch.BatchNumber ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@cost", batch.CostPrice);
+                        cmd.Parameters.AddWithValue("@selling", batch.SellingPrice);
+                        cmd.Parameters.AddWithValue("@qty", batch.Quantity);
+                        cmd.Parameters.AddWithValue("@expiry", batch.ExpiryDate ?? (object)DBNull.Value);
+                        cmd.ExecuteNonQuery();
+
+                        // Update overall product stock
+                        string stockQuery = "UPDATE Products SET StockQuantity = StockQuantity + @qty WHERE ProductID = @prodId";
+                        MySqlCommand stockCmd = new MySqlCommand(stockQuery, conn, trans);
+                        stockCmd.Parameters.AddWithValue("@qty", batch.Quantity);
+                        stockCmd.Parameters.AddWithValue("@prodId", batch.ProductID);
+                        stockCmd.ExecuteNonQuery();
+
+                        trans.Commit();
+                        _auditService.LogAction($"Added Batch for Product ID: {batch.ProductID}, Qty: {batch.Quantity}", "Inventory");
+                        return 1;
+                    }
+                    catch
+                    {
+                        trans.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+        public DataTable GetProductBatches(int productId)
+        {
+            return _dbHelper.ExecuteQuery("SELECT * FROM InventoryBatches WHERE ProductID = @id AND Quantity > 0 ORDER BY ReceivedDate ASC",
+                new MySqlParameter[] { new MySqlParameter("@id", productId) });
+        }
     }
 }

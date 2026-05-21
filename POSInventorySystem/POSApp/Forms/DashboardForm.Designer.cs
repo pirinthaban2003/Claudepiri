@@ -18,6 +18,8 @@ namespace POSApp.Forms
         private void InitializeComponent()
         {
             this.pnlSidebar = new System.Windows.Forms.Panel();
+            this.btnReturns = new System.Windows.Forms.Button();
+            this.btnExpenses = new System.Windows.Forms.Button();
             this.btnReports = new System.Windows.Forms.Button();
             this.btnCustomers = new System.Windows.Forms.Button();
             this.btnSuppliers = new System.Windows.Forms.Button();
@@ -43,6 +45,8 @@ namespace POSApp.Forms
             // pnlSidebar
             //
             this.pnlSidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
+            this.pnlSidebar.Controls.Add(this.btnReturns);
+            this.pnlSidebar.Controls.Add(this.btnExpenses);
             this.pnlSidebar.Controls.Add(this.btnReports);
             this.pnlSidebar.Controls.Add(this.btnCustomers);
             this.pnlSidebar.Controls.Add(this.btnSuppliers);
@@ -54,6 +58,32 @@ namespace POSApp.Forms
             this.pnlSidebar.Name = "pnlSidebar";
             this.pnlSidebar.Size = new System.Drawing.Size(200, 600);
             this.pnlSidebar.TabIndex = 0;
+            //
+            // btnReturns
+            //
+            this.btnReturns.FlatAppearance.BorderSize = 0;
+            this.btnReturns.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReturns.ForeColor = System.Drawing.Color.White;
+            this.btnReturns.Location = new System.Drawing.Point(0, 340);
+            this.btnReturns.Name = "btnReturns";
+            this.btnReturns.Size = new System.Drawing.Size(200, 40);
+            this.btnReturns.TabIndex = 7;
+            this.btnReturns.Text = "Returns & Refunds";
+            this.btnReturns.UseVisualStyleBackColor = true;
+            this.btnReturns.Click += new System.EventHandler(this.btnReturns_Click);
+            //
+            // btnExpenses
+            //
+            this.btnExpenses.FlatAppearance.BorderSize = 0;
+            this.btnExpenses.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExpenses.ForeColor = System.Drawing.Color.White;
+            this.btnExpenses.Location = new System.Drawing.Point(0, 300);
+            this.btnExpenses.Name = "btnExpenses";
+            this.btnExpenses.Size = new System.Drawing.Size(200, 40);
+            this.btnExpenses.TabIndex = 6;
+            this.btnExpenses.Text = "Expenses";
+            this.btnExpenses.UseVisualStyleBackColor = true;
+            this.btnExpenses.Click += new System.EventHandler(this.btnExpenses_Click);
             //
             // btnReports
             //
@@ -263,5 +293,7 @@ namespace POSApp.Forms
         private System.Windows.Forms.Panel pnlSalesToday;
         private System.Windows.Forms.Label lblSalesTodayAmount;
         private System.Windows.Forms.Label lblSalesTodayTitle;
+        private System.Windows.Forms.Button btnExpenses;
+        private System.Windows.Forms.Button btnReturns;
     }
 }

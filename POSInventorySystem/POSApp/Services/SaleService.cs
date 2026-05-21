@@ -59,7 +59,39 @@ namespace POSApp.Services
                             itemCmd.Parameters.AddWithValue("@subtotal", item.Subtotal);
                             itemCmd.ExecuteNonQuery();
 
-                            // Update Stock
+                            // Update Stock using FIFO Logic (Deduct from oldest batches first)
+                            int remainingQty = item.Quantity;
+
+                            string batchQuery = "SELECT BatchID, Quantity FROM InventoryBatches WHERE ProductID = @prodId AND Quantity > 0 ORDER BY ReceivedDate ASC";
+                            MySqlCommand batchCmd = new MySqlCommand(batchQuery, conn, trans);
+                            batchCmd.Parameters.AddWithValue("@prodId", item.ProductID);
+
+                            using (MySqlDataReader reader = batchCmd.ExecuteReader())
+                            {
+                                List<(int BatchID, int Quantity)> batches = new List<(int, int)>();
+                                while (reader.Read())
+                                {
+                                    batches.Add((reader.GetInt32(0), reader.GetInt32(1)));
+                                }
+                                reader.Close();
+
+                                foreach (var batch in batches)
+                                {
+                                    if (remainingQty <= 0) break;
+
+                                    int deductQty = Math.Min(remainingQty, batch.Quantity);
+
+                                    string updateBatchQuery = "UPDATE InventoryBatches SET Quantity = Quantity - @qty WHERE BatchID = @batchId";
+                                    MySqlCommand updateBatchCmd = new MySqlCommand(updateBatchQuery, conn, trans);
+                                    updateBatchCmd.Parameters.AddWithValue("@qty", deductQty);
+                                    updateBatchCmd.Parameters.AddWithValue("@batchId", batch.BatchID);
+                                    updateBatchCmd.ExecuteNonQuery();
+
+                                    remainingQty -= deductQty;
+                                }
+                            }
+
+                            // Update overall product stock
                             string stockQuery = "UPDATE Products SET StockQuantity = StockQuantity - @qty WHERE ProductID = @prodId";
                             MySqlCommand stockCmd = new MySqlCommand(stockQuery, conn, trans);
                             stockCmd.Parameters.AddWithValue("@qty", item.Quantity);
