@@ -65,6 +65,7 @@ namespace POSApp.Forms
                     Phone = txtPhone.Text.Trim(),
                     Email = txtEmail.Text.Trim(),
                     LoyaltyPoints = points,
+                    LoyaltyLevel = txtLevel.Text.Trim(),
                     WalletBalance = wallet
                 };
 
@@ -109,6 +110,7 @@ namespace POSApp.Forms
             txtEmail.Clear();
             txtPoints.Clear();
             txtWallet.Clear();
+            txtLevel.Clear();
             selectedCustomerId = -1;
             btnSave.Text = "Save";
         }
@@ -124,6 +126,7 @@ namespace POSApp.Forms
                 txtEmail.Text = row.Cells["Email"].Value?.ToString();
                 txtPoints.Text = row.Cells["LoyaltyPoints"].Value?.ToString();
                 txtWallet.Text = row.Cells["WalletBalance"].Value?.ToString();
+                txtLevel.Text = row.Cells["LoyaltyLevel"].Value?.ToString();
                 btnSave.Text = "Update";
             }
         }

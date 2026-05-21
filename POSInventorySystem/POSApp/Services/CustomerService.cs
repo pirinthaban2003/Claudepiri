@@ -28,6 +28,7 @@ namespace POSApp.Services
                 new MySqlParameter("@phone", customer.Phone ?? (object)DBNull.Value),
                 new MySqlParameter("@email", customer.Email ?? (object)DBNull.Value),
                 new MySqlParameter("@points", customer.LoyaltyPoints),
+                new MySqlParameter("@level", customer.LoyaltyLevel),
                 new MySqlParameter("@wallet", customer.WalletBalance),
                 new MySqlParameter("@id", customer.CustomerID)
             };
@@ -35,13 +36,13 @@ namespace POSApp.Services
             int result;
             if (customer.CustomerID == -1 || customer.CustomerID == 0)
             {
-                string query = "INSERT INTO Customers (CustomerName, Phone, Email, LoyaltyPoints, WalletBalance) VALUES (@name, @phone, @email, @points, @wallet)";
+                string query = "INSERT INTO Customers (CustomerName, Phone, Email, LoyaltyPoints, LoyaltyLevel, WalletBalance) VALUES (@name, @phone, @email, @points, @level, @wallet)";
                 result = _dbHelper.ExecuteNonQuery(query, parameters);
                 _auditService.LogAction($"Added Customer: {customer.CustomerName}", "Customer");
             }
             else
             {
-                string query = "UPDATE Customers SET CustomerName=@name, Phone=@phone, Email=@email, LoyaltyPoints=@points, WalletBalance=@wallet WHERE CustomerID=@id";
+                string query = "UPDATE Customers SET CustomerName=@name, Phone=@phone, Email=@email, LoyaltyPoints=@points, LoyaltyLevel=@level, WalletBalance=@wallet WHERE CustomerID=@id";
                 result = _dbHelper.ExecuteNonQuery(query, parameters);
                 _auditService.LogAction($"Updated Customer: {customer.CustomerName}", "Customer");
             }
@@ -59,6 +60,25 @@ namespace POSApp.Services
         {
             _dbHelper.ExecuteNonQuery("UPDATE Customers SET LoyaltyPoints = LoyaltyPoints + @points WHERE CustomerID = @id",
                 new MySqlParameter[] { new MySqlParameter("@points", points), new MySqlParameter("@id", customerId) });
+
+            UpdateLoyaltyLevel(customerId);
+        }
+
+        public void UpdateLoyaltyLevel(int customerId)
+        {
+            var result = _dbHelper.ExecuteScalar("SELECT LoyaltyPoints FROM Customers WHERE CustomerID = @id",
+                new MySqlParameter[] { new MySqlParameter("@id", customerId) });
+
+            if (result != null && result != DBNull.Value)
+            {
+                int points = Convert.ToInt32(result);
+                string level = "Bronze";
+                if (points >= 5000) level = "Gold";
+                else if (points >= 1000) level = "Silver";
+
+                _dbHelper.ExecuteNonQuery("UPDATE Customers SET LoyaltyLevel = @level WHERE CustomerID = @id",
+                    new MySqlParameter[] { new MySqlParameter("@level", level), new MySqlParameter("@id", customerId) });
+            }
         }
     }
 }

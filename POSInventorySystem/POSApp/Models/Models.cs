@@ -98,6 +98,7 @@ namespace POSApp.Models
         public string? Phone { get; set; }
         public string? Email { get; set; }
         public int LoyaltyPoints { get; set; }
+        public string LoyaltyLevel { get; set; } = "Bronze";
         public decimal WalletBalance { get; set; }
         public DateTime CreatedAt { get; set; }
     }

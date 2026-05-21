@@ -110,6 +110,22 @@ namespace POSApp.Services
                                 loyaltyCmd.Parameters.AddWithValue("@points", pointsEarned);
                                 loyaltyCmd.Parameters.AddWithValue("@id", sale.CustomerID.Value);
                                 loyaltyCmd.ExecuteNonQuery();
+
+                                // Update Level within transaction
+                                var levelCheckQuery = "SELECT LoyaltyPoints FROM Customers WHERE CustomerID = @id";
+                                MySqlCommand levelCheckCmd = new MySqlCommand(levelCheckQuery, conn, trans);
+                                levelCheckCmd.Parameters.AddWithValue("@id", sale.CustomerID.Value);
+                                int totalPoints = Convert.ToInt32(levelCheckCmd.ExecuteScalar());
+
+                                string level = "Bronze";
+                                if (totalPoints >= 5000) level = "Gold";
+                                else if (totalPoints >= 1000) level = "Silver";
+
+                                string updateLevelQuery = "UPDATE Customers SET LoyaltyLevel = @level WHERE CustomerID = @id";
+                                MySqlCommand updateLevelCmd = new MySqlCommand(updateLevelQuery, conn, trans);
+                                updateLevelCmd.Parameters.AddWithValue("@level", level);
+                                updateLevelCmd.Parameters.AddWithValue("@id", sale.CustomerID.Value);
+                                updateLevelCmd.ExecuteNonQuery();
                             }
                         }
 

@@ -31,6 +31,8 @@ namespace POSApp.Forms
             this.lblEmail = new System.Windows.Forms.Label();
             this.lblPoints = new System.Windows.Forms.Label();
             this.lblWallet = new System.Windows.Forms.Label();
+            this.lblLevel = new System.Windows.Forms.Label();
+            this.txtLevel = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).BeginInit();
             this.SuspendLayout();
             //
@@ -82,7 +84,7 @@ namespace POSApp.Forms
             //
             // btnSave
             //
-            this.btnSave.Location = new System.Drawing.Point(20, 240);
+            this.btnSave.Location = new System.Drawing.Point(20, 280);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(80, 30);
             this.btnSave.TabIndex = 6;
@@ -92,7 +94,7 @@ namespace POSApp.Forms
             //
             // btnDelete
             //
-            this.btnDelete.Location = new System.Drawing.Point(110, 240);
+            this.btnDelete.Location = new System.Drawing.Point(110, 280);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(80, 30);
             this.btnDelete.TabIndex = 7;
@@ -102,7 +104,7 @@ namespace POSApp.Forms
             //
             // btnClear
             //
-            this.btnClear.Location = new System.Drawing.Point(200, 240);
+            this.btnClear.Location = new System.Drawing.Point(200, 280);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(80, 30);
             this.btnClear.TabIndex = 8;
@@ -155,11 +157,30 @@ namespace POSApp.Forms
             this.lblWallet.TabIndex = 13;
             this.lblWallet.Text = "Wallet:";
             //
+            // lblLevel
+            //
+            this.lblLevel.AutoSize = true;
+            this.lblLevel.Location = new System.Drawing.Point(20, 223);
+            this.lblLevel.Name = "lblLevel";
+            this.lblLevel.Size = new System.Drawing.Size(37, 15);
+            this.lblLevel.TabIndex = 14;
+            this.lblLevel.Text = "Level:";
+            //
+            // txtLevel
+            //
+            this.txtLevel.Location = new System.Drawing.Point(120, 220);
+            this.txtLevel.Name = "txtLevel";
+            this.txtLevel.ReadOnly = true;
+            this.txtLevel.Size = new System.Drawing.Size(160, 23);
+            this.txtLevel.TabIndex = 15;
+            //
             // CustomerForm
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.txtLevel);
+            this.Controls.Add(this.lblLevel);
             this.Controls.Add(this.lblWallet);
             this.Controls.Add(this.lblPoints);
             this.Controls.Add(this.lblEmail);
@@ -196,5 +217,7 @@ namespace POSApp.Forms
         private System.Windows.Forms.Label lblEmail;
         private System.Windows.Forms.Label lblPoints;
         private System.Windows.Forms.Label lblWallet;
+        private System.Windows.Forms.Label lblLevel;
+        private System.Windows.Forms.TextBox txtLevel;
     }
 }

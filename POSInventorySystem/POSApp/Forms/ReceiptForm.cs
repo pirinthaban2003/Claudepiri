@@ -1,19 +1,24 @@
 using System;
+using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using POSApp.Models;
 using POSApp.Utilities;
+using MySql.Data.MySqlClient;
+using POSApp.Data;
 
 namespace POSApp.Forms
 {
     public partial class ReceiptForm : Form
     {
         private readonly Sale _sale;
+        private readonly DatabaseHelper _dbHelper;
 
         public ReceiptForm(Sale sale)
         {
             InitializeComponent();
             _sale = sale;
+            _dbHelper = new DatabaseHelper();
             ThemeHelper.ApplyTheme(this);
             CustomizeComponents();
             GenerateReceiptText();
@@ -35,6 +40,19 @@ namespace POSApp.Forms
             sb.AppendLine("******************************************");
             sb.AppendLine($"Date: {DateTime.Now:dd/MM/yyyy HH:mm}");
             sb.AppendLine($"Cashier: {Session.CurrentUser?.FullName ?? "Staff"}");
+
+            // Customer Info
+            if (_sale.CustomerID.HasValue)
+            {
+                var dt = _dbHelper.ExecuteQuery("SELECT CustomerName, LoyaltyPoints, LoyaltyLevel FROM Customers WHERE CustomerID = @id",
+                    new MySqlParameter[] { new MySqlParameter("@id", _sale.CustomerID.Value) });
+                if (dt.Rows.Count > 0)
+                {
+                    sb.AppendLine($"Customer: {dt.Rows[0]["CustomerName"]}");
+                    sb.AppendLine($"Loyalty Level: {dt.Rows[0]["LoyaltyLevel"]}");
+                }
+            }
+
             sb.AppendLine("------------------------------------------");
             sb.AppendLine(string.Format("{0,-20} {1,5} {2,10}", "Item", "Qty", "Price"));
             sb.AppendLine("------------------------------------------");
@@ -51,6 +69,15 @@ namespace POSApp.Forms
             sb.AppendLine(string.Format("{0,-26} {1,14:N2}", "Tax:", _sale.TaxAmount));
             sb.AppendLine("==========================================");
             sb.AppendLine(string.Format("TOTAL: {0,30:C}", _sale.FinalAmount));
+
+            // Loyalty Points Info
+            if (_sale.CustomerID.HasValue)
+            {
+                int pointsEarned = (int)(_sale.FinalAmount / 100);
+                sb.AppendLine("==========================================");
+                sb.AppendLine($"Points Earned this visit: {pointsEarned}");
+            }
+
             sb.AppendLine("==========================================");
             sb.AppendLine("\n      THANK YOU FOR SHOPPING!             ");
             sb.AppendLine("       Please visit us again              ");

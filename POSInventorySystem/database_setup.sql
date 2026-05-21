@@ -106,6 +106,7 @@ CREATE TABLE IF NOT EXISTS Customers (
     Phone VARCHAR(20) UNIQUE,
     Email VARCHAR(100),
     LoyaltyPoints INT DEFAULT 0,
+    LoyaltyLevel VARCHAR(50) DEFAULT 'Bronze',
     WalletBalance DECIMAL(10, 2) DEFAULT 0.00,
     CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
 );
