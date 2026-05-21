@@ -3,6 +3,7 @@ using System.Data;
 using System.Windows.Forms;
 using POSApp.Models;
 using POSApp.Services;
+using POSApp.Utilities;
 
 namespace POSApp.Forms
 {
@@ -15,6 +16,14 @@ namespace POSApp.Forms
         {
             InitializeComponent();
             _supplierService = new SupplierService();
+            ThemeHelper.ApplyTheme(this);
+            CustomizeComponents();
+        }
+
+        private void CustomizeComponents()
+        {
+            btnSave.BackColor = ThemeHelper.AccentBlue;
+            btnDelete.BackColor = ThemeHelper.AccentRed;
         }
 
         private void SupplierForm_Load(object sender, EventArgs e)

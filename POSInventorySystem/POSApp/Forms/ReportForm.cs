@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using System.Windows.Forms;
 using POSApp.Data;
+using POSApp.Utilities;
 
 namespace POSApp.Forms
 {
@@ -13,7 +14,21 @@ namespace POSApp.Forms
         {
             InitializeComponent();
             _dbHelper = new DatabaseHelper();
+            ThemeHelper.ApplyTheme(this);
             AddProfitButton();
+            CustomizeComponents();
+        }
+
+        private void CustomizeComponents()
+        {
+            lblReportTitle.ForeColor = ThemeHelper.AccentBlue;
+            foreach (Control ctrl in this.Controls)
+            {
+                if (ctrl is Button btn)
+                {
+                    btn.BackColor = ThemeHelper.PrimaryDark;
+                }
+            }
         }
 
         private void AddProfitButton()

@@ -1,6 +1,7 @@
 using System;
 using System.Windows.Forms;
 using POSApp.Services;
+using POSApp.Utilities;
 
 namespace POSApp.Forms
 {
@@ -12,6 +13,15 @@ namespace POSApp.Forms
         {
             InitializeComponent();
             _authService = new AuthService();
+            ThemeHelper.ApplyTheme(this);
+            CustomizeComponents();
+        }
+
+        private void CustomizeComponents()
+        {
+            btnLogin.BackColor = ThemeHelper.AccentBlue;
+            lblTitle.ForeColor = ThemeHelper.AccentBlue;
+            lblTitle.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
         }
 
         private void btnLogin_Click(object sender, EventArgs e)

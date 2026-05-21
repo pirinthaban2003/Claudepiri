@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using POSApp.Services;
+using POSApp.Utilities;
 
 namespace POSApp.Forms
 {
@@ -15,7 +16,14 @@ namespace POSApp.Forms
         {
             InitializeComponent();
             _returnService = new ReturnService();
+            ThemeHelper.ApplyTheme(this);
             SetupGrid();
+            CustomizeComponents();
+        }
+
+        private void CustomizeComponents()
+        {
+            btnProcessRefund.BackColor = ThemeHelper.AccentRed;
         }
 
         private void SetupGrid()

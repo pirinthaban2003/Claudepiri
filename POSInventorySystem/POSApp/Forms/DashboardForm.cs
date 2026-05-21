@@ -3,6 +3,7 @@ using System.Data;
 using System.Windows.Forms;
 using POSApp.Data;
 using POSApp.Services;
+using POSApp.Utilities;
 
 namespace POSApp.Forms
 {
@@ -16,6 +17,25 @@ namespace POSApp.Forms
             _dbHelper = new DatabaseHelper();
             this.KeyPreview = true;
             this.KeyDown += new KeyEventHandler(DashboardForm_KeyDown);
+            ThemeHelper.ApplyTheme(this);
+            CustomizeComponents();
+        }
+
+        private void CustomizeComponents()
+        {
+            pnlSidebar.BackColor = ThemeHelper.PrimaryDark;
+            pnlHeader.BackColor = ThemeHelper.SecondaryDark;
+            lblTitle.ForeColor = ThemeHelper.AccentBlue;
+
+            // Sidebar buttons hover effect could be added here in a real environment
+            foreach (Control ctrl in pnlSidebar.Controls)
+            {
+                if (ctrl is Button btn)
+                {
+                    btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+                    btn.Padding = new Padding(20, 0, 0, 0);
+                }
+            }
         }
 
         private void DashboardForm_KeyDown(object? sender, KeyEventArgs e)

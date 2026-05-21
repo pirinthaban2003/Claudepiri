@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using POSApp.Models;
 using POSApp.Services;
+using POSApp.Utilities;
 
 namespace POSApp.Forms
 {
@@ -25,6 +26,17 @@ namespace POSApp.Forms
             _promotionService = new PromotionService();
             this.KeyPreview = true;
             this.KeyDown += new KeyEventHandler(POSForm_KeyDown);
+            ThemeHelper.ApplyTheme(this);
+            CustomizeComponents();
+        }
+
+        private void CustomizeComponents()
+        {
+            pnlSearch.BackColor = ThemeHelper.PrimaryDark;
+            pnlPayment.BackColor = ThemeHelper.PrimaryDark;
+            btnCheckout.BackColor = ThemeHelper.AccentBlue;
+            btnAddToCart.BackColor = ThemeHelper.AccentGreen;
+            lblTotalValue.ForeColor = ThemeHelper.AccentGreen;
         }
 
         private void POSForm_KeyDown(object? sender, KeyEventArgs e)

@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using System.Windows.Forms;
 using POSApp.Services;
+using POSApp.Utilities;
 
 namespace POSApp.Forms
 {
@@ -13,6 +14,13 @@ namespace POSApp.Forms
         {
             InitializeComponent();
             _expenseService = new ExpenseService();
+            ThemeHelper.ApplyTheme(this);
+            CustomizeComponents();
+        }
+
+        private void CustomizeComponents()
+        {
+            btnSave.BackColor = ThemeHelper.AccentBlue;
         }
 
         private void ExpenseForm_Load(object sender, EventArgs e)

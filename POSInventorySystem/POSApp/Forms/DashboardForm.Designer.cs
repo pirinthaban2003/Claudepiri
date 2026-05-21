@@ -56,7 +56,7 @@ namespace POSApp.Forms
             this.pnlSidebar.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlSidebar.Location = new System.Drawing.Point(0, 0);
             this.pnlSidebar.Name = "pnlSidebar";
-            this.pnlSidebar.Size = new System.Drawing.Size(200, 600);
+            this.pnlSidebar.Size = new System.Drawing.Size(220, 600);
             this.pnlSidebar.TabIndex = 0;
             //
             // btnReturns
@@ -64,9 +64,9 @@ namespace POSApp.Forms
             this.btnReturns.FlatAppearance.BorderSize = 0;
             this.btnReturns.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReturns.ForeColor = System.Drawing.Color.White;
-            this.btnReturns.Location = new System.Drawing.Point(0, 340);
+            this.btnReturns.Location = new System.Drawing.Point(0, 360);
             this.btnReturns.Name = "btnReturns";
-            this.btnReturns.Size = new System.Drawing.Size(200, 40);
+            this.btnReturns.Size = new System.Drawing.Size(220, 50);
             this.btnReturns.TabIndex = 7;
             this.btnReturns.Text = "Returns & Refunds (Alt+F)";
             this.btnReturns.UseVisualStyleBackColor = true;
@@ -77,9 +77,9 @@ namespace POSApp.Forms
             this.btnExpenses.FlatAppearance.BorderSize = 0;
             this.btnExpenses.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExpenses.ForeColor = System.Drawing.Color.White;
-            this.btnExpenses.Location = new System.Drawing.Point(0, 300);
+            this.btnExpenses.Location = new System.Drawing.Point(0, 310);
             this.btnExpenses.Name = "btnExpenses";
-            this.btnExpenses.Size = new System.Drawing.Size(200, 40);
+            this.btnExpenses.Size = new System.Drawing.Size(220, 50);
             this.btnExpenses.TabIndex = 6;
             this.btnExpenses.Text = "Expenses (Alt+E)";
             this.btnExpenses.UseVisualStyleBackColor = true;
@@ -92,7 +92,7 @@ namespace POSApp.Forms
             this.btnReports.ForeColor = System.Drawing.Color.White;
             this.btnReports.Location = new System.Drawing.Point(0, 260);
             this.btnReports.Name = "btnReports";
-            this.btnReports.Size = new System.Drawing.Size(200, 40);
+            this.btnReports.Size = new System.Drawing.Size(220, 50);
             this.btnReports.TabIndex = 5;
             this.btnReports.Text = "Reports & Analytics (Alt+R)";
             this.btnReports.UseVisualStyleBackColor = true;
@@ -103,9 +103,9 @@ namespace POSApp.Forms
             this.btnCustomers.FlatAppearance.BorderSize = 0;
             this.btnCustomers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCustomers.ForeColor = System.Drawing.Color.White;
-            this.btnCustomers.Location = new System.Drawing.Point(0, 220);
+            this.btnCustomers.Location = new System.Drawing.Point(0, 210);
             this.btnCustomers.Name = "btnCustomers";
-            this.btnCustomers.Size = new System.Drawing.Size(200, 40);
+            this.btnCustomers.Size = new System.Drawing.Size(220, 50);
             this.btnCustomers.TabIndex = 4;
             this.btnCustomers.Text = "Customers (Alt+C)";
             this.btnCustomers.UseVisualStyleBackColor = true;
@@ -116,9 +116,9 @@ namespace POSApp.Forms
             this.btnSuppliers.FlatAppearance.BorderSize = 0;
             this.btnSuppliers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSuppliers.ForeColor = System.Drawing.Color.White;
-            this.btnSuppliers.Location = new System.Drawing.Point(0, 180);
+            this.btnSuppliers.Location = new System.Drawing.Point(0, 160);
             this.btnSuppliers.Name = "btnSuppliers";
-            this.btnSuppliers.Size = new System.Drawing.Size(200, 40);
+            this.btnSuppliers.Size = new System.Drawing.Size(220, 50);
             this.btnSuppliers.TabIndex = 3;
             this.btnSuppliers.Text = "Suppliers (Alt+S)";
             this.btnSuppliers.UseVisualStyleBackColor = true;
@@ -129,9 +129,9 @@ namespace POSApp.Forms
             this.btnInventory.FlatAppearance.BorderSize = 0;
             this.btnInventory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnInventory.ForeColor = System.Drawing.Color.White;
-            this.btnInventory.Location = new System.Drawing.Point(0, 140);
+            this.btnInventory.Location = new System.Drawing.Point(0, 110);
             this.btnInventory.Name = "btnInventory";
-            this.btnInventory.Size = new System.Drawing.Size(200, 40);
+            this.btnInventory.Size = new System.Drawing.Size(220, 50);
             this.btnInventory.TabIndex = 2;
             this.btnInventory.Text = "Inventory (Alt+I)";
             this.btnInventory.UseVisualStyleBackColor = true;
@@ -142,9 +142,9 @@ namespace POSApp.Forms
             this.btnPOS.FlatAppearance.BorderSize = 0;
             this.btnPOS.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPOS.ForeColor = System.Drawing.Color.White;
-            this.btnPOS.Location = new System.Drawing.Point(0, 100);
+            this.btnPOS.Location = new System.Drawing.Point(0, 60);
             this.btnPOS.Name = "btnPOS";
-            this.btnPOS.Size = new System.Drawing.Size(200, 40);
+            this.btnPOS.Size = new System.Drawing.Size(220, 50);
             this.btnPOS.TabIndex = 1;
             this.btnPOS.Text = "POS Terminal (Alt+P)";
             this.btnPOS.UseVisualStyleBackColor = true;
@@ -153,22 +153,22 @@ namespace POSApp.Forms
             // lblTitle
             //
             this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(20, 20);
+            this.lblTitle.Location = new System.Drawing.Point(12, 9);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(155, 30);
+            this.lblTitle.Size = new System.Drawing.Size(81, 32);
             this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "SRMS Admin";
+            this.lblTitle.Text = "SRMS";
             //
             // pnlHeader
             //
             this.pnlHeader.BackColor = System.Drawing.Color.White;
             this.pnlHeader.Controls.Add(this.lblWelcome);
             this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlHeader.Location = new System.Drawing.Point(200, 0);
+            this.pnlHeader.Location = new System.Drawing.Point(220, 0);
             this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(800, 60);
+            this.pnlHeader.Size = new System.Drawing.Size(780, 60);
             this.pnlHeader.TabIndex = 1;
             //
             // lblWelcome
@@ -186,9 +186,9 @@ namespace POSApp.Forms
             this.pnlContent.Controls.Add(this.pnlLowStock);
             this.pnlContent.Controls.Add(this.pnlSalesToday);
             this.pnlContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlContent.Location = new System.Drawing.Point(200, 60);
+            this.pnlContent.Location = new System.Drawing.Point(220, 60);
             this.pnlContent.Name = "pnlContent";
-            this.pnlContent.Size = new System.Drawing.Size(800, 540);
+            this.pnlContent.Size = new System.Drawing.Size(780, 540);
             this.pnlContent.TabIndex = 2;
             //
             // pnlLowStock

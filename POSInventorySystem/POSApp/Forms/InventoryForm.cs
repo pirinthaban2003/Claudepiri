@@ -3,6 +3,7 @@ using System.Data;
 using System.Windows.Forms;
 using POSApp.Models;
 using POSApp.Services;
+using POSApp.Utilities;
 
 namespace POSApp.Forms
 {
@@ -19,6 +20,14 @@ namespace POSApp.Forms
             _supplierService = new SupplierService();
             this.KeyPreview = true;
             this.KeyDown += new KeyEventHandler(InventoryForm_KeyDown);
+            ThemeHelper.ApplyTheme(this);
+            CustomizeComponents();
+        }
+
+        private void CustomizeComponents()
+        {
+            btnSave.BackColor = ThemeHelper.AccentBlue;
+            btnDelete.BackColor = ThemeHelper.AccentRed;
         }
 
         private void InventoryForm_KeyDown(object? sender, KeyEventArgs e)
