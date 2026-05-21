@@ -169,21 +169,21 @@ namespace POSApp.Forms
             //
             this.btnCheckout.BackColor = System.Drawing.Color.DodgerBlue;
             this.btnCheckout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCheckout.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnCheckout.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnCheckout.ForeColor = System.Drawing.Color.White;
-            this.btnCheckout.Location = new System.Drawing.Point(20, 250);
+            this.btnCheckout.Location = new System.Drawing.Point(10, 250);
             this.btnCheckout.Name = "btnCheckout";
-            this.btnCheckout.Size = new System.Drawing.Size(210, 60);
+            this.btnCheckout.Size = new System.Drawing.Size(230, 80);
             this.btnCheckout.TabIndex = 9;
-            this.btnCheckout.Text = "CHECKOUT (F5)";
+            this.btnCheckout.Text = "CHECKOUT\n(F5 / Enter)";
             this.btnCheckout.UseVisualStyleBackColor = false;
             this.btnCheckout.Click += new System.EventHandler(this.btnCheckout_Click);
             //
             // btnClearCart
             //
-            this.btnClearCart.Location = new System.Drawing.Point(20, 320);
+            this.btnClearCart.Location = new System.Drawing.Point(10, 340);
             this.btnClearCart.Name = "btnClearCart";
-            this.btnClearCart.Size = new System.Drawing.Size(210, 30);
+            this.btnClearCart.Size = new System.Drawing.Size(230, 30);
             this.btnClearCart.TabIndex = 10;
             this.btnClearCart.Text = "Clear Cart (F12)";
             this.btnClearCart.UseVisualStyleBackColor = true;

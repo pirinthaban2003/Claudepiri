@@ -37,6 +37,9 @@ namespace POSApp.Forms
             btnCheckout.BackColor = ThemeHelper.AccentBlue;
             btnAddToCart.BackColor = ThemeHelper.AccentGreen;
             lblTotalValue.ForeColor = ThemeHelper.AccentGreen;
+
+            // Set AcceptButton so Enter key triggers Checkout
+            this.AcceptButton = btnCheckout;
         }
 
         private void POSForm_KeyDown(object? sender, KeyEventArgs e)
