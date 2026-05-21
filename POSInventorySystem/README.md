@@ -6,10 +6,12 @@ A robust Point of Sale (POS) and Inventory Management system built with C# Windo
 
 - **Authentication & Security**: Role-based access control (Admin, Manager, Cashier, Inventory Staff) with secure login.
 - **Product Management**: Track products with SKU, Barcode, Brand, Category, and Supplier mapping.
-- **Inventory Management**: Manage stock levels and view detailed product information.
-- **Supplier Management**: CRUD operations for suppliers to manage the supply chain.
-- **Point of Sale (POS)**: Efficient billing system with cart management, real-time stock updates, and transaction persistence.
-- **Database Persistence**: Comprehensive schema covering sales, customers, suppliers, and audit logs.
+- **Inventory Management**: Manage stock levels with FIFO batch tracking and real-time color-coded stock alerts.
+- **Supplier & Customer CRM**: Full management for the supply chain and customer loyalty programs.
+- **Automated Loyalty**: Tiered progression (Bronze, Silver, Gold) with points added automatically during checkout.
+- **Point of Sale (POS)**: High-efficiency terminal with keyboard shortcuts, hold/resume sales, and itemized receipt previews.
+- **Enterprise Dashboard**: Real-time visual analytics (GDI+ charts) and live system notifications (Expiries, Security, Low Stock).
+- **Business Intelligence**: Detailed reporting for Profit/Loss, Daily Sales, and Top Products with CSV export capabilities.
 
 ## Prerequisites
 
@@ -24,6 +26,13 @@ A robust Point of Sale (POS) and Inventory Management system built with C# Windo
 ```sql
 SOURCE path/to/database_setup.sql;
 ```
+
+## Default Credentials
+
+Use the following credentials to access the system after setup:
+
+- **Username**: `admin`
+- **Password**: `admin123`
 
 ## Configuration
 
@@ -53,7 +62,8 @@ public static string Password { get; set; } = "password";
 
 ## Project Structure
 
-- `Forms/`: UI Windows Forms (Login, Inventory, POS, Supplier).
-- `Models/`: Data entities (User, Product, Sale, etc.).
+- `Forms/`: UI Windows Forms (Dashboard, Login, Inventory, POS, etc.).
+- `Models/`: Data entities (User, Product, Sale, Branch, etc.).
+- `Services/`: Business logic layer (Sale, Inventory, Auth, Notification, etc.).
 - `Data/`: Database access and configuration.
-- `Utilities/`: Security helpers and common utilities.
+- `Utilities/`: Theme management, Access Control, and Security helpers.
