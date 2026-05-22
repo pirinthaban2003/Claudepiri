@@ -103,7 +103,7 @@ namespace POSApp.Forms
             }
         }
 
-        private void DashboardForm_Load(object sender, EventArgs e)
+        private void DashboardForm_Load(object? sender, EventArgs e)
         {
             lblWelcome.Text = $"Welcome, {Session.CurrentUser?.FullName ?? Session.CurrentUser?.Username ?? "User"}!";
             RefreshDashboard();
@@ -158,7 +158,7 @@ namespace POSApp.Forms
             catch { }
         }
 
-        private void pnlChart_Paint(object sender, PaintEventArgs e)
+        private void pnlChart_Paint(object? sender, PaintEventArgs e)
         {
             if (_salesTrend.Count == 0) return;
 
@@ -186,47 +186,47 @@ namespace POSApp.Forms
             }
         }
 
-        private void refreshTimer_Tick(object sender, EventArgs e)
+        private void refreshTimer_Tick(object? sender, EventArgs e)
         {
             RefreshDashboard();
         }
 
-        private void btnPOS_Click(object sender, EventArgs e)
+        private void btnPOS_Click(object? sender, EventArgs e)
         {
             new POSForm().Show();
         }
 
-        private void btnInventory_Click(object sender, EventArgs e)
+        private void btnInventory_Click(object? sender, EventArgs e)
         {
             new InventoryForm().Show();
         }
 
-        private void btnSuppliers_Click(object sender, EventArgs e)
+        private void btnSuppliers_Click(object? sender, EventArgs e)
         {
             new SupplierForm().Show();
         }
 
-        private void btnCustomers_Click(object sender, EventArgs e)
+        private void btnCustomers_Click(object? sender, EventArgs e)
         {
             new CustomerForm().Show();
         }
 
-        private void btnReports_Click(object sender, EventArgs e)
+        private void btnReports_Click(object? sender, EventArgs e)
         {
             new ReportForm().Show();
         }
 
-        private void btnExpenses_Click(object sender, EventArgs e)
+        private void btnExpenses_Click(object? sender, EventArgs e)
         {
             new ExpenseForm().Show();
         }
 
-        private void btnReturns_Click(object sender, EventArgs e)
+        private void btnReturns_Click(object? sender, EventArgs e)
         {
             new RefundForm().Show();
         }
 
-        private void btnLogout_Click(object sender, EventArgs e)
+        private void btnLogout_Click(object? sender, EventArgs e)
         {
             if (MessageBox.Show("Are you sure you want to logout?", "Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {

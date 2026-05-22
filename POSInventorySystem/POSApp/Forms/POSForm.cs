@@ -90,7 +90,7 @@ namespace POSApp.Forms
             }
         }
 
-        private void POSForm_Load(object sender, EventArgs e)
+        private void POSForm_Load(object? sender, EventArgs e)
         {
             LoadProducts();
             LoadCustomers();
@@ -131,9 +131,9 @@ namespace POSApp.Forms
             }
         }
 
-        private void btnAddToCart_Click(object sender, EventArgs e)
+        private void btnAddToCart_Click(object? sender, EventArgs e)
         {
-            if (cmbProducts.SelectedValue == null) return;
+            if (cmbProducts.SelectedValue == null || cmbProducts.SelectedItem == null) return;
 
             DataRowView selectedProduct = (DataRowView)cmbProducts.SelectedItem;
             int productId = Convert.ToInt32(selectedProduct["ProductID"]);
@@ -203,18 +203,18 @@ namespace POSApp.Forms
             lblTotalValue.Text = finalTotal.ToString("C");
         }
 
-        private void txtDiscount_TextChanged(object sender, EventArgs e)
+        private void txtDiscount_TextChanged(object? sender, EventArgs e)
         {
             UpdateCartGrid();
         }
 
-        private void btnClearCart_Click(object sender, EventArgs e)
+        private void btnClearCart_Click(object? sender, EventArgs e)
         {
             cart.Clear();
             UpdateCartGrid();
         }
 
-        private void btnHold_Click(object sender, EventArgs e)
+        private void btnHold_Click(object? sender, EventArgs e)
         {
             if (cart.Count == 0) return;
 
@@ -230,7 +230,7 @@ namespace POSApp.Forms
             MessageBox.Show("Sale held successfully.");
         }
 
-        private void btnResume_Click(object sender, EventArgs e)
+        private void btnResume_Click(object? sender, EventArgs e)
         {
             if (heldCart == null) return;
 
@@ -246,7 +246,7 @@ namespace POSApp.Forms
             btnResume.Enabled = false;
         }
 
-        private void btnCheckout_Click(object sender, EventArgs e)
+        private void btnCheckout_Click(object? sender, EventArgs e)
         {
             if (cart.Count == 0) return;
 

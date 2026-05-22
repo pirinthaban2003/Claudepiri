@@ -20,7 +20,7 @@ namespace POSApp.Services
                 foreach (DataRow row in data.Rows)
                 {
                     IEnumerable<string> fields = row.ItemArray.Select(field =>
-                        string.Concat("\"", field.ToString().Replace("\"", "\"\""), "\""));
+                        string.Concat("\"", (field?.ToString() ?? "").Replace("\"", "\"\""), "\""));
                     sb.AppendLine(string.Join(",", fields));
                 }
 

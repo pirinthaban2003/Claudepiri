@@ -79,7 +79,7 @@ namespace POSApp.Forms
             this.Controls.Add(btnExport);
         }
 
-        private void btnDailySales_Click(object sender, EventArgs e)
+        private void btnDailySales_Click(object? sender, EventArgs e)
         {
             try
             {
@@ -95,7 +95,7 @@ namespace POSApp.Forms
             }
         }
 
-        private void btnLowStock_Click(object sender, EventArgs e)
+        private void btnLowStock_Click(object? sender, EventArgs e)
         {
             try
             {
@@ -108,7 +108,7 @@ namespace POSApp.Forms
             }
         }
 
-        private void btnTopProducts_Click(object sender, EventArgs e)
+        private void btnTopProducts_Click(object? sender, EventArgs e)
         {
             try
             {
@@ -126,7 +126,7 @@ namespace POSApp.Forms
             }
         }
 
-        private void btnProfit_Click(object sender, EventArgs e)
+        private void btnProfit_Click(object? sender, EventArgs e)
         {
             try
             {
@@ -146,7 +146,7 @@ namespace POSApp.Forms
             }
         }
 
-        private void btnExport_Click(object sender, EventArgs e)
+        private void btnExport_Click(object? sender, EventArgs e)
         {
             if (dgvReports.DataSource == null) return;
 
