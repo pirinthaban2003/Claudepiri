@@ -65,9 +65,9 @@ namespace POSApp.Forms
             //
             this.btnResume.Location = new System.Drawing.Point(20, 320);
             this.btnResume.Name = "btnResume";
-            this.btnResume.Size = new System.Drawing.Size(200, 30);
+            this.btnResume.Size = new System.Drawing.Size(200, 35);
             this.btnResume.TabIndex = 14;
-            this.btnResume.Text = "Resume (Ctrl+R)";
+            this.btnResume.Text = "📂 Resume (F5)";
             this.btnResume.UseVisualStyleBackColor = true;
             this.btnResume.Click += new System.EventHandler(this.btnResume_Click);
             //
@@ -75,9 +75,9 @@ namespace POSApp.Forms
             //
             this.btnHold.Location = new System.Drawing.Point(20, 280);
             this.btnHold.Name = "btnHold";
-            this.btnHold.Size = new System.Drawing.Size(200, 30);
+            this.btnHold.Size = new System.Drawing.Size(200, 35);
             this.btnHold.TabIndex = 13;
-            this.btnHold.Text = "Hold Sale (Ctrl+H)";
+            this.btnHold.Text = "⏸ Hold Sale (F4)";
             this.btnHold.UseVisualStyleBackColor = true;
             this.btnHold.Click += new System.EventHandler(this.btnHold_Click);
             //
@@ -156,15 +156,15 @@ namespace POSApp.Forms
             //
             // btnAddToCart
             //
-            this.btnAddToCart.BackColor = System.Drawing.Color.MediumSeaGreen;
+            this.btnAddToCart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(200)))), ((int)(((byte)(100)))));
             this.btnAddToCart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddToCart.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnAddToCart.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnAddToCart.ForeColor = System.Drawing.Color.White;
             this.btnAddToCart.Location = new System.Drawing.Point(20, 220);
             this.btnAddToCart.Name = "btnAddToCart";
-            this.btnAddToCart.Size = new System.Drawing.Size(200, 40);
+            this.btnAddToCart.Size = new System.Drawing.Size(200, 45);
             this.btnAddToCart.TabIndex = 6;
-            this.btnAddToCart.Text = "Add to Cart (F2)";
+            this.btnAddToCart.Text = "🛒 ADD TO CART (F2)";
             this.btnAddToCart.UseVisualStyleBackColor = false;
             this.btnAddToCart.Click += new System.EventHandler(this.btnAddToCart_Click);
             //
@@ -181,25 +181,25 @@ namespace POSApp.Forms
             // lblTotalValue
             //
             this.lblTotalValue.AutoSize = true;
-            this.lblTotalValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblTotalValue.ForeColor = System.Drawing.Color.DarkGreen;
+            this.lblTotalValue.Font = new System.Drawing.Font("Segoe UI", 32F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblTotalValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(200)))), ((int)(((byte)(100)))));
             this.lblTotalValue.Location = new System.Drawing.Point(20, 180);
             this.lblTotalValue.Name = "lblTotalValue";
-            this.lblTotalValue.Size = new System.Drawing.Size(103, 45);
+            this.lblTotalValue.Size = new System.Drawing.Size(135, 59);
             this.lblTotalValue.TabIndex = 8;
             this.lblTotalValue.Text = "$0.00";
             //
             // btnCheckout
             //
-            this.btnCheckout.BackColor = System.Drawing.Color.DodgerBlue;
+            this.btnCheckout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(150)))), ((int)(((byte)(255)))));
             this.btnCheckout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCheckout.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnCheckout.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnCheckout.ForeColor = System.Drawing.Color.White;
-            this.btnCheckout.Location = new System.Drawing.Point(10, 250);
+            this.btnCheckout.Location = new System.Drawing.Point(10, 260);
             this.btnCheckout.Name = "btnCheckout";
-            this.btnCheckout.Size = new System.Drawing.Size(230, 80);
+            this.btnCheckout.Size = new System.Drawing.Size(230, 90);
             this.btnCheckout.TabIndex = 9;
-            this.btnCheckout.Text = "CHECKOUT\n(F5 / Enter)";
+            this.btnCheckout.Text = "💳 CHECKOUT\n(F3 / Enter)";
             this.btnCheckout.UseVisualStyleBackColor = false;
             this.btnCheckout.Click += new System.EventHandler(this.btnCheckout_Click);
             //

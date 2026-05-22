@@ -88,10 +88,9 @@ namespace POSApp.Forms
             this.pnlMain.Controls.Add(this.btnLogin);
             this.pnlMain.Controls.Add(this.txtPassword);
             this.pnlMain.Controls.Add(this.txtUsername);
-            this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlMain.Location = new System.Drawing.Point(0, 0);
+            this.pnlMain.Location = new System.Drawing.Point(50, 50);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(350, 280);
+            this.pnlMain.Size = new System.Drawing.Size(350, 300);
             this.pnlMain.TabIndex = 6;
             //
             // LoginForm
@@ -99,7 +98,7 @@ namespace POSApp.Forms
             this.AcceptButton = this.btnLogin;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(350, 280);
+            this.ClientSize = new System.Drawing.Size(450, 400);
             this.Controls.Add(this.pnlMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;

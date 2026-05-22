@@ -80,7 +80,7 @@ namespace POSApp.Forms
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(220, 50);
             this.btnLogout.TabIndex = 8;
-            this.btnLogout.Text = "Logout (Alt+X)";
+            this.btnLogout.Text = "🚪 Logout (Alt+X)";
             this.btnLogout.UseVisualStyleBackColor = true;
             this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             //
@@ -93,7 +93,7 @@ namespace POSApp.Forms
             this.btnReturns.Name = "btnReturns";
             this.btnReturns.Size = new System.Drawing.Size(220, 50);
             this.btnReturns.TabIndex = 7;
-            this.btnReturns.Text = "Returns & Refunds (Alt+F)";
+            this.btnReturns.Text = "🔄 Returns (Alt+F)";
             this.btnReturns.UseVisualStyleBackColor = true;
             this.btnReturns.Click += new System.EventHandler(this.btnReturns_Click);
             //
@@ -106,7 +106,7 @@ namespace POSApp.Forms
             this.btnExpenses.Name = "btnExpenses";
             this.btnExpenses.Size = new System.Drawing.Size(220, 50);
             this.btnExpenses.TabIndex = 6;
-            this.btnExpenses.Text = "Expenses (Alt+E)";
+            this.btnExpenses.Text = "💸 Expenses (Alt+E)";
             this.btnExpenses.UseVisualStyleBackColor = true;
             this.btnExpenses.Click += new System.EventHandler(this.btnExpenses_Click);
             //
@@ -119,7 +119,7 @@ namespace POSApp.Forms
             this.btnReports.Name = "btnReports";
             this.btnReports.Size = new System.Drawing.Size(220, 50);
             this.btnReports.TabIndex = 5;
-            this.btnReports.Text = "Reports & Analytics (Alt+R)";
+            this.btnReports.Text = "📊 Analytics (Alt+R)";
             this.btnReports.UseVisualStyleBackColor = true;
             this.btnReports.Click += new System.EventHandler(this.btnReports_Click);
             //
@@ -132,7 +132,7 @@ namespace POSApp.Forms
             this.btnCustomers.Name = "btnCustomers";
             this.btnCustomers.Size = new System.Drawing.Size(220, 50);
             this.btnCustomers.TabIndex = 4;
-            this.btnCustomers.Text = "Customers (Alt+C)";
+            this.btnCustomers.Text = "👥 Customers (Alt+C)";
             this.btnCustomers.UseVisualStyleBackColor = true;
             this.btnCustomers.Click += new System.EventHandler(this.btnCustomers_Click);
             //
@@ -145,7 +145,7 @@ namespace POSApp.Forms
             this.btnSuppliers.Name = "btnSuppliers";
             this.btnSuppliers.Size = new System.Drawing.Size(220, 50);
             this.btnSuppliers.TabIndex = 3;
-            this.btnSuppliers.Text = "Suppliers (Alt+S)";
+            this.btnSuppliers.Text = "🚚 Suppliers (Alt+S)";
             this.btnSuppliers.UseVisualStyleBackColor = true;
             this.btnSuppliers.Click += new System.EventHandler(this.btnSuppliers_Click);
             //
@@ -158,7 +158,7 @@ namespace POSApp.Forms
             this.btnInventory.Name = "btnInventory";
             this.btnInventory.Size = new System.Drawing.Size(220, 50);
             this.btnInventory.TabIndex = 2;
-            this.btnInventory.Text = "Inventory (Alt+I)";
+            this.btnInventory.Text = "📦 Inventory (Alt+I)";
             this.btnInventory.UseVisualStyleBackColor = true;
             this.btnInventory.Click += new System.EventHandler(this.btnInventory_Click);
             //
@@ -171,7 +171,7 @@ namespace POSApp.Forms
             this.btnPOS.Name = "btnPOS";
             this.btnPOS.Size = new System.Drawing.Size(220, 50);
             this.btnPOS.TabIndex = 1;
-            this.btnPOS.Text = "POS Terminal (Alt+P)";
+            this.btnPOS.Text = "🛒 POS System (Alt+P)";
             this.btnPOS.UseVisualStyleBackColor = true;
             this.btnPOS.Click += new System.EventHandler(this.btnPOS_Click);
             //
@@ -275,7 +275,7 @@ namespace POSApp.Forms
             //
             // pnlLowStock
             //
-            this.pnlLowStock.BackColor = System.Drawing.Color.Tomato;
+            this.pnlLowStock.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.pnlLowStock.Controls.Add(this.lblLowStockCount);
             this.pnlLowStock.Controls.Add(this.lblLowStockTitle);
             this.pnlLowStock.Location = new System.Drawing.Point(300, 30);
@@ -286,27 +286,28 @@ namespace POSApp.Forms
             // lblLowStockCount
             //
             this.lblLowStockCount.AutoSize = true;
-            this.lblLowStockCount.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblLowStockCount.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lblLowStockCount.ForeColor = System.Drawing.Color.White;
-            this.lblLowStockCount.Location = new System.Drawing.Point(20, 45);
+            this.lblLowStockCount.Location = new System.Drawing.Point(20, 40);
             this.lblLowStockCount.Name = "lblLowStockCount";
-            this.lblLowStockCount.Size = new System.Drawing.Size(38, 45);
+            this.lblLowStockCount.Size = new System.Drawing.Size(44, 51);
             this.lblLowStockCount.TabIndex = 1;
             this.lblLowStockCount.Text = "0";
             //
             // lblLowStockTitle
             //
             this.lblLowStockTitle.AutoSize = true;
+            this.lblLowStockTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lblLowStockTitle.ForeColor = System.Drawing.Color.White;
-            this.lblLowStockTitle.Location = new System.Drawing.Point(20, 20);
+            this.lblLowStockTitle.Location = new System.Drawing.Point(20, 15);
             this.lblLowStockTitle.Name = "lblLowStockTitle";
-            this.lblLowStockTitle.Size = new System.Drawing.Size(91, 15);
+            this.lblLowStockTitle.Size = new System.Drawing.Size(112, 19);
             this.lblLowStockTitle.TabIndex = 0;
             this.lblLowStockTitle.Text = "Low Stock Items";
             //
             // pnlSalesToday
             //
-            this.pnlSalesToday.BackColor = System.Drawing.Color.MediumSeaGreen;
+            this.pnlSalesToday.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(200)))), ((int)(((byte)(100)))));
             this.pnlSalesToday.Controls.Add(this.lblSalesTodayAmount);
             this.pnlSalesToday.Controls.Add(this.lblSalesTodayTitle);
             this.pnlSalesToday.Location = new System.Drawing.Point(30, 30);
@@ -317,21 +318,22 @@ namespace POSApp.Forms
             // lblSalesTodayAmount
             //
             this.lblSalesTodayAmount.AutoSize = true;
-            this.lblSalesTodayAmount.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblSalesTodayAmount.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lblSalesTodayAmount.ForeColor = System.Drawing.Color.White;
-            this.lblSalesTodayAmount.Location = new System.Drawing.Point(20, 45);
+            this.lblSalesTodayAmount.Location = new System.Drawing.Point(20, 40);
             this.lblSalesTodayAmount.Name = "lblSalesTodayAmount";
-            this.lblSalesTodayAmount.Size = new System.Drawing.Size(103, 45);
+            this.lblSalesTodayAmount.Size = new System.Drawing.Size(121, 51);
             this.lblSalesTodayAmount.TabIndex = 1;
             this.lblSalesTodayAmount.Text = "$0.00";
             //
             // lblSalesTodayTitle
             //
             this.lblSalesTodayTitle.AutoSize = true;
+            this.lblSalesTodayTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lblSalesTodayTitle.ForeColor = System.Drawing.Color.White;
-            this.lblSalesTodayTitle.Location = new System.Drawing.Point(20, 20);
+            this.lblSalesTodayTitle.Location = new System.Drawing.Point(20, 15);
             this.lblSalesTodayTitle.Name = "lblSalesTodayTitle";
-            this.lblSalesTodayTitle.Size = new System.Drawing.Size(78, 15);
+            this.lblSalesTodayTitle.Size = new System.Drawing.Size(91, 19);
             this.lblSalesTodayTitle.TabIndex = 0;
             this.lblSalesTodayTitle.Text = "Sales (Today)";
             //

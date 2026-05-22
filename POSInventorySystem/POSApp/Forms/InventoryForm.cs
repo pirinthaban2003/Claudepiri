@@ -27,9 +27,12 @@ namespace POSApp.Forms
 
         private void CustomizeComponents()
         {
+            pnlForm.BackColor = ThemeHelper.SecondaryDark;
+            pnlGrid.BackColor = ThemeHelper.PrimaryDark;
             btnSave.BackColor = ThemeHelper.AccentBlue;
             btnDelete.BackColor = ThemeHelper.AccentRed;
             dgvProducts.CellFormatting += DgvProducts_CellFormatting;
+            txtSearch.TextChanged += (s, e) => LoadProducts(txtSearch.Text.Trim());
         }
 
         private void DgvProducts_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
@@ -72,9 +75,14 @@ namespace POSApp.Forms
                 btnClear.PerformClick();
                 e.Handled = true;
             }
+            else if (e.Control && e.KeyCode == Keys.F)
+            {
+                txtSearch.Focus();
+                e.Handled = true;
+            }
         }
 
-        private void InventoryForm_Load(object sender, EventArgs e)
+        private void InventoryForm_Load(object? sender, EventArgs e)
         {
             LoadCategories();
             LoadSuppliers();
@@ -109,11 +117,20 @@ namespace POSApp.Forms
             }
         }
 
-        private void LoadProducts()
+        private void LoadProducts(string search = "")
         {
             try
             {
-                dgvProducts.DataSource = _inventoryService.GetAllProducts();
+                var dt = _inventoryService.GetAllProducts();
+                if (!string.IsNullOrEmpty(search))
+                {
+                    dt.DefaultView.RowFilter = $"ProductName LIKE '%{search}%' OR SKU LIKE '%{search}%' OR Barcode LIKE '%{search}%'";
+                    dgvProducts.DataSource = dt.DefaultView;
+                }
+                else
+                {
+                    dgvProducts.DataSource = dt;
+                }
 
                 string[] hideCols = { "CategoryID", "SupplierID" };
                 foreach (string col in hideCols)

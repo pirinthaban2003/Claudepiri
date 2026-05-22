@@ -63,7 +63,7 @@ namespace POSApp.Forms
                 btnAddToCart.PerformClick();
                 e.Handled = true;
             }
-            else if (e.KeyCode == Keys.F5)
+            else if (e.KeyCode == Keys.F3)
             {
                 btnCheckout.PerformClick();
                 e.Handled = true;
@@ -83,9 +83,14 @@ namespace POSApp.Forms
                 cmbCustomer.Focus();
                 e.Handled = true;
             }
-            else if (e.Control && e.KeyCode == Keys.H)
+            else if (e.KeyCode == Keys.F4)
             {
                 btnHold.PerformClick();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.F5)
+            {
+                btnResume.PerformClick();
                 e.Handled = true;
             }
         }

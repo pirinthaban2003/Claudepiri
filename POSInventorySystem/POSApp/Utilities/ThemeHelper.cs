@@ -7,18 +7,18 @@ namespace POSApp.Utilities
     public static class ThemeHelper
     {
         // Modern Professional Color Palette
-        public static readonly Color PrimaryDark = Color.FromArgb(45, 45, 48);
-        public static readonly Color SecondaryDark = Color.FromArgb(28, 28, 28);
-        public static readonly Color AccentBlue = Color.FromArgb(0, 122, 204);
-        public static readonly Color AccentGreen = Color.FromArgb(34, 139, 34);
-        public static readonly Color AccentRed = Color.FromArgb(204, 50, 50);
-        public static readonly Color TextWhite = Color.White;
-        public static readonly Color TextLightGray = Color.FromArgb(200, 200, 200);
+        public static readonly Color PrimaryDark = Color.FromArgb(30, 30, 35);
+        public static readonly Color SecondaryDark = Color.FromArgb(22, 22, 26);
+        public static readonly Color AccentBlue = Color.FromArgb(0, 150, 255);
+        public static readonly Color AccentGreen = Color.FromArgb(0, 200, 100);
+        public static readonly Color AccentRed = Color.FromArgb(255, 70, 70);
+        public static readonly Color TextWhite = Color.FromArgb(240, 240, 245);
+        public static readonly Color TextLightGray = Color.FromArgb(160, 160, 175);
 
         // Level-based Colors
-        public static readonly Color LevelCritical = Color.FromArgb(120, 0, 0); // Deep Red
-        public static readonly Color LevelWarning = Color.FromArgb(120, 80, 0); // Dark Orange
-        public static readonly Color LevelSafe = Color.FromArgb(0, 80, 0);     // Dark Green
+        public static readonly Color LevelCritical = Color.FromArgb(180, 30, 30);
+        public static readonly Color LevelWarning = Color.FromArgb(200, 150, 0);
+        public static readonly Color LevelSafe = Color.FromArgb(30, 150, 30);
 
         public static void ApplyTheme(Form form)
         {
@@ -73,20 +73,26 @@ namespace POSApp.Utilities
                 else if (control is DataGridView dgv)
                 {
                     dgv.BackgroundColor = PrimaryDark;
-                    dgv.ForeColor = Color.Black;
+                    dgv.ForeColor = TextWhite;
                     dgv.BorderStyle = BorderStyle.None;
-                    dgv.ColumnHeadersDefaultCellStyle.BackColor = SecondaryDark;
+                    dgv.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+                    dgv.GridColor = Color.FromArgb(50, 50, 60);
+
+                    dgv.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+                    dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(40, 40, 50);
                     dgv.ColumnHeadersDefaultCellStyle.ForeColor = TextWhite;
-                    dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-                    dgv.ColumnHeadersHeight = 35;
-                    dgv.RowTemplate.Height = 30;
+                    dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI Semibold", 10F);
+                    dgv.ColumnHeadersHeight = 40;
+                    dgv.RowTemplate.Height = 35;
                     dgv.EnableHeadersVisualStyles = false;
-                    dgv.DefaultCellStyle.BackColor = Color.FromArgb(50, 50, 50);
+
+                    dgv.DefaultCellStyle.BackColor = PrimaryDark;
                     dgv.DefaultCellStyle.ForeColor = TextWhite;
-                    dgv.DefaultCellStyle.SelectionBackColor = AccentBlue;
-                    dgv.DefaultCellStyle.SelectionForeColor = TextWhite;
-                    dgv.DefaultCellStyle.Padding = new Padding(5, 0, 5, 0);
-                    dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(60, 60, 60);
+                    dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(60, 60, 80);
+                    dgv.DefaultCellStyle.SelectionForeColor = AccentBlue;
+                    dgv.DefaultCellStyle.Padding = new Padding(10, 0, 10, 0);
+                    dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(35, 35, 42);
+                    dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 }
                 else if (control is Panel pnl)
                 {

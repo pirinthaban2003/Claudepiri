@@ -33,19 +33,77 @@ namespace POSApp.Forms
             this.lblWallet = new System.Windows.Forms.Label();
             this.lblLevel = new System.Windows.Forms.Label();
             this.txtLevel = new System.Windows.Forms.TextBox();
+            this.pnlForm = new System.Windows.Forms.Panel();
+            this.pnlGrid = new System.Windows.Forms.Panel();
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.lblSearch = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).BeginInit();
+            this.pnlForm.SuspendLayout();
+            this.pnlGrid.SuspendLayout();
             this.SuspendLayout();
             //
             // dgvCustomers
             //
             this.dgvCustomers.AllowUserToAddRows = false;
             this.dgvCustomers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCustomers.Location = new System.Drawing.Point(300, 20);
+            this.dgvCustomers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvCustomers.Location = new System.Drawing.Point(10, 50);
             this.dgvCustomers.Name = "dgvCustomers";
             this.dgvCustomers.ReadOnly = true;
-            this.dgvCustomers.Size = new System.Drawing.Size(480, 400);
+            this.dgvCustomers.Size = new System.Drawing.Size(660, 460);
             this.dgvCustomers.TabIndex = 0;
             this.dgvCustomers.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCustomers_CellClick);
+            //
+            // pnlForm
+            //
+            this.pnlForm.Controls.Add(this.txtLevel);
+            this.pnlForm.Controls.Add(this.lblLevel);
+            this.pnlForm.Controls.Add(this.lblWallet);
+            this.pnlForm.Controls.Add(this.lblPoints);
+            this.pnlForm.Controls.Add(this.lblEmail);
+            this.pnlForm.Controls.Add(this.lblPhone);
+            this.pnlForm.Controls.Add(this.lblCustomerName);
+            this.pnlForm.Controls.Add(this.btnClear);
+            this.pnlForm.Controls.Add(this.btnDelete);
+            this.pnlForm.Controls.Add(this.btnSave);
+            this.pnlForm.Controls.Add(this.txtWallet);
+            this.pnlForm.Controls.Add(this.txtPoints);
+            this.pnlForm.Controls.Add(this.txtEmail);
+            this.pnlForm.Controls.Add(this.txtPhone);
+            this.pnlForm.Controls.Add(this.txtCustomerName);
+            this.pnlForm.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pnlForm.Location = new System.Drawing.Point(0, 0);
+            this.pnlForm.Name = "pnlForm";
+            this.pnlForm.Size = new System.Drawing.Size(300, 520);
+            this.pnlForm.TabIndex = 16;
+            //
+            // pnlGrid
+            //
+            this.pnlGrid.Controls.Add(this.dgvCustomers);
+            this.pnlGrid.Controls.Add(this.txtSearch);
+            this.pnlGrid.Controls.Add(this.lblSearch);
+            this.pnlGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlGrid.Location = new System.Drawing.Point(300, 0);
+            this.pnlGrid.Name = "pnlGrid";
+            this.pnlGrid.Padding = new System.Windows.Forms.Padding(10);
+            this.pnlGrid.Size = new System.Drawing.Size(680, 520);
+            this.pnlGrid.TabIndex = 17;
+            //
+            // txtSearch
+            //
+            this.txtSearch.Location = new System.Drawing.Point(100, 15);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(300, 23);
+            this.txtSearch.TabIndex = 1;
+            //
+            // lblSearch
+            //
+            this.lblSearch.AutoSize = true;
+            this.lblSearch.Location = new System.Drawing.Point(15, 18);
+            this.lblSearch.Name = "lblSearch";
+            this.lblSearch.Size = new System.Drawing.Size(81, 15);
+            this.lblSearch.TabIndex = 2;
+            this.lblSearch.Text = "Search (Ctrl+F):";
             //
             // txtCustomerName
             //
@@ -86,9 +144,9 @@ namespace POSApp.Forms
             //
             this.btnSave.Location = new System.Drawing.Point(20, 280);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(80, 30);
+            this.btnSave.Size = new System.Drawing.Size(80, 35);
             this.btnSave.TabIndex = 6;
-            this.btnSave.Text = "Save (F2)";
+            this.btnSave.Text = "💾 Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             //
@@ -96,9 +154,9 @@ namespace POSApp.Forms
             //
             this.btnDelete.Location = new System.Drawing.Point(110, 280);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(80, 30);
+            this.btnDelete.Size = new System.Drawing.Size(80, 35);
             this.btnDelete.TabIndex = 7;
-            this.btnDelete.Text = "Delete";
+            this.btnDelete.Text = "🗑 Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             //
@@ -106,9 +164,9 @@ namespace POSApp.Forms
             //
             this.btnClear.Location = new System.Drawing.Point(200, 280);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(80, 30);
+            this.btnClear.Size = new System.Drawing.Size(80, 35);
             this.btnClear.TabIndex = 8;
-            this.btnClear.Text = "Clear (F4)";
+            this.btnClear.Text = "🧹 Clear";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             //
@@ -119,7 +177,7 @@ namespace POSApp.Forms
             this.lblCustomerName.Name = "lblCustomerName";
             this.lblCustomerName.Size = new System.Drawing.Size(115, 15);
             this.lblCustomerName.TabIndex = 9;
-            this.lblCustomerName.Text = "Customer Name (F1):";
+            this.lblCustomerName.Text = "Customer Name:";
             //
             // lblPhone
             //
@@ -178,29 +236,18 @@ namespace POSApp.Forms
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.txtLevel);
-            this.Controls.Add(this.lblLevel);
-            this.Controls.Add(this.lblWallet);
-            this.Controls.Add(this.lblPoints);
-            this.Controls.Add(this.lblEmail);
-            this.Controls.Add(this.lblPhone);
-            this.Controls.Add(this.lblCustomerName);
-            this.Controls.Add(this.btnClear);
-            this.Controls.Add(this.btnDelete);
-            this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.txtWallet);
-            this.Controls.Add(this.txtPoints);
-            this.Controls.Add(this.txtEmail);
-            this.Controls.Add(this.txtPhone);
-            this.Controls.Add(this.txtCustomerName);
-            this.Controls.Add(this.dgvCustomers);
+            this.ClientSize = new System.Drawing.Size(1000, 520);
+            this.Controls.Add(this.pnlGrid);
+            this.Controls.Add(this.pnlForm);
             this.Name = "CustomerForm";
             this.Text = "Customer Management";
             this.Load += new System.EventHandler(this.CustomerForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).EndInit();
+            this.pnlForm.ResumeLayout(false);
+            this.pnlForm.PerformLayout();
+            this.pnlGrid.ResumeLayout(false);
+            this.pnlGrid.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
         }
 
         private System.Windows.Forms.DataGridView dgvCustomers;
@@ -219,5 +266,9 @@ namespace POSApp.Forms
         private System.Windows.Forms.Label lblWallet;
         private System.Windows.Forms.Label lblLevel;
         private System.Windows.Forms.TextBox txtLevel;
+        private System.Windows.Forms.Panel pnlForm;
+        private System.Windows.Forms.Panel pnlGrid;
+        private System.Windows.Forms.TextBox txtSearch;
+        private System.Windows.Forms.Label lblSearch;
     }
 }

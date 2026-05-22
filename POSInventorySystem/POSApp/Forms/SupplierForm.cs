@@ -24,8 +24,11 @@ namespace POSApp.Forms
 
         private void CustomizeComponents()
         {
+            pnlForm.BackColor = ThemeHelper.SecondaryDark;
+            pnlGrid.BackColor = ThemeHelper.PrimaryDark;
             btnSave.BackColor = ThemeHelper.AccentBlue;
             btnDelete.BackColor = ThemeHelper.AccentRed;
+            txtSearch.TextChanged += (s, e) => LoadSuppliers(txtSearch.Text.Trim());
         }
 
         private void SupplierForm_KeyDown(object? sender, KeyEventArgs e)
@@ -45,18 +48,32 @@ namespace POSApp.Forms
                 btnClear.PerformClick();
                 e.Handled = true;
             }
+            else if (e.Control && e.KeyCode == Keys.F)
+            {
+                txtSearch.Focus();
+                e.Handled = true;
+            }
         }
 
-        private void SupplierForm_Load(object sender, EventArgs e)
+        private void SupplierForm_Load(object? sender, EventArgs e)
         {
             LoadSuppliers();
         }
 
-        private void LoadSuppliers()
+        private void LoadSuppliers(string search = "")
         {
             try
             {
-                dgvSuppliers.DataSource = _supplierService.GetAllSuppliers();
+                var dt = _supplierService.GetAllSuppliers();
+                if (!string.IsNullOrEmpty(search))
+                {
+                    dt.DefaultView.RowFilter = $"SupplierName LIKE '%{search}%' OR ContactPerson LIKE '%{search}%' OR Phone LIKE '%{search}%'";
+                    dgvSuppliers.DataSource = dt.DefaultView;
+                }
+                else
+                {
+                    dgvSuppliers.DataSource = dt;
+                }
             }
             catch (Exception ex)
             {

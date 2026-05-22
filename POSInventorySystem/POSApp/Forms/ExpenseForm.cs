@@ -49,13 +49,19 @@ namespace POSApp.Forms
         private void ExpenseForm_Load(object sender, EventArgs e)
         {
             LoadExpenses();
+            txtSearch.TextChanged += (s, ev) => LoadExpenses(txtSearch.Text);
         }
 
-        private void LoadExpenses()
+        private void LoadExpenses(string filter = "")
         {
             try
             {
-                dgvExpenses.DataSource = _expenseService.GetAllExpenses();
+                var data = _expenseService.GetAllExpenses();
+                if (!string.IsNullOrWhiteSpace(filter))
+                {
+                    data.DefaultView.RowFilter = string.Format("title LIKE '%{0}%' OR category LIKE '%{0}%'", filter.Replace("'", "''"));
+                }
+                dgvExpenses.DataSource = data;
             }
             catch (Exception ex)
             {

@@ -35,19 +35,81 @@ namespace POSApp.Forms
             this.lblSKU = new System.Windows.Forms.Label();
             this.lblBrand = new System.Windows.Forms.Label();
             this.lblSupplier = new System.Windows.Forms.Label();
+            this.pnlForm = new System.Windows.Forms.Panel();
+            this.pnlGrid = new System.Windows.Forms.Panel();
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.lblSearch = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProducts)).BeginInit();
+            this.pnlForm.SuspendLayout();
+            this.pnlGrid.SuspendLayout();
             this.SuspendLayout();
             //
             // dgvProducts
             //
             this.dgvProducts.AllowUserToAddRows = false;
             this.dgvProducts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvProducts.Location = new System.Drawing.Point(300, 20);
+            this.dgvProducts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvProducts.Location = new System.Drawing.Point(10, 50);
             this.dgvProducts.Name = "dgvProducts";
             this.dgvProducts.ReadOnly = true;
-            this.dgvProducts.Size = new System.Drawing.Size(680, 480);
+            this.dgvProducts.Size = new System.Drawing.Size(660, 460);
             this.dgvProducts.TabIndex = 0;
             this.dgvProducts.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProducts_CellClick);
+            //
+            // pnlForm
+            //
+            this.pnlForm.Controls.Add(this.lblSupplier);
+            this.pnlForm.Controls.Add(this.lblBrand);
+            this.pnlForm.Controls.Add(this.lblSKU);
+            this.pnlForm.Controls.Add(this.lblBarcode);
+            this.pnlForm.Controls.Add(this.lblCategory);
+            this.pnlForm.Controls.Add(this.lblQuantity);
+            this.pnlForm.Controls.Add(this.lblPrice);
+            this.pnlForm.Controls.Add(this.lblProductName);
+            this.pnlForm.Controls.Add(this.btnClear);
+            this.pnlForm.Controls.Add(this.btnDelete);
+            this.pnlForm.Controls.Add(this.btnSave);
+            this.pnlForm.Controls.Add(this.cmbSupplier);
+            this.pnlForm.Controls.Add(this.cmbCategory);
+            this.pnlForm.Controls.Add(this.txtBrand);
+            this.pnlForm.Controls.Add(this.txtSKU);
+            this.pnlForm.Controls.Add(this.txtBarcode);
+            this.pnlForm.Controls.Add(this.txtQuantity);
+            this.pnlForm.Controls.Add(this.txtPrice);
+            this.pnlForm.Controls.Add(this.txtProductName);
+            this.pnlForm.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pnlForm.Location = new System.Drawing.Point(0, 0);
+            this.pnlForm.Name = "pnlForm";
+            this.pnlForm.Size = new System.Drawing.Size(300, 520);
+            this.pnlForm.TabIndex = 20;
+            //
+            // pnlGrid
+            //
+            this.pnlGrid.Controls.Add(this.dgvProducts);
+            this.pnlGrid.Controls.Add(this.txtSearch);
+            this.pnlGrid.Controls.Add(this.lblSearch);
+            this.pnlGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlGrid.Location = new System.Drawing.Point(300, 0);
+            this.pnlGrid.Name = "pnlGrid";
+            this.pnlGrid.Padding = new System.Windows.Forms.Padding(10);
+            this.pnlGrid.Size = new System.Drawing.Size(680, 520);
+            this.pnlGrid.TabIndex = 21;
+            //
+            // txtSearch
+            //
+            this.txtSearch.Location = new System.Drawing.Point(100, 15);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(300, 23);
+            this.txtSearch.TabIndex = 1;
+            //
+            // lblSearch
+            //
+            this.lblSearch.AutoSize = true;
+            this.lblSearch.Location = new System.Drawing.Point(15, 18);
+            this.lblSearch.Name = "lblSearch";
+            this.lblSearch.Size = new System.Drawing.Size(81, 15);
+            this.lblSearch.TabIndex = 2;
+            this.lblSearch.Text = "Search (Ctrl+F):";
             //
             // txtProductName
             //
@@ -113,9 +175,9 @@ namespace POSApp.Forms
             //
             this.btnSave.Location = new System.Drawing.Point(20, 350);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(80, 30);
+            this.btnSave.Size = new System.Drawing.Size(80, 35);
             this.btnSave.TabIndex = 9;
-            this.btnSave.Text = "Save (F2)";
+            this.btnSave.Text = "💾 Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             //
@@ -123,9 +185,9 @@ namespace POSApp.Forms
             //
             this.btnDelete.Location = new System.Drawing.Point(110, 350);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(80, 30);
+            this.btnDelete.Size = new System.Drawing.Size(80, 35);
             this.btnDelete.TabIndex = 10;
-            this.btnDelete.Text = "Delete (F3)";
+            this.btnDelete.Text = "🗑 Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             //
@@ -133,9 +195,9 @@ namespace POSApp.Forms
             //
             this.btnClear.Location = new System.Drawing.Point(200, 350);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(80, 30);
+            this.btnClear.Size = new System.Drawing.Size(80, 35);
             this.btnClear.TabIndex = 11;
-            this.btnClear.Text = "Clear (F4)";
+            this.btnClear.Text = "🧹 Clear";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             //
@@ -146,7 +208,7 @@ namespace POSApp.Forms
             this.lblProductName.Name = "lblProductName";
             this.lblProductName.Size = new System.Drawing.Size(109, 15);
             this.lblProductName.TabIndex = 12;
-            this.lblProductName.Text = "Product Name (F1):";
+            this.lblProductName.Text = "Product Name:";
             //
             // lblPrice
             //
@@ -216,32 +278,17 @@ namespace POSApp.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1000, 520);
-            this.Controls.Add(this.lblSupplier);
-            this.Controls.Add(this.lblBrand);
-            this.Controls.Add(this.lblSKU);
-            this.Controls.Add(this.lblBarcode);
-            this.Controls.Add(this.lblCategory);
-            this.Controls.Add(this.lblQuantity);
-            this.Controls.Add(this.lblPrice);
-            this.Controls.Add(this.lblProductName);
-            this.Controls.Add(this.btnClear);
-            this.Controls.Add(this.btnDelete);
-            this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.cmbSupplier);
-            this.Controls.Add(this.cmbCategory);
-            this.Controls.Add(this.txtBrand);
-            this.Controls.Add(this.txtSKU);
-            this.Controls.Add(this.txtBarcode);
-            this.Controls.Add(this.txtQuantity);
-            this.Controls.Add(this.txtPrice);
-            this.Controls.Add(this.txtProductName);
-            this.Controls.Add(this.dgvProducts);
+            this.Controls.Add(this.pnlGrid);
+            this.Controls.Add(this.pnlForm);
             this.Name = "InventoryForm";
             this.Text = "Inventory Management";
             this.Load += new System.EventHandler(this.InventoryForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvProducts)).EndInit();
+            this.pnlForm.ResumeLayout(false);
+            this.pnlForm.PerformLayout();
+            this.pnlGrid.ResumeLayout(false);
+            this.pnlGrid.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
         }
 
         private System.Windows.Forms.DataGridView dgvProducts;
@@ -264,5 +311,9 @@ namespace POSApp.Forms
         private System.Windows.Forms.Label lblSKU;
         private System.Windows.Forms.Label lblBrand;
         private System.Windows.Forms.Label lblSupplier;
+        private System.Windows.Forms.Panel pnlForm;
+        private System.Windows.Forms.Panel pnlGrid;
+        private System.Windows.Forms.TextBox txtSearch;
+        private System.Windows.Forms.Label lblSearch;
     }
 }

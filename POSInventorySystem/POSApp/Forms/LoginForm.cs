@@ -19,9 +19,11 @@ namespace POSApp.Forms
 
         private void CustomizeComponents()
         {
+            pnlMain.BackColor = ThemeHelper.PrimaryDark;
             btnLogin.BackColor = ThemeHelper.AccentBlue;
             lblTitle.ForeColor = ThemeHelper.AccentBlue;
-            lblTitle.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
+            lblTitle.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Bold);
+            lblTitle.Text = "SRMS 🏪";
         }
 
         private void btnLogin_Click(object? sender, EventArgs e)
