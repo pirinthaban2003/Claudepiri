@@ -38,7 +38,7 @@ namespace POSApp.Utilities
                 {
                     btn.FlatStyle = FlatStyle.Flat;
                     btn.FlatAppearance.BorderSize = 0;
-                    if (btn.BackColor == SystemColors.Control || btn.BackColor == Color.Transparent || btn.BackColor == SecondaryDark)
+                    if (btn.BackColor == SystemColors.Control || btn.BackColor == Color.Transparent || btn.BackColor == SecondaryDark || btn.BackColor == Color.White)
                     {
                         btn.BackColor = PrimaryDark;
                     }
@@ -47,8 +47,11 @@ namespace POSApp.Utilities
                 }
                 else if (control is Label lbl)
                 {
-                    if (lbl.ForeColor == SystemColors.ControlText)
+                    if (lbl.ForeColor == SystemColors.ControlText || lbl.ForeColor == Color.Black)
                         lbl.ForeColor = TextWhite;
+
+                    if (lbl.BackColor == SystemColors.Control || lbl.BackColor == Color.White)
+                        lbl.BackColor = Color.Transparent;
                 }
                 else if (control is TextBox txt)
                 {
@@ -87,9 +90,14 @@ namespace POSApp.Utilities
                 }
                 else if (control is Panel pnl)
                 {
-                    if (pnl.BackColor == SystemColors.Control)
+                    if (pnl.BackColor == SystemColors.Control || pnl.BackColor == Color.White)
                         pnl.BackColor = SecondaryDark;
-                    ApplyToControls(pnl.Controls);
+                }
+                else if (control is ListBox lst)
+                {
+                    lst.BackColor = PrimaryDark;
+                    lst.ForeColor = TextWhite;
+                    lst.BorderStyle = BorderStyle.None;
                 }
 
                 if (control.HasChildren)

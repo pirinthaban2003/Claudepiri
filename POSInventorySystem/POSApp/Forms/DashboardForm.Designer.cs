@@ -188,7 +188,7 @@ namespace POSApp.Forms
             //
             // pnlHeader
             //
-            this.pnlHeader.BackColor = System.Drawing.Color.White;
+            this.pnlHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
             this.pnlHeader.Controls.Add(this.lblWelcome);
             this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHeader.Location = new System.Drawing.Point(220, 0);

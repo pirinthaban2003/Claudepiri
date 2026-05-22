@@ -174,11 +174,17 @@ namespace POSApp.Forms
             for (int i = 0; i < _salesTrend.Count; i++)
             {
                 int barHeight = (int)((_salesTrend[i] / maxSales) * height);
+                // Ensure height is at least 1 for drawing if there is any sales, or skip if 0
+                if (barHeight <= 0 && _salesTrend[i] > 0) barHeight = 1;
+
                 Rectangle rect = new Rectangle(20 + (i * barWidth) + 10, pnlChart.Height - 40 - barHeight, barWidth - 20, barHeight);
 
-                using (var brush = new System.Drawing.Drawing2D.LinearGradientBrush(rect, ThemeHelper.AccentBlue, Color.FromArgb(0, 80, 150), 90F))
+                if (rect.Width > 0 && rect.Height > 0)
                 {
-                    g.FillRectangle(brush, rect);
+                    using (var brush = new System.Drawing.Drawing2D.LinearGradientBrush(rect, ThemeHelper.AccentBlue, Color.FromArgb(0, 80, 150), 90F))
+                    {
+                        g.FillRectangle(brush, rect);
+                    }
                 }
 
                 g.DrawString(_salesTrend[i].ToString("N0"), this.Font, Brushes.White, rect.X, rect.Y - 20);
