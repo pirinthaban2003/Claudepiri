@@ -27,13 +27,6 @@ namespace POSApp.Utilities
             form.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             form.StartPosition = FormStartPosition.CenterScreen;
 
-            // Full screen mode for operational forms
-            if (!(form.Name == "LoginForm" || form.Name == "ReceiptForm"))
-            {
-                form.WindowState = FormWindowState.Maximized;
-                form.FormBorderStyle = FormBorderStyle.FixedSingle; // Prevent resizing artifacts
-            }
-
             ApplyToControls(form.Controls);
         }
 
