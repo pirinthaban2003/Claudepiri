@@ -20,6 +20,7 @@ namespace POSApp.Forms
             this.components = new System.ComponentModel.Container();
             this.pnlSidebar = new System.Windows.Forms.Panel();
             this.btnLogout = new System.Windows.Forms.Button();
+            this.btnUsers = new System.Windows.Forms.Button();
             this.btnReturns = new System.Windows.Forms.Button();
             this.btnExpenses = new System.Windows.Forms.Button();
             this.btnReports = new System.Windows.Forms.Button();
@@ -56,6 +57,7 @@ namespace POSApp.Forms
             //
             this.pnlSidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.pnlSidebar.Controls.Add(this.btnLogout);
+            this.pnlSidebar.Controls.Add(this.btnUsers);
             this.pnlSidebar.Controls.Add(this.btnReturns);
             this.pnlSidebar.Controls.Add(this.btnExpenses);
             this.pnlSidebar.Controls.Add(this.btnReports);
@@ -83,6 +85,19 @@ namespace POSApp.Forms
             this.btnLogout.Text = "🚪 Logout (Alt+X)";
             this.btnLogout.UseVisualStyleBackColor = true;
             this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
+            //
+            // btnUsers
+            //
+            this.btnUsers.FlatAppearance.BorderSize = 0;
+            this.btnUsers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUsers.ForeColor = System.Drawing.Color.White;
+            this.btnUsers.Location = new System.Drawing.Point(0, 410);
+            this.btnUsers.Name = "btnUsers";
+            this.btnUsers.Size = new System.Drawing.Size(220, 50);
+            this.btnUsers.TabIndex = 9;
+            this.btnUsers.Text = "👤 User Mgt (Alt+U)";
+            this.btnUsers.UseVisualStyleBackColor = true;
+            this.btnUsers.Click += new System.EventHandler(this.btnUsers_Click);
             //
             // btnReturns
             //
@@ -396,5 +411,6 @@ namespace POSApp.Forms
         private System.Windows.Forms.Panel pnlChart;
         private System.Windows.Forms.Label lblChartTitle;
         private System.Windows.Forms.Button btnLogout;
+        private System.Windows.Forms.Button btnUsers;
     }
 }

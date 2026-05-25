@@ -57,6 +57,7 @@ namespace POSApp.Forms
             btnReports.Visible = AccessControl.CanAccess(role, "Reports");
             btnExpenses.Visible = AccessControl.CanAccess(role, "Expenses");
             btnReturns.Visible = AccessControl.CanAccess(role, "Returns");
+            btnUsers.Visible = role == "Admin";
         }
 
         private void DashboardForm_KeyDown(object? sender, KeyEventArgs e)
@@ -94,6 +95,11 @@ namespace POSApp.Forms
             else if (e.Alt && e.KeyCode == Keys.F && btnReturns.Visible)
             {
                 btnReturns.PerformClick();
+                e.Handled = true;
+            }
+            else if (e.Alt && e.KeyCode == Keys.U && btnUsers.Visible)
+            {
+                btnUsers.PerformClick();
                 e.Handled = true;
             }
             else if (e.Alt && e.KeyCode == Keys.X)
@@ -230,6 +236,11 @@ namespace POSApp.Forms
         private void btnReturns_Click(object? sender, EventArgs e)
         {
             new RefundForm().Show();
+        }
+
+        private void btnUsers_Click(object? sender, EventArgs e)
+        {
+            new UserManagementForm().Show();
         }
 
         private void btnLogout_Click(object? sender, EventArgs e)

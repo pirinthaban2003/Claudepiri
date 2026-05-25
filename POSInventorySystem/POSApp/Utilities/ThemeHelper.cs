@@ -30,6 +30,29 @@ namespace POSApp.Utilities
             ApplyToControls(form.Controls);
         }
 
+        public static void ApplyCardStyle(Panel pnl)
+        {
+            pnl.BackColor = Color.FromArgb(38, 38, 42);
+            pnl.BorderStyle = BorderStyle.None;
+            pnl.Paint += (s, e) =>
+            {
+                using (var pen = new Pen(Color.FromArgb(60, 60, 65), 1))
+                {
+                    e.Graphics.DrawRectangle(pen, 0, 0, pnl.Width - 1, pnl.Height - 1);
+                }
+            };
+        }
+
+        public static void ApplyModernButton(Button btn, Color backColor)
+        {
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.FlatAppearance.BorderSize = 0;
+            btn.BackColor = backColor;
+            btn.ForeColor = Color.White;
+            btn.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btn.Cursor = Cursors.Hand;
+        }
+
         private static void ApplyToControls(Control.ControlCollection controls)
         {
             foreach (Control control in controls)
