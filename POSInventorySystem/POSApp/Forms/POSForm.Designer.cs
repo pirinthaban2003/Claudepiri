@@ -32,6 +32,8 @@ namespace POSApp.Forms
             this.lblSubtotal = new System.Windows.Forms.Label();
             this.lblSubtotalValue = new System.Windows.Forms.Label();
             this.pnlSearch = new System.Windows.Forms.Panel();
+            this.lblBarcodeScan = new System.Windows.Forms.Label();
+            this.txtBarcodeScan = new System.Windows.Forms.TextBox();
             this.btnResume = new System.Windows.Forms.Button();
             this.btnHold = new System.Windows.Forms.Button();
             this.pnlCart = new System.Windows.Forms.Panel();
@@ -46,6 +48,8 @@ namespace POSApp.Forms
             // pnlSearch
             //
             this.pnlSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlSearch.Controls.Add(this.lblBarcodeScan);
+            this.pnlSearch.Controls.Add(this.txtBarcodeScan);
             this.pnlSearch.Controls.Add(this.btnResume);
             this.pnlSearch.Controls.Add(this.btnHold);
             this.pnlSearch.Controls.Add(this.lblProduct);
@@ -61,9 +65,25 @@ namespace POSApp.Forms
             this.pnlSearch.Size = new System.Drawing.Size(250, 600);
             this.pnlSearch.TabIndex = 17;
             //
+            // lblBarcodeScan
+            //
+            this.lblBarcodeScan.AutoSize = true;
+            this.lblBarcodeScan.Location = new System.Drawing.Point(20, 80);
+            this.lblBarcodeScan.Name = "lblBarcodeScan";
+            this.lblBarcodeScan.Size = new System.Drawing.Size(104, 15);
+            this.lblBarcodeScan.TabIndex = 15;
+            this.lblBarcodeScan.Text = "Scan Barcode (F2):";
+            //
+            // txtBarcodeScan
+            //
+            this.txtBarcodeScan.Location = new System.Drawing.Point(20, 100);
+            this.txtBarcodeScan.Name = "txtBarcodeScan";
+            this.txtBarcodeScan.Size = new System.Drawing.Size(200, 23);
+            this.txtBarcodeScan.TabIndex = 0;
+            //
             // btnResume
             //
-            this.btnResume.Location = new System.Drawing.Point(20, 320);
+            this.btnResume.Location = new System.Drawing.Point(20, 420);
             this.btnResume.Name = "btnResume";
             this.btnResume.Size = new System.Drawing.Size(200, 35);
             this.btnResume.TabIndex = 14;
@@ -73,7 +93,7 @@ namespace POSApp.Forms
             //
             // btnHold
             //
-            this.btnHold.Location = new System.Drawing.Point(20, 280);
+            this.btnHold.Location = new System.Drawing.Point(20, 380);
             this.btnHold.Name = "btnHold";
             this.btnHold.Size = new System.Drawing.Size(200, 35);
             this.btnHold.TabIndex = 13;
@@ -122,7 +142,7 @@ namespace POSApp.Forms
             // cmbProducts
             //
             this.cmbProducts.FormattingEnabled = true;
-            this.cmbProducts.Location = new System.Drawing.Point(20, 120);
+            this.cmbProducts.Location = new System.Drawing.Point(20, 170);
             this.cmbProducts.Name = "cmbProducts";
             this.cmbProducts.Size = new System.Drawing.Size(200, 23);
             this.cmbProducts.TabIndex = 1;
@@ -130,7 +150,7 @@ namespace POSApp.Forms
             // lblProduct
             //
             this.lblProduct.AutoSize = true;
-            this.lblProduct.Location = new System.Drawing.Point(20, 100);
+            this.lblProduct.Location = new System.Drawing.Point(20, 150);
             this.lblProduct.Name = "lblProduct";
             this.lblProduct.Size = new System.Drawing.Size(107, 15);
             this.lblProduct.TabIndex = 2;
@@ -139,7 +159,7 @@ namespace POSApp.Forms
             // lblQuantity
             //
             this.lblQuantity.AutoSize = true;
-            this.lblQuantity.Location = new System.Drawing.Point(20, 160);
+            this.lblQuantity.Location = new System.Drawing.Point(20, 210);
             this.lblQuantity.Name = "lblQuantity";
             this.lblQuantity.Size = new System.Drawing.Size(56, 15);
             this.lblQuantity.TabIndex = 4;
@@ -147,7 +167,7 @@ namespace POSApp.Forms
             //
             // numQuantity
             //
-            this.numQuantity.Location = new System.Drawing.Point(20, 180);
+            this.numQuantity.Location = new System.Drawing.Point(20, 230);
             this.numQuantity.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             this.numQuantity.Name = "numQuantity";
             this.numQuantity.Size = new System.Drawing.Size(200, 23);
@@ -160,11 +180,11 @@ namespace POSApp.Forms
             this.btnAddToCart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddToCart.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnAddToCart.ForeColor = System.Drawing.Color.White;
-            this.btnAddToCart.Location = new System.Drawing.Point(20, 220);
+            this.btnAddToCart.Location = new System.Drawing.Point(20, 270);
             this.btnAddToCart.Name = "btnAddToCart";
             this.btnAddToCart.Size = new System.Drawing.Size(200, 45);
             this.btnAddToCart.TabIndex = 6;
-            this.btnAddToCart.Text = "🛒 ADD TO CART (F2)";
+            this.btnAddToCart.Text = "🛒 ADD TO CART";
             this.btnAddToCart.UseVisualStyleBackColor = false;
             this.btnAddToCart.Click += new System.EventHandler(this.btnAddToCart_Click);
             //
@@ -310,5 +330,7 @@ namespace POSApp.Forms
         private System.Windows.Forms.Panel pnlPayment;
         private System.Windows.Forms.Button btnHold;
         private System.Windows.Forms.Button btnResume;
+        private System.Windows.Forms.Label lblBarcodeScan;
+        private System.Windows.Forms.TextBox txtBarcodeScan;
     }
 }

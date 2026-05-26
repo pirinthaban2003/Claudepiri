@@ -45,6 +45,77 @@ namespace POSApp.Forms
             dgvCart.CellFormatting += DgvCart_CellFormatting;
 
             btnResume.Enabled = heldCart != null;
+            txtBarcodeScan.KeyDown += TxtBarcodeScan_KeyDown;
+        }
+
+        private void TxtBarcodeScan_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                string barcode = txtBarcodeScan.Text.Trim();
+                if (!string.IsNullOrEmpty(barcode))
+                {
+                    ProcessBarcode(barcode);
+                    txtBarcodeScan.Clear();
+                    txtBarcodeScan.Focus();
+                }
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void ProcessBarcode(string barcode)
+        {
+            try
+            {
+                var productRow = _saleService.GetProductByBarcode(barcode);
+                if (productRow != null)
+                {
+                    int productId = Convert.ToInt32(productRow["ProductID"]);
+                    string productName = productRow["ProductName"].ToString()!;
+                    decimal price = Convert.ToDecimal(productRow["Price"]);
+                    int stock = Convert.ToInt32(productRow["StockQuantity"]);
+
+                    if (stock <= 0)
+                    {
+                        MessageBox.Show("Product is out of stock.", "Out of Stock", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    var existingItem = cart.FirstOrDefault(i => i.ProductID == productId);
+                    if (existingItem != null)
+                    {
+                        if (existingItem.Quantity + 1 > stock)
+                        {
+                            MessageBox.Show("Total quantity in cart exceeds available stock.", "Low Stock", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                        existingItem.Quantity += 1;
+                        existingItem.Subtotal = existingItem.Quantity * existingItem.UnitPrice;
+                    }
+                    else
+                    {
+                        cart.Add(new SaleItem
+                        {
+                            ProductID = productId,
+                            ProductName = productName,
+                            Quantity = 1,
+                            UnitPrice = price,
+                            Subtotal = price
+                        });
+                    }
+
+                    UpdateCartGrid();
+                }
+                else
+                {
+                    MessageBox.Show("Product not found for barcode: " + barcode, "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error processing barcode: " + ex.Message);
+            }
         }
 
         private void DgvCart_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
@@ -60,7 +131,7 @@ namespace POSApp.Forms
             }
             else if (e.KeyCode == Keys.F2)
             {
-                btnAddToCart.PerformClick();
+                txtBarcodeScan.Focus();
                 e.Handled = true;
             }
             else if (e.KeyCode == Keys.F3)
