@@ -427,7 +427,7 @@ namespace POSApp.Forms
                     DiscountAmount = autoDiscount + manualDiscount,
                     TaxAmount = taxTotal,
                     FinalAmount = (total - autoDiscount + taxTotal) - manualDiscount > 0 ? (total - autoDiscount + taxTotal) - manualDiscount : 0,
-                    Items = cart
+                    Items = new List<SaleItem>(cart)
                 };
 
                 // Open Receipt Preview

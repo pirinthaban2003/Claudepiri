@@ -188,9 +188,9 @@ namespace POSApp.Forms
                     ProductName = txtProductName.Text.Trim(),
                     SKU = txtSKU.Text.Trim(),
                     Barcode = txtBarcode.Text.Trim(),
-                    CategoryID = Convert.ToInt32(cmbCategory.SelectedValue),
-                    SupplierID = Convert.ToInt32(cmbSupplier.SelectedValue),
-                    TaxCategoryID = Convert.ToInt32(cmbTaxCategory.SelectedValue),
+                    CategoryID = cmbCategory.SelectedValue != null ? Convert.ToInt32(cmbCategory.SelectedValue) : (int?)null,
+                    SupplierID = cmbSupplier.SelectedValue != null ? Convert.ToInt32(cmbSupplier.SelectedValue) : (int?)null,
+                    TaxCategoryID = cmbTaxCategory.SelectedValue != null ? Convert.ToInt32(cmbTaxCategory.SelectedValue) : 3, // Default to Zero Rated
                     Brand = txtBrand.Text.Trim(),
                     Price = price,
                     StockQuantity = quantity,
