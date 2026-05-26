@@ -25,6 +25,7 @@ namespace POSApp.Forms
             ThemeHelper.ApplyCardStyle(pnlForm);
             ThemeHelper.ApplyModernButton(btnSave, ThemeHelper.AccentBlue);
             ThemeHelper.ApplyModernButton(btnPromote, ThemeHelper.AccentGreen);
+            ThemeHelper.ApplyModernButton(btnDemote, Color.Orange);
             ThemeHelper.ApplyModernButton(btnToggleStatus, ThemeHelper.AccentRed);
         }
 
@@ -95,6 +96,18 @@ namespace POSApp.Forms
             if (_userService.UpdateUserRole(_selectedUserId, 1))
             {
                 MessageBox.Show("User promoted to Admin.");
+                LoadUsers();
+            }
+        }
+
+        private void btnDemote_Click(object sender, EventArgs e)
+        {
+            if (_selectedUserId == 0) return;
+
+            // Simple demotion to Cashier (RoleID 3)
+            if (_userService.UpdateUserRole(_selectedUserId, 3))
+            {
+                MessageBox.Show("User demoted to Cashier.");
                 LoadUsers();
             }
         }

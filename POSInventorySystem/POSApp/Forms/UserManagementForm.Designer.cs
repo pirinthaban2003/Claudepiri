@@ -33,6 +33,7 @@ namespace POSApp.Forms
             this.pnlActions = new System.Windows.Forms.Panel();
             this.lblSelectedUser = new System.Windows.Forms.Label();
             this.btnPromote = new System.Windows.Forms.Button();
+            this.btnDemote = new System.Windows.Forms.Button();
             this.btnToggleStatus = new System.Windows.Forms.Button();
             this.pnlForm.SuspendLayout();
             this.pnlGrid.SuspendLayout();
@@ -192,6 +193,7 @@ namespace POSApp.Forms
             //
             this.pnlActions.Controls.Add(this.lblSelectedUser);
             this.pnlActions.Controls.Add(this.btnPromote);
+            this.pnlActions.Controls.Add(this.btnDemote);
             this.pnlActions.Controls.Add(this.btnToggleStatus);
             this.pnlActions.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlActions.Location = new System.Drawing.Point(20, 20);
@@ -211,17 +213,27 @@ namespace POSApp.Forms
             //
             // btnPromote
             //
-            this.btnPromote.Location = new System.Drawing.Point(350, 10);
+            this.btnPromote.Location = new System.Drawing.Point(230, 10);
             this.btnPromote.Name = "btnPromote";
-            this.btnPromote.Size = new System.Drawing.Size(140, 30);
+            this.btnPromote.Size = new System.Drawing.Size(130, 30);
             this.btnPromote.TabIndex = 1;
             this.btnPromote.Text = "Promote to Admin";
             this.btnPromote.UseVisualStyleBackColor = true;
             this.btnPromote.Click += new System.EventHandler(this.btnPromote_Click);
             //
+            // btnDemote
+            //
+            this.btnDemote.Location = new System.Drawing.Point(370, 10);
+            this.btnDemote.Name = "btnDemote";
+            this.btnDemote.Size = new System.Drawing.Size(130, 30);
+            this.btnDemote.TabIndex = 3;
+            this.btnDemote.Text = "Demote to Cashier";
+            this.btnDemote.UseVisualStyleBackColor = true;
+            this.btnDemote.Click += new System.EventHandler(this.btnDemote_Click);
+            //
             // btnToggleStatus
             //
-            this.btnToggleStatus.Location = new System.Drawing.Point(500, 10);
+            this.btnToggleStatus.Location = new System.Drawing.Point(510, 10);
             this.btnToggleStatus.Name = "btnToggleStatus";
             this.btnToggleStatus.Size = new System.Drawing.Size(140, 30);
             this.btnToggleStatus.TabIndex = 2;
@@ -266,6 +278,7 @@ namespace POSApp.Forms
         private System.Windows.Forms.Panel pnlActions;
         private System.Windows.Forms.Label lblSelectedUser;
         private System.Windows.Forms.Button btnPromote;
+        private System.Windows.Forms.Button btnDemote;
         private System.Windows.Forms.Button btnToggleStatus;
     }
 }
