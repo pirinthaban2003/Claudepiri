@@ -41,7 +41,8 @@ namespace POSApp.Forms
             {
                 if (e.Value != null && int.TryParse(e.Value.ToString(), out int stock))
                 {
-                    int minStock = Convert.ToInt32(dgvProducts.Rows[e.RowIndex].Cells["MinStockLevel"].Value);
+                    object? minStockVal = GetCellValue(dgvProducts.Rows[e.RowIndex], "MinStockLevel");
+                    int minStock = minStockVal != null && minStockVal != DBNull.Value ? Convert.ToInt32(minStockVal) : 10;
 
                     if (stock <= 0)
                         dgvProducts.Rows[e.RowIndex].DefaultCellStyle.BackColor = ThemeHelper.LevelCritical;
@@ -251,33 +252,52 @@ namespace POSApp.Forms
             btnSave.Text = "Save (F2)";
         }
 
+        private object? GetCellValue(DataGridViewRow row, string columnName)
+        {
+            if (row.DataGridView?.Columns.Contains(columnName) == true)
+            {
+                return row.Cells[columnName].Value;
+            }
+            return null;
+        }
+
         private void dgvProducts_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dgvProducts.Rows[e.RowIndex];
-                selectedProductId = Convert.ToInt32(row.Cells["ProductID"].Value);
-                txtProductName.Text = row.Cells["ProductName"].Value?.ToString();
-                txtSKU.Text = row.Cells["SKU"].Value?.ToString();
-                txtBarcode.Text = row.Cells["Barcode"].Value?.ToString();
-                txtBrand.Text = row.Cells["Brand"].Value?.ToString();
-                txtPrice.Text = row.Cells["Price"].Value?.ToString();
-                txtQuantity.Text = row.Cells["StockQuantity"].Value?.ToString();
-                txtMinStock.Text = row.Cells["MinStockLevel"].Value?.ToString();
-                txtDiscountRate.Text = row.Cells["DiscountRate"].Value?.ToString();
-                chkIsBOGO.Checked = row.Cells["IsBOGO"].Value != DBNull.Value && Convert.ToBoolean(row.Cells["IsBOGO"].Value);
 
-                if (row.Cells["CategoryID"].Value != DBNull.Value)
-                    cmbCategory.SelectedValue = row.Cells["CategoryID"].Value;
+                var prodIdVal = GetCellValue(row, "ProductID");
+                if (prodIdVal != null && prodIdVal != DBNull.Value)
+                    selectedProductId = Convert.ToInt32(prodIdVal);
 
-                if (row.Cells["SupplierID"].Value != DBNull.Value)
-                    cmbSupplier.SelectedValue = row.Cells["SupplierID"].Value;
+                txtProductName.Text = GetCellValue(row, "ProductName")?.ToString();
+                txtSKU.Text = GetCellValue(row, "SKU")?.ToString();
+                txtBarcode.Text = GetCellValue(row, "Barcode")?.ToString();
+                txtBrand.Text = GetCellValue(row, "Brand")?.ToString();
+                txtPrice.Text = GetCellValue(row, "Price")?.ToString();
+                txtQuantity.Text = GetCellValue(row, "StockQuantity")?.ToString();
+                txtMinStock.Text = GetCellValue(row, "MinStockLevel")?.ToString();
+                txtDiscountRate.Text = GetCellValue(row, "DiscountRate")?.ToString() ?? "0";
 
-                if (row.Cells["TaxCategoryID"].Value != DBNull.Value)
-                    cmbTaxCategory.SelectedValue = row.Cells["TaxCategoryID"].Value;
+                var bogoVal = GetCellValue(row, "IsBOGO");
+                chkIsBOGO.Checked = bogoVal != null && bogoVal != DBNull.Value && Convert.ToBoolean(bogoVal);
 
-                if (row.Cells["UnitType"].Value != DBNull.Value)
-                    cmbUnitType.SelectedItem = row.Cells["UnitType"].Value.ToString();
+                var catIdVal = GetCellValue(row, "CategoryID");
+                if (catIdVal != null && catIdVal != DBNull.Value)
+                    cmbCategory.SelectedValue = catIdVal;
+
+                var supIdVal = GetCellValue(row, "SupplierID");
+                if (supIdVal != null && supIdVal != DBNull.Value)
+                    cmbSupplier.SelectedValue = supIdVal;
+
+                var taxIdVal = GetCellValue(row, "TaxCategoryID");
+                if (taxIdVal != null && taxIdVal != DBNull.Value)
+                    cmbTaxCategory.SelectedValue = taxIdVal;
+
+                var unitVal = GetCellValue(row, "UnitType");
+                if (unitVal != null && unitVal != DBNull.Value)
+                    cmbUnitType.SelectedItem = unitVal.ToString();
 
                 btnSave.Text = "Update (F2)";
             }
