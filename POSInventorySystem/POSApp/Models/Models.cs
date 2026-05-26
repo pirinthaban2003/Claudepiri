@@ -72,6 +72,8 @@ namespace POSApp.Models
         public decimal TaxRate { get; set; }
         public int StockQuantity { get; set; }
         public int MinStockLevel { get; set; }
+        public decimal DiscountRate { get; set; }
+        public bool IsBOGO { get; set; }
         public bool IsActive { get; set; }
         public string? CategoryName { get; set; }
         public string? SupplierName { get; set; }

@@ -21,13 +21,19 @@ namespace POSApp.Services
             return _dbHelper.ExecuteQuery("SELECT * FROM Categories");
         }
 
+        public DataTable GetTaxCategories()
+        {
+            return _dbHelper.ExecuteQuery("SELECT * FROM TaxCategories");
+        }
+
         public DataTable GetAllProducts()
         {
             return _dbHelper.ExecuteQuery(@"
-                SELECT p.*, c.CategoryName, s.SupplierName
+                SELECT p.*, c.CategoryName, s.SupplierName, t.TaxName, t.TaxPercentage
                 FROM Products p
                 LEFT JOIN Categories c ON p.CategoryID = c.CategoryID
-                LEFT JOIN Suppliers s ON p.SupplierID = s.SupplierID");
+                LEFT JOIN Suppliers s ON p.SupplierID = s.SupplierID
+                LEFT JOIN TaxCategories t ON p.TaxCategoryID = t.TaxCategoryID");
         }
 
         public int SaveProduct(Product product)
@@ -38,24 +44,30 @@ namespace POSApp.Services
                 new MySqlParameter("@barcode", product.Barcode ?? (object)DBNull.Value),
                 new MySqlParameter("@catId", product.CategoryID ?? (object)DBNull.Value),
                 new MySqlParameter("@supId", product.SupplierID ?? (object)DBNull.Value),
+                new MySqlParameter("@taxId", product.TaxCategoryID ?? (object)DBNull.Value),
+                new MySqlParameter("@unit", product.UnitType ?? (object)DBNull.Value),
                 new MySqlParameter("@brand", product.Brand ?? (object)DBNull.Value),
                 new MySqlParameter("@price", product.Price),
                 new MySqlParameter("@qty", product.StockQuantity),
+                new MySqlParameter("@minStock", product.MinStockLevel),
+                new MySqlParameter("@discRate", product.DiscountRate),
+                new MySqlParameter("@bogo", product.IsBOGO),
                 new MySqlParameter("@id", product.ProductID)
             };
 
             int result;
             if (product.ProductID == -1 || product.ProductID == 0)
             {
-                string query = @"INSERT INTO Products (ProductName, SKU, Barcode, CategoryID, SupplierID, Brand, Price, StockQuantity)
-                               VALUES (@name, @sku, @barcode, @catId, @supId, @brand, @price, @qty)";
+                string query = @"INSERT INTO Products (ProductName, SKU, Barcode, CategoryID, SupplierID, TaxCategoryID, UnitType, Brand, Price, StockQuantity, MinStockLevel, DiscountRate, IsBOGO)
+                               VALUES (@name, @sku, @barcode, @catId, @supId, @taxId, @unit, @brand, @price, @qty, @minStock, @discRate, @bogo)";
                 result = _dbHelper.ExecuteNonQuery(query, parameters);
                 _auditService.LogAction($"Added Product: {product.ProductName}", "Inventory");
             }
             else
             {
                 string query = @"UPDATE Products SET ProductName=@name, SKU=@sku, Barcode=@barcode, CategoryID=@catId,
-                               SupplierID=@supId, Brand=@brand, Price=@price, StockQuantity=@qty WHERE ProductID=@id";
+                               SupplierID=@supId, TaxCategoryID=@taxId, UnitType=@unit, Brand=@brand, Price=@price, StockQuantity=@qty,
+                               MinStockLevel=@minStock, DiscountRate=@discRate, IsBOGO=@bogo WHERE ProductID=@id";
                 result = _dbHelper.ExecuteNonQuery(query, parameters);
                 _auditService.LogAction($"Updated Product: {product.ProductName}", "Inventory");
             }

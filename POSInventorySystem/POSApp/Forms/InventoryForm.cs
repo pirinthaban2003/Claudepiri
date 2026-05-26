@@ -86,6 +86,7 @@ namespace POSApp.Forms
         {
             LoadCategories();
             LoadSuppliers();
+            LoadTaxCategories();
             LoadProducts();
         }
 
@@ -100,6 +101,20 @@ namespace POSApp.Forms
             catch (Exception ex)
             {
                 MessageBox.Show("Error loading categories: " + ex.Message);
+            }
+        }
+
+        private void LoadTaxCategories()
+        {
+            try
+            {
+                cmbTaxCategory.DataSource = _inventoryService.GetTaxCategories();
+                cmbTaxCategory.DisplayMember = "TaxName";
+                cmbTaxCategory.ValueMember = "TaxCategoryID";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading tax categories: " + ex.Message);
             }
         }
 
@@ -132,7 +147,7 @@ namespace POSApp.Forms
                     dgvProducts.DataSource = dt;
                 }
 
-                string[] hideCols = { "CategoryID", "SupplierID" };
+                string[] hideCols = { "CategoryID", "SupplierID", "TaxCategoryID" };
                 foreach (string col in hideCols)
                 {
                     if (dgvProducts.Columns[col] != null)
@@ -175,9 +190,14 @@ namespace POSApp.Forms
                     Barcode = txtBarcode.Text.Trim(),
                     CategoryID = Convert.ToInt32(cmbCategory.SelectedValue),
                     SupplierID = Convert.ToInt32(cmbSupplier.SelectedValue),
+                    TaxCategoryID = Convert.ToInt32(cmbTaxCategory.SelectedValue),
                     Brand = txtBrand.Text.Trim(),
                     Price = price,
-                    StockQuantity = quantity
+                    StockQuantity = quantity,
+                    MinStockLevel = int.TryParse(txtMinStock.Text, out int min) ? min : 10,
+                    DiscountRate = decimal.TryParse(txtDiscountRate.Text, out decimal disc) ? disc : 0,
+                    IsBOGO = chkIsBOGO.Checked,
+                    UnitType = cmbUnitType.SelectedItem?.ToString()
                 };
 
                 _inventoryService.SaveProduct(product);
@@ -222,6 +242,11 @@ namespace POSApp.Forms
             txtBrand.Clear();
             txtPrice.Clear();
             txtQuantity.Clear();
+            txtMinStock.Text = "10";
+            txtDiscountRate.Text = "0";
+            chkIsBOGO.Checked = false;
+            cmbUnitType.SelectedIndex = 0;
+            if (cmbTaxCategory.Items.Count > 0) cmbTaxCategory.SelectedIndex = 0;
             selectedProductId = -1;
             btnSave.Text = "Save (F2)";
         }
@@ -238,6 +263,9 @@ namespace POSApp.Forms
                 txtBrand.Text = row.Cells["Brand"].Value?.ToString();
                 txtPrice.Text = row.Cells["Price"].Value?.ToString();
                 txtQuantity.Text = row.Cells["StockQuantity"].Value?.ToString();
+                txtMinStock.Text = row.Cells["MinStockLevel"].Value?.ToString();
+                txtDiscountRate.Text = row.Cells["DiscountRate"].Value?.ToString();
+                chkIsBOGO.Checked = row.Cells["IsBOGO"].Value != DBNull.Value && Convert.ToBoolean(row.Cells["IsBOGO"].Value);
 
                 if (row.Cells["CategoryID"].Value != DBNull.Value)
                     cmbCategory.SelectedValue = row.Cells["CategoryID"].Value;
@@ -245,7 +273,39 @@ namespace POSApp.Forms
                 if (row.Cells["SupplierID"].Value != DBNull.Value)
                     cmbSupplier.SelectedValue = row.Cells["SupplierID"].Value;
 
+                if (row.Cells["TaxCategoryID"].Value != DBNull.Value)
+                    cmbTaxCategory.SelectedValue = row.Cells["TaxCategoryID"].Value;
+
+                if (row.Cells["UnitType"].Value != DBNull.Value)
+                    cmbUnitType.SelectedItem = row.Cells["UnitType"].Value.ToString();
+
                 btnSave.Text = "Update (F2)";
+            }
+        }
+
+        private void btnAddCategory_Click(object sender, EventArgs e)
+        {
+            using (var form = new Form())
+            {
+                form.Text = "Add Category";
+                form.Size = new Size(300, 150);
+                form.StartPosition = FormStartPosition.CenterParent;
+                Label lbl = new Label() { Text = "Category Name:", Left = 20, Top = 20, Width = 100 };
+                TextBox txt = new TextBox() { Left = 20, Top = 45, Width = 240 };
+                Button btn = new Button() { Text = "Add", Left = 180, Top = 80, Width = 80 };
+                btn.Click += (s, ev) => {
+                    if (!string.IsNullOrWhiteSpace(txt.Text))
+                    {
+                        try {
+                            var db = new Data.DatabaseHelper();
+                            db.ExecuteNonQuery("INSERT INTO Categories (CategoryName) VALUES (@name)",
+                                new MySql.Data.MySqlClient.MySqlParameter[] { new MySql.Data.MySqlClient.MySqlParameter("@name", txt.Text.Trim()) });
+                            form.DialogResult = DialogResult.OK;
+                        } catch (Exception ex) { MessageBox.Show(ex.Message); }
+                    }
+                };
+                form.Controls.Add(lbl); form.Controls.Add(txt); form.Controls.Add(btn);
+                if (form.ShowDialog() == DialogResult.OK) LoadCategories();
             }
         }
     }

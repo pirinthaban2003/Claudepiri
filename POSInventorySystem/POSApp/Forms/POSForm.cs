@@ -19,7 +19,9 @@ namespace POSApp.Forms
         private static List<SaleItem>? heldCart = null;
         private static int? heldCustomerId = null;
         private decimal total = 0;
-        private decimal discount = 0;
+        private decimal autoDiscount = 0;
+        private decimal taxTotal = 0;
+        private decimal manualDiscount = 0;
 
         public POSForm()
         {
@@ -266,27 +268,59 @@ namespace POSApp.Forms
         private void UpdateCartGrid()
         {
             dgvCart.DataSource = null;
+
+            decimal runningTotal = 0;
+            autoDiscount = 0;
+            taxTotal = 0;
+
+            // Calculate line item totals with auto-discounts and taxes
+            foreach (var item in cart)
+            {
+                if (cmbProducts.DataSource is DataTable dt)
+                {
+                    var rows = dt.Select($"ProductID = {item.ProductID}");
+                    if (rows.Length > 0)
+                    {
+                        decimal taxPercent = rows[0]["TaxPercentage"] != DBNull.Value ? Convert.ToDecimal(rows[0]["TaxPercentage"]) : 0;
+                        decimal permDiscPercent = rows[0]["DiscountRate"] != DBNull.Value ? Convert.ToDecimal(rows[0]["DiscountRate"]) : 0;
+                        bool isBOGO = rows[0]["IsBOGO"] != DBNull.Value && Convert.ToBoolean(rows[0]["IsBOGO"]);
+                        string? unitType = rows[0]["UnitType"]?.ToString();
+
+                        decimal baseSubtotal = item.Quantity * item.UnitPrice;
+                        decimal lineDiscount = baseSubtotal * (permDiscPercent / 100);
+
+                        if (isBOGO && item.Quantity >= 2)
+                        {
+                            lineDiscount += (item.Quantity / 2) * item.UnitPrice;
+                        }
+
+                        decimal taxableAmount = baseSubtotal - lineDiscount;
+                        decimal lineTax = taxableAmount * (taxPercent / 100);
+
+                        item.Discount = lineDiscount;
+                        item.Subtotal = taxableAmount + lineTax;
+
+                        runningTotal += baseSubtotal;
+                        autoDiscount += lineDiscount;
+                        taxTotal += lineTax;
+                    }
+                }
+            }
+
             dgvCart.DataSource = cart.Select(i => new {
                 i.ProductName,
                 i.Quantity,
-                i.UnitPrice,
-                Subtotal = i.Subtotal
+                UnitPrice = i.UnitPrice.ToString("C"),
+                Discount = i.Discount.ToString("C"),
+                Subtotal = i.Subtotal.ToString("C")
             }).ToList();
 
-            total = cart.Sum(i => i.Subtotal);
+            total = runningTotal;
             lblSubtotalValue.Text = total.ToString("C");
 
-            int? customerId = null;
-            if (cmbCustomer.SelectedValue != DBNull.Value && cmbCustomer.SelectedValue != null)
-                customerId = Convert.ToInt32(cmbCustomer.SelectedValue);
-
-            decimal autoDiscount = _promotionService.CalculateDiscount(cart, customerId);
-            decimal manualDiscount = 0;
             decimal.TryParse(txtDiscount.Text, out manualDiscount);
 
-            discount = autoDiscount + manualDiscount;
-
-            decimal finalTotal = total - discount;
+            decimal finalTotal = (total - autoDiscount + taxTotal) - manualDiscount;
             if (finalTotal < 0) finalTotal = 0;
 
             lblTotalValue.Text = finalTotal.ToString("C");
@@ -390,8 +424,9 @@ namespace POSApp.Forms
                 {
                     CustomerID = customerId,
                     TotalAmount = total,
-                    DiscountAmount = discount,
-                    FinalAmount = total - discount > 0 ? total - discount : 0,
+                    DiscountAmount = autoDiscount + manualDiscount,
+                    TaxAmount = taxTotal,
+                    FinalAmount = (total - autoDiscount + taxTotal) - manualDiscount > 0 ? (total - autoDiscount + taxTotal) - manualDiscount : 0,
                     Items = cart
                 };
 

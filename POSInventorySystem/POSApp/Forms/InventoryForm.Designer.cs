@@ -36,6 +36,16 @@ namespace POSApp.Forms
             this.lblBrand = new System.Windows.Forms.Label();
             this.lblSupplier = new System.Windows.Forms.Label();
             this.pnlForm = new System.Windows.Forms.Panel();
+            this.lblUnitType = new System.Windows.Forms.Label();
+            this.cmbUnitType = new System.Windows.Forms.ComboBox();
+            this.lblTaxCategory = new System.Windows.Forms.Label();
+            this.cmbTaxCategory = new System.Windows.Forms.ComboBox();
+            this.lblMinStock = new System.Windows.Forms.Label();
+            this.txtMinStock = new System.Windows.Forms.TextBox();
+            this.lblDiscountRate = new System.Windows.Forms.Label();
+            this.txtDiscountRate = new System.Windows.Forms.TextBox();
+            this.chkIsBOGO = new System.Windows.Forms.CheckBox();
+            this.btnAddCategory = new System.Windows.Forms.Button();
             this.pnlGrid = new System.Windows.Forms.Panel();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.lblSearch = new System.Windows.Forms.Label();
@@ -52,12 +62,22 @@ namespace POSApp.Forms
             this.dgvProducts.Location = new System.Drawing.Point(10, 50);
             this.dgvProducts.Name = "dgvProducts";
             this.dgvProducts.ReadOnly = true;
-            this.dgvProducts.Size = new System.Drawing.Size(660, 460);
+            this.dgvProducts.Size = new System.Drawing.Size(660, 540);
             this.dgvProducts.TabIndex = 0;
             this.dgvProducts.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProducts_CellClick);
             //
             // pnlForm
             //
+            this.pnlForm.Controls.Add(this.btnAddCategory);
+            this.pnlForm.Controls.Add(this.chkIsBOGO);
+            this.pnlForm.Controls.Add(this.lblDiscountRate);
+            this.pnlForm.Controls.Add(this.txtDiscountRate);
+            this.pnlForm.Controls.Add(this.lblMinStock);
+            this.pnlForm.Controls.Add(this.txtMinStock);
+            this.pnlForm.Controls.Add(this.lblTaxCategory);
+            this.pnlForm.Controls.Add(this.cmbTaxCategory);
+            this.pnlForm.Controls.Add(this.lblUnitType);
+            this.pnlForm.Controls.Add(this.cmbUnitType);
             this.pnlForm.Controls.Add(this.lblSupplier);
             this.pnlForm.Controls.Add(this.lblBrand);
             this.pnlForm.Controls.Add(this.lblSKU);
@@ -80,8 +100,106 @@ namespace POSApp.Forms
             this.pnlForm.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlForm.Location = new System.Drawing.Point(0, 0);
             this.pnlForm.Name = "pnlForm";
-            this.pnlForm.Size = new System.Drawing.Size(300, 520);
+            this.pnlForm.Size = new System.Drawing.Size(300, 600);
             this.pnlForm.TabIndex = 20;
+            //
+            // lblUnitType
+            //
+            this.lblUnitType.AutoSize = true;
+            this.lblUnitType.Location = new System.Drawing.Point(20, 263);
+            this.lblUnitType.Name = "lblUnitType";
+            this.lblUnitType.Size = new System.Drawing.Size(59, 15);
+            this.lblUnitType.TabIndex = 22;
+            this.lblUnitType.Text = "Unit Type:";
+            //
+            // cmbUnitType
+            //
+            this.cmbUnitType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbUnitType.FormattingEnabled = true;
+            this.cmbUnitType.Items.AddRange(new object[] {
+            "pcs",
+            "kg",
+            "ltr",
+            "pkt",
+            "box",
+            "dz"});
+            this.cmbUnitType.Location = new System.Drawing.Point(120, 260);
+            this.cmbUnitType.Name = "cmbUnitType";
+            this.cmbUnitType.Size = new System.Drawing.Size(160, 23);
+            this.cmbUnitType.TabIndex = 23;
+            //
+            // lblTaxCategory
+            //
+            this.lblTaxCategory.AutoSize = true;
+            this.lblTaxCategory.Location = new System.Drawing.Point(20, 303);
+            this.lblTaxCategory.Name = "lblTaxCategory";
+            this.lblTaxCategory.Size = new System.Drawing.Size(78, 15);
+            this.lblTaxCategory.TabIndex = 24;
+            this.lblTaxCategory.Text = "Tax Category:";
+            //
+            // cmbTaxCategory
+            //
+            this.cmbTaxCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTaxCategory.FormattingEnabled = true;
+            this.cmbTaxCategory.Location = new System.Drawing.Point(120, 300);
+            this.cmbTaxCategory.Name = "cmbTaxCategory";
+            this.cmbTaxCategory.Size = new System.Drawing.Size(160, 23);
+            this.cmbTaxCategory.TabIndex = 25;
+            //
+            // lblMinStock
+            //
+            this.lblMinStock.AutoSize = true;
+            this.lblMinStock.Location = new System.Drawing.Point(185, 383);
+            this.lblMinStock.Name = "lblMinStock";
+            this.lblMinStock.Size = new System.Drawing.Size(31, 15);
+            this.lblMinStock.TabIndex = 29;
+            this.lblMinStock.Text = "Min:";
+            //
+            // txtMinStock
+            //
+            this.txtMinStock.Location = new System.Drawing.Point(220, 380);
+            this.txtMinStock.Name = "txtMinStock";
+            this.txtMinStock.Size = new System.Drawing.Size(60, 23);
+            this.txtMinStock.TabIndex = 30;
+            this.txtMinStock.Text = "10";
+            //
+            // lblDiscountRate
+            //
+            this.lblDiscountRate.AutoSize = true;
+            this.lblDiscountRate.Location = new System.Drawing.Point(20, 423);
+            this.lblDiscountRate.Name = "lblDiscountRate";
+            this.lblDiscountRate.Size = new System.Drawing.Size(73, 15);
+            this.lblDiscountRate.TabIndex = 26;
+            this.lblDiscountRate.Text = "Perm Disc %:";
+            //
+            // txtDiscountRate
+            //
+            this.txtDiscountRate.Location = new System.Drawing.Point(120, 420);
+            this.txtDiscountRate.Name = "txtDiscountRate";
+            this.txtDiscountRate.Size = new System.Drawing.Size(60, 23);
+            this.txtDiscountRate.TabIndex = 27;
+            this.txtDiscountRate.Text = "0";
+            //
+            // chkIsBOGO
+            //
+            this.chkIsBOGO.AutoSize = true;
+            this.chkIsBOGO.ForeColor = System.Drawing.Color.White;
+            this.chkIsBOGO.Location = new System.Drawing.Point(190, 422);
+            this.chkIsBOGO.Name = "chkIsBOGO";
+            this.chkIsBOGO.Size = new System.Drawing.Size(59, 19);
+            this.chkIsBOGO.TabIndex = 28;
+            this.chkIsBOGO.Text = "BOGO";
+            this.chkIsBOGO.UseVisualStyleBackColor = true;
+            //
+            // btnAddCategory
+            //
+            this.btnAddCategory.Location = new System.Drawing.Point(255, 140);
+            this.btnAddCategory.Name = "btnAddCategory";
+            this.btnAddCategory.Size = new System.Drawing.Size(25, 23);
+            this.btnAddCategory.TabIndex = 31;
+            this.btnAddCategory.Text = "+";
+            this.btnAddCategory.UseVisualStyleBackColor = true;
+            this.btnAddCategory.Click += new System.EventHandler(this.btnAddCategory_Click);
             //
             // pnlGrid
             //
@@ -92,7 +210,7 @@ namespace POSApp.Forms
             this.pnlGrid.Location = new System.Drawing.Point(300, 0);
             this.pnlGrid.Name = "pnlGrid";
             this.pnlGrid.Padding = new System.Windows.Forms.Padding(10);
-            this.pnlGrid.Size = new System.Drawing.Size(680, 520);
+            this.pnlGrid.Size = new System.Drawing.Size(680, 600);
             this.pnlGrid.TabIndex = 21;
             //
             // txtSearch
@@ -120,16 +238,16 @@ namespace POSApp.Forms
             //
             // txtPrice
             //
-            this.txtPrice.Location = new System.Drawing.Point(120, 260);
+            this.txtPrice.Location = new System.Drawing.Point(120, 340);
             this.txtPrice.Name = "txtPrice";
             this.txtPrice.Size = new System.Drawing.Size(160, 23);
             this.txtPrice.TabIndex = 2;
             //
             // txtQuantity
             //
-            this.txtQuantity.Location = new System.Drawing.Point(120, 300);
+            this.txtQuantity.Location = new System.Drawing.Point(120, 380);
             this.txtQuantity.Name = "txtQuantity";
-            this.txtQuantity.Size = new System.Drawing.Size(160, 23);
+            this.txtQuantity.Size = new System.Drawing.Size(60, 23);
             this.txtQuantity.TabIndex = 3;
             //
             // txtBarcode
@@ -159,7 +277,7 @@ namespace POSApp.Forms
             this.cmbCategory.FormattingEnabled = true;
             this.cmbCategory.Location = new System.Drawing.Point(120, 140);
             this.cmbCategory.Name = "cmbCategory";
-            this.cmbCategory.Size = new System.Drawing.Size(160, 23);
+            this.cmbCategory.Size = new System.Drawing.Size(130, 23);
             this.cmbCategory.TabIndex = 7;
             //
             // cmbSupplier
@@ -173,7 +291,7 @@ namespace POSApp.Forms
             //
             // btnSave
             //
-            this.btnSave.Location = new System.Drawing.Point(20, 350);
+            this.btnSave.Location = new System.Drawing.Point(20, 460);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(80, 35);
             this.btnSave.TabIndex = 9;
@@ -183,7 +301,7 @@ namespace POSApp.Forms
             //
             // btnDelete
             //
-            this.btnDelete.Location = new System.Drawing.Point(110, 350);
+            this.btnDelete.Location = new System.Drawing.Point(110, 460);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(80, 35);
             this.btnDelete.TabIndex = 10;
@@ -193,7 +311,7 @@ namespace POSApp.Forms
             //
             // btnClear
             //
-            this.btnClear.Location = new System.Drawing.Point(200, 350);
+            this.btnClear.Location = new System.Drawing.Point(200, 460);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(80, 35);
             this.btnClear.TabIndex = 11;
@@ -213,7 +331,7 @@ namespace POSApp.Forms
             // lblPrice
             //
             this.lblPrice.AutoSize = true;
-            this.lblPrice.Location = new System.Drawing.Point(20, 263);
+            this.lblPrice.Location = new System.Drawing.Point(20, 343);
             this.lblPrice.Name = "lblPrice";
             this.lblPrice.Size = new System.Drawing.Size(36, 15);
             this.lblPrice.TabIndex = 13;
@@ -222,7 +340,7 @@ namespace POSApp.Forms
             // lblQuantity
             //
             this.lblQuantity.AutoSize = true;
-            this.lblQuantity.Location = new System.Drawing.Point(20, 303);
+            this.lblQuantity.Location = new System.Drawing.Point(20, 383);
             this.lblQuantity.Name = "lblQuantity";
             this.lblQuantity.Size = new System.Drawing.Size(56, 15);
             this.lblQuantity.TabIndex = 14;
@@ -277,7 +395,7 @@ namespace POSApp.Forms
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1000, 520);
+            this.ClientSize = new System.Drawing.Size(1000, 600);
             this.Controls.Add(this.pnlGrid);
             this.Controls.Add(this.pnlForm);
             this.Name = "InventoryForm";
@@ -311,6 +429,16 @@ namespace POSApp.Forms
         private System.Windows.Forms.Label lblSKU;
         private System.Windows.Forms.Label lblBrand;
         private System.Windows.Forms.Label lblSupplier;
+        private System.Windows.Forms.Label lblUnitType;
+        private System.Windows.Forms.ComboBox cmbUnitType;
+        private System.Windows.Forms.Label lblTaxCategory;
+        private System.Windows.Forms.ComboBox cmbTaxCategory;
+        private System.Windows.Forms.Label lblMinStock;
+        private System.Windows.Forms.TextBox txtMinStock;
+        private System.Windows.Forms.Label lblDiscountRate;
+        private System.Windows.Forms.TextBox txtDiscountRate;
+        private System.Windows.Forms.CheckBox chkIsBOGO;
+        private System.Windows.Forms.Button btnAddCategory;
         private System.Windows.Forms.Panel pnlForm;
         private System.Windows.Forms.Panel pnlGrid;
         private System.Windows.Forms.TextBox txtSearch;

@@ -21,12 +21,20 @@ namespace POSApp.Services
 
         public DataTable GetAvailableProducts()
         {
-            return _dbHelper.ExecuteQuery("SELECT ProductID, ProductName, Price, StockQuantity, Barcode FROM Products WHERE StockQuantity > 0");
+            return _dbHelper.ExecuteQuery(@"
+                SELECT p.ProductID, p.ProductName, p.Price, p.StockQuantity, p.Barcode, p.UnitType, p.DiscountRate, p.IsBOGO, t.TaxPercentage
+                FROM Products p
+                LEFT JOIN TaxCategories t ON p.TaxCategoryID = t.TaxCategoryID
+                WHERE p.StockQuantity > 0 AND p.IsActive = 1");
         }
 
         public DataRow? GetProductByBarcode(string barcode)
         {
-            string query = "SELECT ProductID, ProductName, Price, StockQuantity FROM Products WHERE Barcode = @barcode AND IsActive = 1";
+            string query = @"
+                SELECT p.ProductID, p.ProductName, p.Price, p.StockQuantity, p.UnitType, p.DiscountRate, p.IsBOGO, t.TaxPercentage
+                FROM Products p
+                LEFT JOIN TaxCategories t ON p.TaxCategoryID = t.TaxCategoryID
+                WHERE p.Barcode = @barcode AND p.IsActive = 1";
             MySqlParameter[] parameters = { new MySqlParameter("@barcode", barcode) };
             DataTable dt = _dbHelper.ExecuteQuery(query, parameters);
             return dt.Rows.Count > 0 ? dt.Rows[0] : null;
