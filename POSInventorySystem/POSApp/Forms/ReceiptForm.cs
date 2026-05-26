@@ -34,10 +34,10 @@ namespace POSApp.Forms
         private void GenerateReceiptText()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("******************************************");
-            sb.AppendLine("      SUPERMARKET RETAIL SYSTEM           ");
-            sb.AppendLine("            SRMS TERMINAL                 ");
-            sb.AppendLine("******************************************");
+            sb.AppendLine("********************************");
+            sb.AppendLine("   SUPERMARKET RETAIL SYSTEM    ");
+            sb.AppendLine("        SRMS TERMINAL           ");
+            sb.AppendLine("********************************");
             sb.AppendLine($"Date: {DateTime.Now:dd/MM/yyyy HH:mm}");
             sb.AppendLine($"Cashier: {Session.CurrentUser?.FullName ?? "Staff"}");
 
@@ -48,40 +48,40 @@ namespace POSApp.Forms
                     new MySqlParameter[] { new MySqlParameter("@id", _sale.CustomerID.Value) });
                 if (dt.Rows.Count > 0)
                 {
-                    sb.AppendLine($"Customer: {dt.Rows[0]["CustomerName"]}");
-                    sb.AppendLine($"Loyalty Level: {dt.Rows[0]["LoyaltyLevel"]}");
+                    sb.AppendLine($"Cust: {dt.Rows[0]["CustomerName"]}");
+                    sb.AppendLine($"Loyalty: {dt.Rows[0]["LoyaltyLevel"]}");
                 }
             }
 
-            sb.AppendLine("------------------------------------------");
-            sb.AppendLine(string.Format("{0,-20} {1,5} {2,10}", "Item", "Qty", "Price"));
-            sb.AppendLine("------------------------------------------");
+            sb.AppendLine("--------------------------------");
+            sb.AppendLine(string.Format("{0,-15} {1,4} {2,11}", "Item", "Qty", "Price"));
+            sb.AppendLine("--------------------------------");
 
             foreach (var item in _sale.Items)
             {
-                string name = item.ProductName.Length > 18 ? item.ProductName.Substring(0, 18) : item.ProductName;
-                sb.AppendLine(string.Format("{0,-20} {1,5} {2,10:N2}", name, item.Quantity, item.Subtotal));
+                string name = item.ProductName.Length > 14 ? item.ProductName.Substring(0, 14) : item.ProductName;
+                sb.AppendLine(string.Format("{0,-15} {1,4} {2,11:N2}", name, item.Quantity, item.Subtotal));
             }
 
-            sb.AppendLine("------------------------------------------");
-            sb.AppendLine(string.Format("{0,-26} {1,14:N2}", "Subtotal:", _sale.TotalAmount));
-            sb.AppendLine(string.Format("{0,-26} {1,14:N2}", "Discount:", _sale.DiscountAmount));
-            sb.AppendLine(string.Format("{0,-26} {1,14:N2}", "Tax:", _sale.TaxAmount));
-            sb.AppendLine("==========================================");
-            sb.AppendLine(string.Format("TOTAL: {0,30:C}", _sale.FinalAmount));
+            sb.AppendLine("--------------------------------");
+            sb.AppendLine(string.Format("{0,-18} {1,13:N2}", "Subtotal:", _sale.TotalAmount));
+            sb.AppendLine(string.Format("{0,-18} {1,13:N2}", "Discount:", _sale.DiscountAmount));
+            sb.AppendLine(string.Format("{0,-18} {1,13:N2}", "Tax:", _sale.TaxAmount));
+            sb.AppendLine("================================");
+            sb.AppendLine(string.Format("TOTAL: {0,23:C}", _sale.FinalAmount));
 
             // Loyalty Points Info
             if (_sale.CustomerID.HasValue)
             {
                 int pointsEarned = (int)(_sale.FinalAmount / 100);
-                sb.AppendLine("==========================================");
-                sb.AppendLine($"Points Earned this visit: {pointsEarned}");
+                sb.AppendLine("================================");
+                sb.AppendLine($"Points Earned: {pointsEarned}");
             }
 
-            sb.AppendLine("==========================================");
-            sb.AppendLine("\n      THANK YOU FOR SHOPPING!             ");
-            sb.AppendLine("       Please visit us again              ");
-            sb.AppendLine("******************************************");
+            sb.AppendLine("================================");
+            sb.AppendLine("\n    THANK YOU FOR SHOPPING!     ");
+            sb.AppendLine("     Please visit us again      ");
+            sb.AppendLine("********************************");
 
             txtReceipt.Text = sb.ToString();
         }

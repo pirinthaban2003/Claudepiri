@@ -47,6 +47,11 @@ namespace POSApp.Forms
             btnResume.Enabled = heldCart != null;
             txtBarcodeScan.KeyDown += TxtBarcodeScan_KeyDown;
             numQuantity.KeyDown += NumQuantity_KeyDown;
+
+            // Auto-select text on focus for speed
+            txtCustomerContact.GotFocus += (s, e) => txtCustomerContact.SelectAll();
+            txtBarcodeScan.GotFocus += (s, e) => txtBarcodeScan.SelectAll();
+            numQuantity.GotFocus += (s, e) => numQuantity.Select(0, numQuantity.Text.Length);
         }
 
         private void NumQuantity_KeyDown(object? sender, KeyEventArgs e)
@@ -55,6 +60,18 @@ namespace POSApp.Forms
             {
                 btnAddToCart.PerformClick();
                 txtBarcodeScan.Focus();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+            else if (e.KeyCode == Keys.Add || (e.Shift && e.KeyCode == Keys.Oemplus))
+            {
+                btnQtyPlus.PerformClick();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+            else if (e.KeyCode == Keys.Subtract || e.KeyCode == Keys.OemMinus)
+            {
+                btnQtyMinus.PerformClick();
                 e.Handled = true;
                 e.SuppressKeyPress = true;
             }
