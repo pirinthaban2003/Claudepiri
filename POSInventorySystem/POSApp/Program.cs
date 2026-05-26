@@ -1,4 +1,5 @@
 using POSApp.Forms;
+using POSApp.Services;
 
 namespace POSApp;
 
@@ -13,6 +14,9 @@ static class Program
         // To customize application configuration such as set high DPI settings or default font,
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
+
+        // Run migrations
+        new DatabaseMigration().EnsureSchemaUpToDate();
 
         using (LoginForm loginForm = new LoginForm())
         {
