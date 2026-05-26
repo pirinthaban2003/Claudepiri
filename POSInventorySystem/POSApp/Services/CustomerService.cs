@@ -80,5 +80,11 @@ namespace POSApp.Services
                     new MySqlParameter[] { new MySqlParameter("@level", level), new MySqlParameter("@id", customerId) });
             }
         }
+
+        public DataTable GetCustomerByPhone(string phone)
+        {
+            string query = "SELECT * FROM Customers WHERE Phone = @phone";
+            return _dbHelper.ExecuteQuery(query, new MySqlParameter[] { new MySqlParameter("@phone", phone) });
+        }
     }
 }

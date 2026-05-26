@@ -46,6 +46,18 @@ namespace POSApp.Forms
 
             btnResume.Enabled = heldCart != null;
             txtBarcodeScan.KeyDown += TxtBarcodeScan_KeyDown;
+            numQuantity.KeyDown += NumQuantity_KeyDown;
+        }
+
+        private void NumQuantity_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnAddToCart.PerformClick();
+                txtBarcodeScan.Focus();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
         }
 
         private void TxtBarcodeScan_KeyDown(object? sender, KeyEventArgs e)
@@ -57,7 +69,12 @@ namespace POSApp.Forms
                 {
                     ProcessBarcode(barcode);
                     txtBarcodeScan.Clear();
-                    txtBarcodeScan.Focus();
+                    // Focus stays or is returned by ProcessBarcode logic
+                }
+                else if (cart.Count > 0)
+                {
+                    // Empty barcode Enter triggers checkout if items exist
+                    btnCheckout.PerformClick();
                 }
                 e.Handled = true;
                 e.SuppressKeyPress = true;
@@ -106,6 +123,8 @@ namespace POSApp.Forms
                     }
 
                     UpdateCartGrid();
+                    numQuantity.Focus();
+                    numQuantity.Select(0, numQuantity.Text.Length);
                 }
                 else
                 {
@@ -126,17 +145,12 @@ namespace POSApp.Forms
         {
             if (e.KeyCode == Keys.F1)
             {
-                cmbProducts.Focus();
+                txtCustomerContact.Focus();
                 e.Handled = true;
             }
             else if (e.KeyCode == Keys.F2)
             {
                 txtBarcodeScan.Focus();
-                e.Handled = true;
-            }
-            else if (e.KeyCode == Keys.F3)
-            {
-                btnCheckout.PerformClick();
                 e.Handled = true;
             }
             else if (e.KeyCode == Keys.F12)
@@ -209,9 +223,11 @@ namespace POSApp.Forms
 
         private void btnAddToCart_Click(object? sender, EventArgs e)
         {
-            if (cmbProducts.SelectedValue == null || cmbProducts.SelectedItem == null) return;
+            if (cmbProducts.SelectedValue == null) return;
 
-            DataRowView selectedProduct = (DataRowView)cmbProducts.SelectedItem;
+            DataRowView? selectedProduct = cmbProducts.SelectedItem as DataRowView;
+            if (selectedProduct == null) return;
+
             int productId = Convert.ToInt32(selectedProduct["ProductID"]);
             string productName = selectedProduct["ProductName"].ToString()!;
             decimal price = Convert.ToDecimal(selectedProduct["Price"]);
@@ -248,6 +264,7 @@ namespace POSApp.Forms
             }
 
             UpdateCartGrid();
+            numQuantity.Value = 1;
         }
 
         private void UpdateCartGrid()
@@ -286,8 +303,47 @@ namespace POSApp.Forms
 
         private void btnClearCart_Click(object? sender, EventArgs e)
         {
+            if (cart.Count > 0 && MessageBox.Show("Are you sure you want to clear the cart?", "Clear Cart", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                return;
+
             cart.Clear();
+            txtCustomerContact.Clear();
+            txtBarcodeScan.Clear();
             UpdateCartGrid();
+            txtCustomerContact.Focus();
+        }
+
+        private void txtCustomerContact_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                string contact = txtCustomerContact.Text.Trim();
+                if (!string.IsNullOrEmpty(contact))
+                {
+                    var dt = _customerService.GetCustomerByPhone(contact);
+                    if (dt.Rows.Count > 0)
+                    {
+                        cmbCustomer.SelectedValue = dt.Rows[0]["CustomerID"];
+                    }
+                    else
+                    {
+                        MessageBox.Show("Customer not found with this contact number.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                txtBarcodeScan.Focus();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void btnQtyPlus_Click(object? sender, EventArgs e)
+        {
+            numQuantity.Value = Math.Min(numQuantity.Maximum, numQuantity.Value + 1);
+        }
+
+        private void btnQtyMinus_Click(object? sender, EventArgs e)
+        {
+            numQuantity.Value = Math.Max(numQuantity.Minimum, numQuantity.Value - 1);
         }
 
         private void btnHold_Click(object? sender, EventArgs e)
