@@ -56,6 +56,17 @@ namespace POSApp.Forms
             numQuantity.GotFocus += (s, e) => numQuantity.Select(0, numQuantity.Text.Length);
 
             txtCustomerContact.TextChanged += TxtCustomerContact_TextChanged;
+            txtBarcodeScan.TextChanged += TxtBarcodeScan_TextChanged;
+        }
+
+        private void TxtBarcodeScan_TextChanged(object? sender, EventArgs e)
+        {
+            string barcode = txtBarcodeScan.Text.Trim();
+            if (barcode.Length >= 3) // Optimize: only search if at least 3 chars
+            {
+                // Try to find a match without showing error messages (silent mode)
+                ProcessBarcode(barcode, true);
+            }
         }
 
         private void TxtCustomerContact_TextChanged(object? sender, EventArgs e)
@@ -102,9 +113,8 @@ namespace POSApp.Forms
                 string barcode = txtBarcodeScan.Text.Trim();
                 if (!string.IsNullOrEmpty(barcode))
                 {
-                    ProcessBarcode(barcode);
+                    ProcessBarcode(barcode, false); // Explicit Enter should show error if not found
                     txtBarcodeScan.Clear();
-                    // Focus stays or is returned by ProcessBarcode logic
                 }
                 else if (cart.Count > 0)
                 {
@@ -116,13 +126,18 @@ namespace POSApp.Forms
             }
         }
 
-        private void ProcessBarcode(string barcode)
+        private void ProcessBarcode(string barcode, bool silent)
         {
             try
             {
                 var productRow = _saleService.GetProductByBarcode(barcode);
                 if (productRow != null)
                 {
+                    // Exact match found!
+
+                    // Prevent TextChanged re-entry while adding
+                    txtBarcodeScan.TextChanged -= TxtBarcodeScan_TextChanged;
+
                     // Select for visual feedback
                     cmbProducts.SelectedValue = Convert.ToInt32(productRow["ProductID"]);
 
@@ -130,10 +145,12 @@ namespace POSApp.Forms
                     numQuantity.Value = 1;
                     btnAddToCart.PerformClick();
 
-                    // Keep focus in barcode for next scan
+                    // Clear and restore
+                    txtBarcodeScan.Clear();
+                    txtBarcodeScan.TextChanged += TxtBarcodeScan_TextChanged;
                     txtBarcodeScan.Focus();
                 }
-                else
+                else if (!silent)
                 {
                     MessageBox.Show("Product not found for barcode: " + barcode, "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     txtBarcodeScan.Focus();
@@ -142,7 +159,7 @@ namespace POSApp.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error processing barcode: " + ex.Message);
+                if (!silent) MessageBox.Show("Error processing barcode: " + ex.Message);
             }
         }
 
