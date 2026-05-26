@@ -22,6 +22,22 @@ namespace POSApp.Forms
             ThemeHelper.ApplyTheme(this);
             CustomizeComponents();
             GenerateReceiptText();
+            this.KeyPreview = true;
+            this.KeyDown += ReceiptForm_KeyDown;
+        }
+
+        private void ReceiptForm_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnPrint.PerformClick();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                btnCancel.PerformClick();
+                e.Handled = true;
+            }
         }
 
         private void CustomizeComponents()

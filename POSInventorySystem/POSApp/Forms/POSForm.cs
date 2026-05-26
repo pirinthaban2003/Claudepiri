@@ -105,47 +105,18 @@ namespace POSApp.Forms
                 var productRow = _saleService.GetProductByBarcode(barcode);
                 if (productRow != null)
                 {
-                    int productId = Convert.ToInt32(productRow["ProductID"]);
-                    string productName = productRow["ProductName"].ToString()!;
-                    decimal price = Convert.ToDecimal(productRow["Price"]);
-                    int stock = Convert.ToInt32(productRow["StockQuantity"]);
+                    // Select the product in the dropdown for visual feedback
+                    cmbProducts.SelectedValue = Convert.ToInt32(productRow["ProductID"]);
 
-                    if (stock <= 0)
-                    {
-                        MessageBox.Show("Product is out of stock.", "Out of Stock", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
-                    var existingItem = cart.FirstOrDefault(i => i.ProductID == productId);
-                    if (existingItem != null)
-                    {
-                        if (existingItem.Quantity + 1 > stock)
-                        {
-                            MessageBox.Show("Total quantity in cart exceeds available stock.", "Low Stock", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
-                        existingItem.Quantity += 1;
-                        existingItem.Subtotal = existingItem.Quantity * existingItem.UnitPrice;
-                    }
-                    else
-                    {
-                        cart.Add(new SaleItem
-                        {
-                            ProductID = productId,
-                            ProductName = productName,
-                            Quantity = 1,
-                            UnitPrice = price,
-                            Subtotal = price
-                        });
-                    }
-
-                    UpdateCartGrid();
+                    // Move fast to next section: Quantity
                     numQuantity.Focus();
                     numQuantity.Select(0, numQuantity.Text.Length);
                 }
                 else
                 {
                     MessageBox.Show("Product not found for barcode: " + barcode, "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    txtBarcodeScan.Focus();
+                    txtBarcodeScan.SelectAll();
                 }
             }
             catch (Exception ex)
@@ -240,12 +211,16 @@ namespace POSApp.Forms
 
         private void btnAddToCart_Click(object? sender, EventArgs e)
         {
-            if (cmbProducts.SelectedValue == null) return;
+            if (cmbProducts.SelectedValue == null || cmbProducts.SelectedValue == DBNull.Value) return;
 
-            DataRowView? selectedProduct = cmbProducts.SelectedItem as DataRowView;
-            if (selectedProduct == null) return;
+            int productId = Convert.ToInt32(cmbProducts.SelectedValue);
 
-            int productId = Convert.ToInt32(selectedProduct["ProductID"]);
+            // Re-fetch product data from DataSource to ensure fresh stock levels
+            if (cmbProducts.DataSource is not DataTable dt) return;
+            DataRow[] rows = dt.Select($"ProductID = {productId}");
+            if (rows.Length == 0) return;
+            DataRow selectedProduct = rows[0];
+
             string productName = selectedProduct["ProductName"].ToString()!;
             decimal price = Convert.ToDecimal(selectedProduct["Price"]);
             int quantity = (int)numQuantity.Value;
@@ -282,6 +257,10 @@ namespace POSApp.Forms
 
             UpdateCartGrid();
             numQuantity.Value = 1;
+
+            // Move fast back to Barcode for next scan
+            txtBarcodeScan.Focus();
+            txtBarcodeScan.Clear();
         }
 
         private void UpdateCartGrid()
