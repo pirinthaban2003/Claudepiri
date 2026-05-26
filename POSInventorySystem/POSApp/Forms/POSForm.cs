@@ -54,6 +54,22 @@ namespace POSApp.Forms
             txtCustomerContact.GotFocus += (s, e) => txtCustomerContact.SelectAll();
             txtBarcodeScan.GotFocus += (s, e) => txtBarcodeScan.SelectAll();
             numQuantity.GotFocus += (s, e) => numQuantity.Select(0, numQuantity.Text.Length);
+
+            txtCustomerContact.TextChanged += TxtCustomerContact_TextChanged;
+        }
+
+        private void TxtCustomerContact_TextChanged(object? sender, EventArgs e)
+        {
+            string contact = txtCustomerContact.Text.Trim();
+            if (contact.Length >= 10)
+            {
+                var dt = _customerService.GetCustomerByPhone(contact);
+                if (dt.Rows.Count > 0)
+                {
+                    cmbCustomer.SelectedValue = dt.Rows[0]["CustomerID"];
+                    txtBarcodeScan.Focus();
+                }
+            }
         }
 
         private void NumQuantity_KeyDown(object? sender, KeyEventArgs e)
@@ -107,12 +123,15 @@ namespace POSApp.Forms
                 var productRow = _saleService.GetProductByBarcode(barcode);
                 if (productRow != null)
                 {
-                    // Select the product in the dropdown for visual feedback
+                    // Select for visual feedback
                     cmbProducts.SelectedValue = Convert.ToInt32(productRow["ProductID"]);
 
-                    // Move fast to next section: Quantity
-                    numQuantity.Focus();
-                    numQuantity.Select(0, numQuantity.Text.Length);
+                    // High-speed mode: Automatically add to cart with qty 1
+                    numQuantity.Value = 1;
+                    btnAddToCart.PerformClick();
+
+                    // Keep focus in barcode for next scan
+                    txtBarcodeScan.Focus();
                 }
                 else
                 {
@@ -143,10 +162,31 @@ namespace POSApp.Forms
                 txtBarcodeScan.Focus();
                 e.Handled = true;
             }
+            else if (e.KeyCode == Keys.F10)
+            {
+                btnCheckout.PerformClick();
+                e.Handled = true;
+            }
             else if (e.KeyCode == Keys.F12)
             {
                 btnClearCart.PerformClick();
                 e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.Add || (e.Shift && e.KeyCode == Keys.Oemplus))
+            {
+                if (!txtCustomerContact.Focused && !txtBarcodeScan.Focused && !txtDiscount.Focused)
+                {
+                    btnQtyPlus.PerformClick();
+                    e.Handled = true;
+                }
+            }
+            else if (e.KeyCode == Keys.Subtract || e.KeyCode == Keys.OemMinus)
+            {
+                if (!txtCustomerContact.Focused && !txtBarcodeScan.Focused && !txtDiscount.Focused)
+                {
+                    btnQtyMinus.PerformClick();
+                    e.Handled = true;
+                }
             }
             else if (e.Control && e.KeyCode == Keys.D)
             {

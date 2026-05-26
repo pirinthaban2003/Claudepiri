@@ -80,7 +80,7 @@ namespace POSApp.Forms
             this.lblCustomerContact.Name = "lblCustomerContact";
             this.lblCustomerContact.Size = new System.Drawing.Size(107, 15);
             this.lblCustomerContact.TabIndex = 16;
-            this.lblCustomerContact.Text = "Customer Contact:";
+            this.lblCustomerContact.Text = "Customer Contact (F1):";
             //
             // txtCustomerContact
             //
@@ -291,7 +291,7 @@ namespace POSApp.Forms
             this.btnCheckout.Name = "btnCheckout";
             this.btnCheckout.Size = new System.Drawing.Size(230, 90);
             this.btnCheckout.TabIndex = 9;
-            this.btnCheckout.Text = "💳 CHECKOUT\n(Enter)";
+            this.btnCheckout.Text = "💳 CHECKOUT\n(F10 / Enter)";
             this.btnCheckout.UseVisualStyleBackColor = false;
             this.btnCheckout.Click += new System.EventHandler(this.btnCheckout_Click);
             //
