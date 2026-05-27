@@ -43,12 +43,14 @@ namespace POSApp.Forms
             btnAddToCart.BackColor = ThemeHelper.AccentGreen;
             lblTotalValue.ForeColor = ThemeHelper.AccentGreen;
 
-            this.AcceptButton = btnCheckout;
+            // Remove global AcceptButton to allow context-sensitive Enter handling
+            this.AcceptButton = null;
             dgvCart.CellFormatting += DgvCart_CellFormatting;
 
             btnResume.Enabled = heldCart != null;
             txtBarcodeScan.KeyDown += TxtBarcodeScan_KeyDown;
             numQuantity.KeyDown += NumQuantity_KeyDown;
+            cmbProducts.KeyDown += CmbProducts_KeyDown;
 
             // Auto-select text on focus for speed
             txtCustomerContact.GotFocus += (s, e) => txtCustomerContact.SelectAll();
@@ -57,6 +59,16 @@ namespace POSApp.Forms
 
             txtCustomerContact.TextChanged += TxtCustomerContact_TextChanged;
             txtBarcodeScan.TextChanged += TxtBarcodeScan_TextChanged;
+        }
+
+        private void CmbProducts_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnAddToCart.PerformClick();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
         }
 
         private void TxtBarcodeScan_TextChanged(object? sender, EventArgs e)
@@ -116,10 +128,10 @@ namespace POSApp.Forms
                     ProcessBarcode(barcode, false); // Explicit Enter should show error if not found
                     txtBarcodeScan.Clear();
                 }
-                else if (cart.Count > 0)
+                else if (cmbProducts.SelectedValue != null && cmbProducts.SelectedValue != DBNull.Value)
                 {
-                    // Empty barcode Enter triggers checkout if items exist
-                    btnCheckout.PerformClick();
+                    // If barcode is empty but a product is selected, add it to cart
+                    btnAddToCart.PerformClick();
                 }
                 e.Handled = true;
                 e.SuppressKeyPress = true;
