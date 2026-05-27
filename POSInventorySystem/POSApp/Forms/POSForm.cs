@@ -147,20 +147,21 @@ namespace POSApp.Forms
                 {
                     // Exact match found!
 
-                    // Prevent TextChanged re-entry while adding
-                    txtBarcodeScan.TextChanged -= TxtBarcodeScan_TextChanged;
-
                     // Select for visual feedback
                     cmbProducts.SelectedValue = Convert.ToInt32(productRow["ProductID"]);
 
-                    // High-speed mode: Automatically add to cart with qty 1
-                    numQuantity.Value = 1;
-                    btnAddToCart.PerformClick();
-
-                    // Clear and restore
-                    txtBarcodeScan.Clear();
-                    txtBarcodeScan.TextChanged += TxtBarcodeScan_TextChanged;
-                    txtBarcodeScan.Focus();
+                    if (!silent)
+                    {
+                        // Explicit search (Enter key): Add to cart immediately
+                        btnAddToCart.PerformClick();
+                        txtBarcodeScan.Clear();
+                    }
+                    else
+                    {
+                        // Silent search (typing): Just select and move focus for confirmation
+                        numQuantity.Focus();
+                        numQuantity.Select(0, numQuantity.Text.Length);
+                    }
                 }
                 else if (!silent)
                 {
