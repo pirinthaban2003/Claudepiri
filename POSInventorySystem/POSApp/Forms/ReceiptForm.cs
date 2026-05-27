@@ -62,7 +62,7 @@ namespace POSApp.Forms
             {
                 var dt = _dbHelper.ExecuteQuery("SELECT CustomerName, LoyaltyPoints, LoyaltyLevel FROM Customers WHERE CustomerID = @id",
                     new MySqlParameter[] { new MySqlParameter("@id", _sale.CustomerID.Value) });
-                if (dt.Rows.Count > 0)
+                if (dt != null && dt.Rows.Count > 0)
                 {
                     sb.AppendLine($"Cust: {dt.Rows[0]["CustomerName"]}");
                     sb.AppendLine($"Loyalty: {dt.Rows[0]["LoyaltyLevel"]}");

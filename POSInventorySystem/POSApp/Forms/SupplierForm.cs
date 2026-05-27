@@ -67,7 +67,8 @@ namespace POSApp.Forms
                 var dt = _supplierService.GetAllSuppliers();
                 if (!string.IsNullOrEmpty(search))
                 {
-                    dt.DefaultView.RowFilter = $"SupplierName LIKE '%{search}%' OR ContactPerson LIKE '%{search}%' OR Phone LIKE '%{search}%'";
+                    string safeSearch = search.Replace("'", "''");
+                    dt.DefaultView.RowFilter = $"SupplierName LIKE '%{safeSearch}%' OR ContactPerson LIKE '%{safeSearch}%' OR Phone LIKE '%{safeSearch}%'";
                     dgvSuppliers.DataSource = dt.DefaultView;
                 }
                 else

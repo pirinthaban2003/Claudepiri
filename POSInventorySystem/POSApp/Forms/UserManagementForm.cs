@@ -81,10 +81,14 @@ namespace POSApp.Forms
 
         private void dgvUsers_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (e.RowIndex >= 0 && e.RowIndex < dgvUsers.Rows.Count)
             {
-                _selectedUserId = Convert.ToInt32(dgvUsers.Rows[e.RowIndex].Cells["UserID"].Value);
-                lblSelectedUser.Text = "Selected: " + dgvUsers.Rows[e.RowIndex].Cells["Username"].Value.ToString();
+                var userIdVal = dgvUsers.Rows[e.RowIndex].Cells["UserID"].Value;
+                if (userIdVal != null && userIdVal != DBNull.Value)
+                {
+                    _selectedUserId = Convert.ToInt32(userIdVal);
+                    lblSelectedUser.Text = "Selected: " + (dgvUsers.Rows[e.RowIndex].Cells["Username"].Value?.ToString() ?? "N/A");
+                }
             }
         }
 
@@ -114,9 +118,11 @@ namespace POSApp.Forms
 
         private void btnToggleStatus_Click(object sender, EventArgs e)
         {
-            if (_selectedUserId == 0) return;
+            if (_selectedUserId == 0 || dgvUsers.CurrentRow == null) return;
 
-            bool currentStatus = Convert.ToBoolean(dgvUsers.CurrentRow.Cells["IsActive"].Value);
+            var activeVal = dgvUsers.CurrentRow.Cells["IsActive"].Value;
+            bool currentStatus = activeVal != null && activeVal != DBNull.Value && Convert.ToBoolean(activeVal);
+
             if (_userService.ToggleUserStatus(_selectedUserId, !currentStatus))
             {
                 MessageBox.Show("User status updated.");

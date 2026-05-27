@@ -67,7 +67,8 @@ namespace POSApp.Forms
                 var dt = _customerService.GetAllCustomers();
                 if (!string.IsNullOrEmpty(search))
                 {
-                    dt.DefaultView.RowFilter = $"CustomerName LIKE '%{search}%' OR Phone LIKE '%{search}%' OR Email LIKE '%{search}%'";
+                    string safeSearch = search.Replace("'", "''");
+                    dt.DefaultView.RowFilter = $"CustomerName LIKE '%{safeSearch}%' OR Phone LIKE '%{safeSearch}%' OR Email LIKE '%{safeSearch}%'";
                     dgvCustomers.DataSource = dt.DefaultView;
                 }
                 else

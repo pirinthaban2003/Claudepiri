@@ -129,6 +129,9 @@ namespace POSApp.Models
         public decimal UnitPrice { get; set; }
         public decimal Discount { get; set; }
         public decimal Subtotal { get; set; }
+        public decimal TaxPercentage { get; set; }
+        public decimal DiscountRate { get; set; }
+        public bool IsBOGO { get; set; }
     }
 
     public class AuditLog

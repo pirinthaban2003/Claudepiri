@@ -77,7 +77,8 @@ namespace POSApp.Forms
                 {
                     cmbProducts.DroppedDown = true;
                     // Auto-select the first result for quick Enter key addition
-                    cmbProducts.SelectedIndex = 0;
+                    if (cmbProducts.Items.Count > 0)
+                        cmbProducts.SelectedIndex = 0;
                 }
             }
             else
@@ -127,7 +128,7 @@ namespace POSApp.Forms
             if (contact.Length >= 10)
             {
                 var dt = _customerService.GetCustomerByPhone(contact);
-                if (dt.Rows.Count > 0)
+                if (dt != null && dt.Rows.Count > 0)
                 {
                     cmbCustomer.SelectedValue = dt.Rows[0]["CustomerID"];
                     txtBarcodeScan.Focus();
@@ -360,7 +361,10 @@ namespace POSApp.Forms
                     ProductName = productName,
                     Quantity = quantity,
                     UnitPrice = price,
-                    Subtotal = quantity * price
+                    Subtotal = quantity * price,
+                    TaxPercentage = selectedProduct["TaxPercentage"] != DBNull.Value ? Convert.ToDecimal(selectedProduct["TaxPercentage"]) : 0,
+                    DiscountRate = selectedProduct["DiscountRate"] != DBNull.Value ? Convert.ToDecimal(selectedProduct["DiscountRate"]) : 0,
+                    IsBOGO = selectedProduct["IsBOGO"] != DBNull.Value && Convert.ToBoolean(selectedProduct["IsBOGO"])
                 });
             }
 
@@ -383,38 +387,30 @@ namespace POSApp.Forms
             autoDiscount = 0;
             taxTotal = 0;
 
-            // Calculate line item totals with auto-discounts and taxes
+            // Calculate line item totals with auto-discounts and taxes using persistent item metadata
             foreach (var item in cart)
             {
-                if (cmbProducts.DataSource is DataTable dt)
+                decimal taxPercent = item.TaxPercentage;
+                decimal permDiscPercent = item.DiscountRate;
+                bool isBOGO = item.IsBOGO;
+
+                decimal baseSubtotal = item.Quantity * item.UnitPrice;
+                decimal lineDiscount = baseSubtotal * (permDiscPercent / 100);
+
+                if (isBOGO && item.Quantity >= 2)
                 {
-                    var rows = dt.Select($"ProductID = {item.ProductID}");
-                    if (rows.Length > 0)
-                    {
-                        decimal taxPercent = rows[0]["TaxPercentage"] != DBNull.Value ? Convert.ToDecimal(rows[0]["TaxPercentage"]) : 0;
-                        decimal permDiscPercent = rows[0]["DiscountRate"] != DBNull.Value ? Convert.ToDecimal(rows[0]["DiscountRate"]) : 0;
-                        bool isBOGO = rows[0]["IsBOGO"] != DBNull.Value && Convert.ToBoolean(rows[0]["IsBOGO"]);
-                        string? unitType = rows[0]["UnitType"]?.ToString();
-
-                        decimal baseSubtotal = item.Quantity * item.UnitPrice;
-                        decimal lineDiscount = baseSubtotal * (permDiscPercent / 100);
-
-                        if (isBOGO && item.Quantity >= 2)
-                        {
-                            lineDiscount += (item.Quantity / 2) * item.UnitPrice;
-                        }
-
-                        decimal taxableAmount = baseSubtotal - lineDiscount;
-                        decimal lineTax = taxableAmount * (taxPercent / 100);
-
-                        item.Discount = lineDiscount;
-                        item.Subtotal = taxableAmount + lineTax;
-
-                        runningTotal += baseSubtotal;
-                        autoDiscount += lineDiscount;
-                        taxTotal += lineTax;
-                    }
+                    lineDiscount += (item.Quantity / 2) * item.UnitPrice;
                 }
+
+                decimal taxableAmount = baseSubtotal - lineDiscount;
+                decimal lineTax = taxableAmount * (taxPercent / 100);
+
+                item.Discount = lineDiscount;
+                item.Subtotal = taxableAmount + lineTax;
+
+                runningTotal += baseSubtotal;
+                autoDiscount += lineDiscount;
+                taxTotal += lineTax;
             }
 
             dgvCart.DataSource = cart.Select(i => new {
@@ -461,7 +457,7 @@ namespace POSApp.Forms
                 if (!string.IsNullOrEmpty(contact))
                 {
                     var dt = _customerService.GetCustomerByPhone(contact);
-                    if (dt.Rows.Count > 0)
+                    if (dt != null && dt.Rows.Count > 0)
                     {
                         cmbCustomer.SelectedValue = dt.Rows[0]["CustomerID"];
                     }
@@ -509,7 +505,7 @@ namespace POSApp.Forms
             cart = new List<SaleItem>(heldCart);
             if (heldCustomerId != null)
                 cmbCustomer.SelectedValue = heldCustomerId;
-            else
+            else if (cmbCustomer.Items.Count > 0)
                 cmbCustomer.SelectedIndex = 0;
 
             heldCart = null;

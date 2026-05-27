@@ -140,7 +140,8 @@ namespace POSApp.Forms
                 var dt = _inventoryService.GetAllProducts();
                 if (!string.IsNullOrEmpty(search))
                 {
-                    dt.DefaultView.RowFilter = $"ProductName LIKE '%{search}%' OR SKU LIKE '%{search}%' OR Barcode LIKE '%{search}%'";
+                    string safeSearch = search.Replace("'", "''");
+                    dt.DefaultView.RowFilter = $"ProductName LIKE '%{safeSearch}%' OR SKU LIKE '%{safeSearch}%' OR Barcode LIKE '%{safeSearch}%'";
                     dgvProducts.DataSource = dt.DefaultView;
                 }
                 else
@@ -246,7 +247,7 @@ namespace POSApp.Forms
             txtMinStock.Text = "10";
             txtDiscountRate.Text = "0";
             chkIsBOGO.Checked = false;
-            cmbUnitType.SelectedIndex = 0;
+            if (cmbUnitType.Items.Count > 0) cmbUnitType.SelectedIndex = 0;
             if (cmbTaxCategory.Items.Count > 0) cmbTaxCategory.SelectedIndex = 0;
             selectedProductId = -1;
             btnSave.Text = "Save (F2)";
@@ -300,6 +301,21 @@ namespace POSApp.Forms
                     cmbUnitType.SelectedItem = unitVal.ToString();
 
                 btnSave.Text = "Update (F2)";
+            }
+        }
+
+        private void btnManageBatches_Click(object sender, EventArgs e)
+        {
+            if (selectedProductId == -1)
+            {
+                MessageBox.Show("Please select a product first.");
+                return;
+            }
+
+            using (var form = new BatchManagementForm(selectedProductId, txtProductName.Text))
+            {
+                form.ShowDialog();
+                LoadProducts(); // Refresh stock
             }
         }
 

@@ -25,6 +25,7 @@ namespace POSApp.Forms
             this.cmbCategory = new System.Windows.Forms.ComboBox();
             this.cmbSupplier = new System.Windows.Forms.ComboBox();
             this.btnSave = new System.Windows.Forms.Button();
+            this.btnManageBatches = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.lblProductName = new System.Windows.Forms.Label();
@@ -87,6 +88,7 @@ namespace POSApp.Forms
             this.pnlForm.Controls.Add(this.lblPrice);
             this.pnlForm.Controls.Add(this.lblProductName);
             this.pnlForm.Controls.Add(this.btnClear);
+            this.pnlForm.Controls.Add(this.btnManageBatches);
             this.pnlForm.Controls.Add(this.btnDelete);
             this.pnlForm.Controls.Add(this.btnSave);
             this.pnlForm.Controls.Add(this.cmbSupplier);
@@ -293,29 +295,39 @@ namespace POSApp.Forms
             //
             this.btnSave.Location = new System.Drawing.Point(20, 460);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(80, 35);
+            this.btnSave.Size = new System.Drawing.Size(125, 35);
             this.btnSave.TabIndex = 9;
-            this.btnSave.Text = "💾 Save";
+            this.btnSave.Text = "💾 Save (F2)";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             //
+            // btnManageBatches
+            //
+            this.btnManageBatches.Location = new System.Drawing.Point(155, 460);
+            this.btnManageBatches.Name = "btnManageBatches";
+            this.btnManageBatches.Size = new System.Drawing.Size(125, 35);
+            this.btnManageBatches.TabIndex = 32;
+            this.btnManageBatches.Text = "📦 Batches";
+            this.btnManageBatches.UseVisualStyleBackColor = true;
+            this.btnManageBatches.Click += new System.EventHandler(this.btnManageBatches_Click);
+            //
             // btnDelete
             //
-            this.btnDelete.Location = new System.Drawing.Point(110, 460);
+            this.btnDelete.Location = new System.Drawing.Point(20, 505);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(80, 35);
+            this.btnDelete.Size = new System.Drawing.Size(125, 35);
             this.btnDelete.TabIndex = 10;
-            this.btnDelete.Text = "🗑 Delete";
+            this.btnDelete.Text = "🗑 Delete (F3)";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             //
             // btnClear
             //
-            this.btnClear.Location = new System.Drawing.Point(200, 460);
+            this.btnClear.Location = new System.Drawing.Point(155, 505);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(80, 35);
+            this.btnClear.Size = new System.Drawing.Size(125, 35);
             this.btnClear.TabIndex = 11;
-            this.btnClear.Text = "🧹 Clear";
+            this.btnClear.Text = "🧹 Clear (F4)";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             //
@@ -419,6 +431,7 @@ namespace POSApp.Forms
         private System.Windows.Forms.ComboBox cmbCategory;
         private System.Windows.Forms.ComboBox cmbSupplier;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnManageBatches;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Label lblProductName;
