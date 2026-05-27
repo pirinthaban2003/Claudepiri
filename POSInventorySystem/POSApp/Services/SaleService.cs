@@ -28,6 +28,18 @@ namespace POSApp.Services
                 WHERE p.StockQuantity > 0 AND p.IsActive = 1");
         }
 
+        public DataTable SearchProducts(string search)
+        {
+            string query = @"
+                SELECT p.ProductID, p.ProductName, p.Price, p.StockQuantity, p.Barcode, p.UnitType, p.DiscountRate, p.IsBOGO, t.TaxPercentage
+                FROM Products p
+                LEFT JOIN TaxCategories t ON p.TaxCategoryID = t.TaxCategoryID
+                WHERE (p.ProductName LIKE @search OR p.Barcode LIKE @search OR p.SKU LIKE @search)
+                AND p.StockQuantity > 0 AND p.IsActive = 1";
+            MySqlParameter[] parameters = { new MySqlParameter("@search", $"%{search}%") };
+            return _dbHelper.ExecuteQuery(query, parameters);
+        }
+
         public DataRow? GetProductByBarcode(string barcode)
         {
             string query = @"

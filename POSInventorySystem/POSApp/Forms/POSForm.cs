@@ -55,10 +55,35 @@ namespace POSApp.Forms
             // Auto-select text on focus for speed
             txtCustomerContact.GotFocus += (s, e) => txtCustomerContact.SelectAll();
             txtBarcodeScan.GotFocus += (s, e) => txtBarcodeScan.SelectAll();
+            txtProductSearch.GotFocus += (s, e) => txtProductSearch.SelectAll();
             numQuantity.GotFocus += (s, e) => numQuantity.Select(0, numQuantity.Text.Length);
 
             txtCustomerContact.TextChanged += TxtCustomerContact_TextChanged;
             txtBarcodeScan.TextChanged += TxtBarcodeScan_TextChanged;
+            txtProductSearch.TextChanged += TxtProductSearch_TextChanged;
+        }
+
+        private void TxtProductSearch_TextChanged(object? sender, EventArgs e)
+        {
+            string search = txtProductSearch.Text.Trim();
+            if (search.Length >= 2)
+            {
+                var dt = _saleService.SearchProducts(search);
+                cmbProducts.DataSource = dt;
+                cmbProducts.DisplayMember = "ProductName";
+                cmbProducts.ValueMember = "ProductID";
+
+                if (dt.Rows.Count > 0)
+                {
+                    cmbProducts.DroppedDown = true;
+                    // Auto-select the first result for quick Enter key addition
+                    cmbProducts.SelectedIndex = 0;
+                }
+            }
+            else
+            {
+                cmbProducts.DataSource = null;
+            }
         }
 
         private void CmbProducts_KeyDown(object? sender, KeyEventArgs e)
@@ -68,6 +93,21 @@ namespace POSApp.Forms
                 btnAddToCart.PerformClick();
                 e.Handled = true;
                 e.SuppressKeyPress = true;
+            }
+        }
+
+        private void TxtProductSearch_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && cmbProducts.Items.Count > 0)
+            {
+                btnAddToCart.PerformClick();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+            else if (e.KeyCode == Keys.Down && cmbProducts.Items.Count > 0)
+            {
+                cmbProducts.Focus();
+                e.Handled = true;
             }
         }
 
@@ -192,6 +232,11 @@ namespace POSApp.Forms
                 txtBarcodeScan.Focus();
                 e.Handled = true;
             }
+            else if (e.KeyCode == Keys.F3)
+            {
+                txtProductSearch.Focus();
+                e.Handled = true;
+            }
             else if (e.KeyCode == Keys.F10)
             {
                 btnCheckout.PerformClick();
@@ -249,16 +294,8 @@ namespace POSApp.Forms
 
         private void LoadProducts()
         {
-            try
-            {
-                cmbProducts.DataSource = _saleService.GetAvailableProducts();
-                cmbProducts.DisplayMember = "ProductName";
-                cmbProducts.ValueMember = "ProductID";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error loading products: " + ex.Message);
-            }
+            // Initial load is now empty to support high-speed on-demand search
+            cmbProducts.DataSource = null;
         }
 
         private void LoadCustomers()
@@ -329,6 +366,9 @@ namespace POSApp.Forms
 
             UpdateCartGrid();
             numQuantity.Value = 1;
+
+            // Clear search after adding
+            txtProductSearch.Clear();
 
             // Move fast back to Barcode for next scan
             txtBarcodeScan.Focus();
