@@ -279,7 +279,7 @@ namespace POSApp.Forms
             this.lblTotalValue.Name = "lblTotalValue";
             this.lblTotalValue.Size = new System.Drawing.Size(135, 59);
             this.lblTotalValue.TabIndex = 8;
-            this.lblTotalValue.Text = "$0.00";
+            this.lblTotalValue.Text = "Rs. 0.00";
             //
             // btnCheckout
             //
@@ -341,7 +341,7 @@ namespace POSApp.Forms
             this.lblSubtotalValue.Name = "lblSubtotalValue";
             this.lblSubtotalValue.Size = new System.Drawing.Size(49, 21);
             this.lblSubtotalValue.TabIndex = 16;
-            this.lblSubtotalValue.Text = "$0.00";
+            this.lblSubtotalValue.Text = "Rs. 0.00";
             //
             // POSForm
             //

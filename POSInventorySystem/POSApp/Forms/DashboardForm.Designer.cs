@@ -339,7 +339,7 @@ namespace POSApp.Forms
             this.lblSalesTodayAmount.Name = "lblSalesTodayAmount";
             this.lblSalesTodayAmount.Size = new System.Drawing.Size(121, 51);
             this.lblSalesTodayAmount.TabIndex = 1;
-            this.lblSalesTodayAmount.Text = "$0.00";
+            this.lblSalesTodayAmount.Text = "Rs. 0.00";
             //
             // lblSalesTodayTitle
             //

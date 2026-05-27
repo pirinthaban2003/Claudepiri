@@ -380,20 +380,20 @@ namespace POSApp.Forms
             dgvCart.DataSource = cart.Select(i => new {
                 i.ProductName,
                 i.Quantity,
-                UnitPrice = i.UnitPrice.ToString("C"),
-                Discount = i.Discount.ToString("C"),
-                Subtotal = i.Subtotal.ToString("C")
+                UnitPrice = "Rs. " + i.UnitPrice.ToString("N2"),
+                Discount = "Rs. " + i.Discount.ToString("N2"),
+                Subtotal = "Rs. " + i.Subtotal.ToString("N2")
             }).ToList();
 
             total = runningTotal;
-            lblSubtotalValue.Text = total.ToString("C");
+            lblSubtotalValue.Text = "Rs. " + total.ToString("N2");
 
             decimal.TryParse(txtDiscount.Text, out manualDiscount);
 
             decimal finalTotal = (total - autoDiscount + taxTotal) - manualDiscount;
             if (finalTotal < 0) finalTotal = 0;
 
-            lblTotalValue.Text = finalTotal.ToString("C");
+            lblTotalValue.Text = "Rs. " + finalTotal.ToString("N2");
         }
 
         private void txtDiscount_TextChanged(object? sender, EventArgs e)

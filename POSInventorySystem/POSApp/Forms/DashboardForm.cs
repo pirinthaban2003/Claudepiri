@@ -128,7 +128,7 @@ namespace POSApp.Forms
             try
             {
                 var salesToday = _dbHelper.ExecuteScalar("SELECT SUM(FinalAmount) FROM Sales WHERE DATE(SaleDate) = CURDATE()");
-                lblSalesTodayAmount.Text = (salesToday != DBNull.Value ? Convert.ToDecimal(salesToday) : 0).ToString("C");
+                lblSalesTodayAmount.Text = "Rs. " + (salesToday != DBNull.Value ? Convert.ToDecimal(salesToday) : 0).ToString("N2");
 
                 var lowStock = _dbHelper.ExecuteScalar("SELECT COUNT(*) FROM Products WHERE StockQuantity <= MinStockLevel AND IsActive = 1");
                 lblLowStockCount.Text = (lowStock != DBNull.Value ? Convert.ToInt32(lowStock) : 0).ToString();

@@ -84,7 +84,7 @@ namespace POSApp.Forms
             sb.AppendLine(string.Format("{0,-18} {1,13:N2}", "Discount:", _sale.DiscountAmount));
             sb.AppendLine(string.Format("{0,-18} {1,13:N2}", "Tax:", _sale.TaxAmount));
             sb.AppendLine("================================");
-            sb.AppendLine(string.Format("TOTAL: {0,23:C}", _sale.FinalAmount));
+            sb.AppendLine(string.Format("TOTAL: Rs. {0,19:N2}", _sale.FinalAmount));
 
             // Loyalty Points Info
             if (_sale.CustomerID.HasValue)
