@@ -43,6 +43,8 @@ namespace POSApp.Forms
             //
             // pnlForm
             //
+            this.btnBack = new System.Windows.Forms.Button();
+            this.pnlForm.Controls.Add(this.btnBack);
             this.pnlForm.Controls.Add(this.lblFormTitle);
             this.pnlForm.Controls.Add(this.lblUsername);
             this.pnlForm.Controls.Add(this.txtUsername);
@@ -72,10 +74,20 @@ namespace POSApp.Forms
             this.lblFormTitle.TabIndex = 11;
             this.lblFormTitle.Text = "Add New User";
             //
+            // btnBack
+            //
+            this.btnBack.Location = new System.Drawing.Point(5, 5);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(40, 25);
+            this.btnBack.TabIndex = 22;
+            this.btnBack.Text = "←";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            //
             // lblUsername
             //
             this.lblUsername.AutoSize = true;
-            this.lblUsername.Location = new System.Drawing.Point(20, 70);
+            this.lblUsername.Location = new System.Drawing.Point(20, 40);
             this.lblUsername.Name = "lblUsername";
             this.lblUsername.Size = new System.Drawing.Size(63, 15);
             this.lblUsername.TabIndex = 1;
@@ -280,5 +292,6 @@ namespace POSApp.Forms
         private System.Windows.Forms.Button btnPromote;
         private System.Windows.Forms.Button btnDemote;
         private System.Windows.Forms.Button btnToggleStatus;
+        private System.Windows.Forms.Button btnBack;
     }
 }

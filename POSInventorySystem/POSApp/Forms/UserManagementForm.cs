@@ -132,6 +132,11 @@ namespace POSApp.Forms
             }
         }
 
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         private void ClearForm()
         {
             txtUsername.Clear();

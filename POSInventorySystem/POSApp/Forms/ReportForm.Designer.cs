@@ -17,6 +17,7 @@ namespace POSApp.Forms
 
         private void InitializeComponent()
         {
+            this.btnBack = new System.Windows.Forms.Button();
             this.dgvReports = new System.Windows.Forms.DataGridView();
             this.btnDailySales = new System.Windows.Forms.Button();
             this.btnLowStock = new System.Windows.Forms.Button();
@@ -35,6 +36,16 @@ namespace POSApp.Forms
             this.dgvReports.ReadOnly = true;
             this.dgvReports.Size = new System.Drawing.Size(760, 330);
             this.dgvReports.TabIndex = 0;
+            //
+            // btnBack
+            //
+            this.btnBack.Location = new System.Drawing.Point(5, 5);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(40, 25);
+            this.btnBack.TabIndex = 22;
+            this.btnBack.Text = "←";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             //
             // btnDailySales
             //
@@ -81,6 +92,7 @@ namespace POSApp.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnBack);
             this.Controls.Add(this.lblReportTitle);
             this.Controls.Add(this.btnTopProducts);
             this.Controls.Add(this.btnLowStock);
@@ -98,5 +110,6 @@ namespace POSApp.Forms
         private System.Windows.Forms.Button btnLowStock;
         private System.Windows.Forms.Button btnTopProducts;
         private System.Windows.Forms.Label lblReportTitle;
+        private System.Windows.Forms.Button btnBack;
     }
 }

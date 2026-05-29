@@ -36,6 +36,8 @@ namespace POSApp.Forms
             // pnlLeft
             //
             this.pnlLeft.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
+            this.btnBack = new System.Windows.Forms.Button();
+            this.pnlLeft.Controls.Add(this.btnBack);
             this.pnlLeft.Controls.Add(this.lblFormTitle);
             this.pnlLeft.Controls.Add(this.lblSaleID);
             this.pnlLeft.Controls.Add(this.txtSaleID);
@@ -49,6 +51,16 @@ namespace POSApp.Forms
             this.pnlLeft.Padding = new System.Windows.Forms.Padding(20);
             this.pnlLeft.Size = new System.Drawing.Size(300, 600);
             this.pnlLeft.TabIndex = 0;
+            //
+            // btnBack
+            //
+            this.btnBack.Location = new System.Drawing.Point(5, 5);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(40, 25);
+            this.btnBack.TabIndex = 22;
+            this.btnBack.Text = "←";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             //
             // lblFormTitle
             //
@@ -184,5 +196,6 @@ namespace POSApp.Forms
         private System.Windows.Forms.Panel pnlRight;
         private System.Windows.Forms.Label lblItems;
         private System.Windows.Forms.DataGridView dgvSaleItems;
+        private System.Windows.Forms.Button btnBack;
     }
 }

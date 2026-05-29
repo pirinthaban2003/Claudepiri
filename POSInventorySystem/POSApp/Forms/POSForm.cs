@@ -519,6 +519,11 @@ namespace POSApp.Forms
             MessageBox.Show("Sale held successfully.");
         }
 
+        private void btnBack_Click(object? sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         private void btnResume_Click(object? sender, EventArgs e)
         {
             if (heldCart == null) return;

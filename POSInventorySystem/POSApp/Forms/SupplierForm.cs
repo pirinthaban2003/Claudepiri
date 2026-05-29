@@ -131,6 +131,11 @@ namespace POSApp.Forms
             }
         }
 
+        private void btnBack_Click(object? sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         private void btnClear_Click(object sender, EventArgs e)
         {
             ClearFields();

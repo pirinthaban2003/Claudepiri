@@ -45,6 +45,8 @@ namespace POSApp.Forms
             //
             this.pnlLeft.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.pnlLeft.Controls.Add(this.lblFormTitle);
+            this.btnBack = new System.Windows.Forms.Button();
+            this.pnlLeft.Controls.Add(this.btnBack);
             this.pnlLeft.Controls.Add(this.lblTitle);
             this.pnlLeft.Controls.Add(this.txtTitle);
             this.pnlLeft.Controls.Add(this.lblCategory);
@@ -62,6 +64,16 @@ namespace POSApp.Forms
             this.pnlLeft.Padding = new System.Windows.Forms.Padding(20);
             this.pnlLeft.Size = new System.Drawing.Size(300, 600);
             this.pnlLeft.TabIndex = 0;
+            //
+            // btnBack
+            //
+            this.btnBack.Location = new System.Drawing.Point(5, 5);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(40, 25);
+            this.btnBack.TabIndex = 22;
+            this.btnBack.Text = "←";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             //
             // lblFormTitle
             //
@@ -271,5 +283,6 @@ namespace POSApp.Forms
         private System.Windows.Forms.Panel pnlSearch;
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Label lblSearch;
+        private System.Windows.Forms.Button btnBack;
     }
 }

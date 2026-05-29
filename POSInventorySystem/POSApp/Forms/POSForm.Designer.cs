@@ -56,6 +56,8 @@ namespace POSApp.Forms
             // pnlSearch
             //
             this.pnlSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.btnBack = new System.Windows.Forms.Button();
+            this.pnlSearch.Controls.Add(this.btnBack);
             this.pnlSearch.Controls.Add(this.lblCustomerContact);
             this.pnlSearch.Controls.Add(this.txtCustomerContact);
             this.pnlSearch.Controls.Add(this.lblBarcodeScan);
@@ -77,10 +79,20 @@ namespace POSApp.Forms
             this.pnlSearch.Size = new System.Drawing.Size(250, 600);
             this.pnlSearch.TabIndex = 17;
             //
+            // btnBack
+            //
+            this.btnBack.Location = new System.Drawing.Point(5, 5);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(40, 25);
+            this.btnBack.TabIndex = 20;
+            this.btnBack.Text = "←";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            //
             // lblCustomerContact
             //
             this.lblCustomerContact.AutoSize = true;
-            this.lblCustomerContact.Location = new System.Drawing.Point(20, 10);
+            this.lblCustomerContact.Location = new System.Drawing.Point(20, 40);
             this.lblCustomerContact.Name = "lblCustomerContact";
             this.lblCustomerContact.Size = new System.Drawing.Size(107, 15);
             this.lblCustomerContact.TabIndex = 16;
@@ -417,5 +429,6 @@ namespace POSApp.Forms
         private System.Windows.Forms.Panel pnlQtyActions;
         private System.Windows.Forms.Button btnQtyPlus;
         private System.Windows.Forms.Button btnQtyMinus;
+        private System.Windows.Forms.Button btnBack;
     }
 }

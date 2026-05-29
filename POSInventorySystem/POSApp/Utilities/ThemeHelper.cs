@@ -61,11 +61,19 @@ namespace POSApp.Utilities
                 {
                     btn.FlatStyle = FlatStyle.Flat;
                     btn.FlatAppearance.BorderSize = 0;
-                    if (btn.BackColor == SystemColors.Control || btn.BackColor == Color.Transparent || btn.BackColor == SecondaryDark || btn.BackColor == Color.White)
+
+                    if (btn.Text == "←")
+                    {
+                        btn.BackColor = Color.FromArgb(60, 60, 65);
+                        btn.ForeColor = AccentBlue;
+                        btn.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+                        btn.Padding = new Padding(0);
+                    }
+                    else if (btn.BackColor == SystemColors.Control || btn.BackColor == Color.Transparent || btn.BackColor == SecondaryDark || btn.BackColor == Color.White)
                     {
                         btn.BackColor = PrimaryDark;
                     }
-                    btn.ForeColor = TextWhite;
+                    btn.ForeColor = btn.Text == "←" ? AccentBlue : TextWhite;
                     btn.Cursor = Cursors.Hand;
                 }
                 else if (control is Label lbl)

@@ -31,7 +31,12 @@ namespace POSApp.Forms
             dgvBatches.DataSource = _inventoryService.GetProductBatches(_productId);
         }
 
-        private void btnAddBatch_Click(object sender, EventArgs e)
+        private void btnBack_Click(object? sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnAddBatch_Click(object? sender, EventArgs e)
         {
             if (!decimal.TryParse(txtCostPrice.Text, out decimal cost))
             {
@@ -81,35 +86,23 @@ namespace POSApp.Forms
     // Manual Designer code for simplicity in this agent environment
     partial class BatchManagementForm
     {
-        private System.Windows.Forms.Label lblProduct;
-        private System.Windows.Forms.DataGridView dgvBatches;
-        private System.Windows.Forms.TextBox txtBatchNumber;
-        private System.Windows.Forms.TextBox txtCostPrice;
-        private System.Windows.Forms.TextBox txtSellingPrice;
-        private System.Windows.Forms.TextBox txtQuantity;
-        private System.Windows.Forms.DateTimePicker dtpExpiry;
-        private System.Windows.Forms.Button btnAddBatch;
-        private System.Windows.Forms.Label lblBatchNum;
-        private System.Windows.Forms.Label lblCost;
-        private System.Windows.Forms.Label lblSelling;
-        private System.Windows.Forms.Label lblQty;
-        private System.Windows.Forms.Label lblExpiry;
+        private System.Windows.Forms.Label lblProduct = new System.Windows.Forms.Label();
+        private System.Windows.Forms.DataGridView dgvBatches = new System.Windows.Forms.DataGridView();
+        private System.Windows.Forms.TextBox txtBatchNumber = new System.Windows.Forms.TextBox();
+        private System.Windows.Forms.TextBox txtCostPrice = new System.Windows.Forms.TextBox();
+        private System.Windows.Forms.TextBox txtSellingPrice = new System.Windows.Forms.TextBox();
+        private System.Windows.Forms.TextBox txtQuantity = new System.Windows.Forms.TextBox();
+        private System.Windows.Forms.DateTimePicker dtpExpiry = new System.Windows.Forms.DateTimePicker();
+        private System.Windows.Forms.Button btnAddBatch = new System.Windows.Forms.Button();
+        private System.Windows.Forms.Label lblBatchNum = new System.Windows.Forms.Label();
+        private System.Windows.Forms.Label lblCost = new System.Windows.Forms.Label();
+        private System.Windows.Forms.Label lblSelling = new System.Windows.Forms.Label();
+        private System.Windows.Forms.Label lblQty = new System.Windows.Forms.Label();
+        private System.Windows.Forms.Label lblExpiry = new System.Windows.Forms.Label();
+        private System.Windows.Forms.Button btnBack = new System.Windows.Forms.Button();
 
         private void InitializeComponent()
         {
-            this.lblProduct = new System.Windows.Forms.Label();
-            this.dgvBatches = new System.Windows.Forms.DataGridView();
-            this.txtBatchNumber = new System.Windows.Forms.TextBox();
-            this.txtCostPrice = new System.Windows.Forms.TextBox();
-            this.txtSellingPrice = new System.Windows.Forms.TextBox();
-            this.txtQuantity = new System.Windows.Forms.TextBox();
-            this.dtpExpiry = new System.Windows.Forms.DateTimePicker();
-            this.btnAddBatch = new System.Windows.Forms.Button();
-            this.lblBatchNum = new System.Windows.Forms.Label();
-            this.lblCost = new System.Windows.Forms.Label();
-            this.lblSelling = new System.Windows.Forms.Label();
-            this.lblQty = new System.Windows.Forms.Label();
-            this.lblExpiry = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBatches)).BeginInit();
             this.SuspendLayout();
 
@@ -148,6 +141,12 @@ namespace POSApp.Forms
             this.lblExpiry.Location = new Point(left, top + spacing * 4);
             this.dtpExpiry.Location = new Point(left + labelWidth, top + spacing * 4);
             this.dtpExpiry.Width = inputWidth;
+
+            this.btnBack.Text = "←";
+            this.btnBack.Location = new Point(5, 5);
+            this.btnBack.Size = new Size(40, 25);
+            this.btnBack.Click += new EventHandler(btnBack_Click);
+            this.Controls.Add(btnBack);
 
             this.btnAddBatch.Text = "ADD BATCH";
             this.btnAddBatch.Location = new Point(left + labelWidth, top + spacing * 5);

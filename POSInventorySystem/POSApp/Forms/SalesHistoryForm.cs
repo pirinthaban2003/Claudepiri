@@ -93,12 +93,17 @@ namespace POSApp.Forms
             }
         }
 
-        private void btnSearch_Click(object sender, EventArgs e)
+        private void btnSearch_Click(object? sender, EventArgs e)
         {
             LoadSales(txtSearchID.Text.Trim());
         }
 
-        private void btnRefresh_Click(object sender, EventArgs e)
+        private void btnBack_Click(object? sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnRefresh_Click(object? sender, EventArgs e)
         {
             txtSearchID.Clear();
             LoadSales();
@@ -107,25 +112,18 @@ namespace POSApp.Forms
 
     partial class SalesHistoryForm
     {
-        private System.Windows.Forms.DataGridView dgvSales;
-        private System.Windows.Forms.DataGridView dgvDetails;
-        private System.Windows.Forms.TextBox txtSearchID;
-        private System.Windows.Forms.Button btnSearch;
-        private System.Windows.Forms.Button btnRefresh;
-        private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.Label lblDetailTitle;
-        private System.Windows.Forms.Panel pnlSearch;
+        private System.Windows.Forms.DataGridView dgvSales = new System.Windows.Forms.DataGridView();
+        private System.Windows.Forms.DataGridView dgvDetails = new System.Windows.Forms.DataGridView();
+        private System.Windows.Forms.TextBox txtSearchID = new System.Windows.Forms.TextBox();
+        private System.Windows.Forms.Button btnSearch = new System.Windows.Forms.Button();
+        private System.Windows.Forms.Button btnRefresh = new System.Windows.Forms.Button();
+        private System.Windows.Forms.Label lblTitle = new System.Windows.Forms.Label();
+        private System.Windows.Forms.Label lblDetailTitle = new System.Windows.Forms.Label();
+        private System.Windows.Forms.Panel pnlSearch = new System.Windows.Forms.Panel();
+        private System.Windows.Forms.Button btnBack = new System.Windows.Forms.Button();
 
         private void InitializeComponent()
         {
-            this.dgvSales = new System.Windows.Forms.DataGridView();
-            this.dgvDetails = new System.Windows.Forms.DataGridView();
-            this.txtSearchID = new System.Windows.Forms.TextBox();
-            this.btnSearch = new System.Windows.Forms.Button();
-            this.btnRefresh = new System.Windows.Forms.Button();
-            this.lblTitle = new System.Windows.Forms.Label();
-            this.lblDetailTitle = new System.Windows.Forms.Label();
-            this.pnlSearch = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSales)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetails)).BeginInit();
             this.pnlSearch.SuspendLayout();
@@ -137,6 +135,12 @@ namespace POSApp.Forms
             this.lblTitle.Text = "Sales Records";
 
             this.pnlSearch.Controls.Add(this.btnRefresh);
+            this.btnBack.Text = "←";
+            this.btnBack.Location = new Point(5, 5);
+            this.btnBack.Size = new Size(40, 25);
+            this.btnBack.Click += new EventHandler(btnBack_Click);
+            this.Controls.Add(btnBack);
+
             this.pnlSearch.Controls.Add(this.btnSearch);
             this.pnlSearch.Controls.Add(this.txtSearchID);
             this.pnlSearch.Location = new System.Drawing.Point(20, 60);

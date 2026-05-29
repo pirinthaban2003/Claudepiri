@@ -74,6 +74,11 @@ namespace POSApp.Forms
             }
         }
 
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         private void btnProcessRefund_Click(object sender, EventArgs e)
         {
             if (!int.TryParse(txtSaleID.Text, out int saleId)) return;

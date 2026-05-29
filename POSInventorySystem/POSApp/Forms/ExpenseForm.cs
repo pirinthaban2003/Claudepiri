@@ -69,6 +69,11 @@ namespace POSApp.Forms
             }
         }
 
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtTitle.Text) || !decimal.TryParse(txtAmount.Text, out decimal amount))

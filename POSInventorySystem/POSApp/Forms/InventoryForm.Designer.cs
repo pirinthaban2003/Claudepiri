@@ -69,6 +69,8 @@ namespace POSApp.Forms
             //
             // pnlForm
             //
+            this.btnBack = new System.Windows.Forms.Button();
+            this.pnlForm.Controls.Add(this.btnBack);
             this.pnlForm.Controls.Add(this.btnAddCategory);
             this.pnlForm.Controls.Add(this.chkIsBOGO);
             this.pnlForm.Controls.Add(this.lblDiscountRate);
@@ -104,6 +106,16 @@ namespace POSApp.Forms
             this.pnlForm.Name = "pnlForm";
             this.pnlForm.Size = new System.Drawing.Size(300, 600);
             this.pnlForm.TabIndex = 20;
+            //
+            // btnBack
+            //
+            this.btnBack.Location = new System.Drawing.Point(5, 5);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(40, 25);
+            this.btnBack.TabIndex = 33;
+            this.btnBack.Text = "←";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             //
             // lblUnitType
             //
@@ -432,6 +444,7 @@ namespace POSApp.Forms
         private System.Windows.Forms.ComboBox cmbSupplier;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnManageBatches;
+        private System.Windows.Forms.Button btnBack;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Label lblProductName;
