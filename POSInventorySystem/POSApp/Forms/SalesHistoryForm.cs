@@ -28,7 +28,7 @@ namespace POSApp.Forms
             btnRefresh.BackColor = ThemeHelper.AccentGreen;
         }
 
-        private void SalesHistoryForm_Load(object sender, EventArgs e)
+        private void SalesHistoryForm_Load(object? sender, EventArgs e)
         {
             LoadSales();
         }
@@ -62,7 +62,7 @@ namespace POSApp.Forms
             }
         }
 
-        private void dgvSales_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvSales_CellClick(object? sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
@@ -107,92 +107,6 @@ namespace POSApp.Forms
         {
             txtSearchID.Clear();
             LoadSales();
-        }
-    }
-
-    partial class SalesHistoryForm
-    {
-        private System.Windows.Forms.DataGridView dgvSales = new System.Windows.Forms.DataGridView();
-        private System.Windows.Forms.DataGridView dgvDetails = new System.Windows.Forms.DataGridView();
-        private System.Windows.Forms.TextBox txtSearchID = new System.Windows.Forms.TextBox();
-        private System.Windows.Forms.Button btnSearch = new System.Windows.Forms.Button();
-        private System.Windows.Forms.Button btnRefresh = new System.Windows.Forms.Button();
-        private System.Windows.Forms.Label lblTitle = new System.Windows.Forms.Label();
-        private System.Windows.Forms.Label lblDetailTitle = new System.Windows.Forms.Label();
-        private System.Windows.Forms.Panel pnlSearch = new System.Windows.Forms.Panel();
-        private System.Windows.Forms.Button btnBack = new System.Windows.Forms.Button();
-
-        private void InitializeComponent()
-        {
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSales)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDetails)).BeginInit();
-            this.pnlSearch.SuspendLayout();
-            this.SuspendLayout();
-
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.Location = new System.Drawing.Point(50, 10);
-            this.lblTitle.Text = "Sales Records";
-
-            this.pnlSearch.Controls.Add(this.btnRefresh);
-            this.btnBack.Text = "←";
-            this.btnBack.Location = new Point(5, 5);
-            this.btnBack.Size = new Size(40, 25);
-            this.btnBack.Click += new EventHandler(btnBack_Click);
-            this.Controls.Add(btnBack);
-
-            this.pnlSearch.Controls.Add(this.btnSearch);
-            this.pnlSearch.Controls.Add(this.txtSearchID);
-            this.pnlSearch.Location = new System.Drawing.Point(20, 60);
-            this.pnlSearch.Size = new System.Drawing.Size(400, 40);
-
-            this.txtSearchID.Location = new Point(0, 5);
-            this.txtSearchID.Width = 150;
-            this.txtSearchID.PlaceholderText = "Enter Sale ID";
-
-            this.btnSearch.Text = "🔍 Search";
-            this.btnSearch.Location = new Point(160, 4);
-            this.btnSearch.Width = 80;
-            this.btnSearch.Click += new EventHandler(btnSearch_Click);
-
-            this.btnRefresh.Text = "🔄 Refresh";
-            this.btnRefresh.Location = new Point(250, 4);
-            this.btnRefresh.Width = 80;
-            this.btnRefresh.Click += new EventHandler(btnRefresh_Click);
-
-            this.dgvSales.Location = new Point(20, 110);
-            this.dgvSales.Size = new Size(800, 250);
-            this.dgvSales.ReadOnly = true;
-            this.dgvSales.AllowUserToAddRows = false;
-            this.dgvSales.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvSales.CellClick += new DataGridViewCellEventHandler(dgvSales_CellClick);
-
-            this.lblDetailTitle.AutoSize = true;
-            this.lblDetailTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.lblDetailTitle.Location = new Point(20, 380);
-            this.lblDetailTitle.Text = "Sale Details";
-
-            this.dgvDetails.Location = new Point(20, 410);
-            this.dgvDetails.Size = new Size(800, 200);
-            this.dgvDetails.ReadOnly = true;
-            this.dgvDetails.AllowUserToAddRows = false;
-            this.dgvDetails.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
-            this.ClientSize = new Size(850, 650);
-            this.Controls.Add(lblTitle);
-            this.Controls.Add(pnlSearch);
-            this.Controls.Add(dgvSales);
-            this.Controls.Add(lblDetailTitle);
-            this.Controls.Add(dgvDetails);
-            this.Text = "Sales History";
-            this.Load += new EventHandler(SalesHistoryForm_Load);
-
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSales)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDetails)).EndInit();
-            this.pnlSearch.ResumeLayout(false);
-            this.pnlSearch.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
         }
     }
 }
