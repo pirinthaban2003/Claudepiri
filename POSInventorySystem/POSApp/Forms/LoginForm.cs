@@ -19,11 +19,13 @@ namespace POSApp.Forms
 
         private void CustomizeComponents()
         {
-            pnlMain.BackColor = ThemeHelper.PrimaryDark;
-            btnLogin.BackColor = ThemeHelper.AccentBlue;
-            lblTitle.ForeColor = ThemeHelper.AccentBlue;
-            lblTitle.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Bold);
-            lblTitle.Text = "SRMS 🏪";
+            pnlMain.BackColor = ThemeHelper.PrimaryLight;
+            ThemeHelper.ApplyModernButton(btnLogin, ThemeHelper.AccentBlue);
+            lblTitle.ForeColor = Color.Black;
+            lblTitle.Font = new System.Drawing.Font("Segoe UI", 32F, System.Drawing.FontStyle.Bold);
+            lblTitle.Text = "SRMS";
+            lblIcon.ForeColor = ThemeHelper.AccentBlue;
+            lblIcon.Text = "🏪";
         }
 
         private void btnLogin_Click(object? sender, EventArgs e)

@@ -6,24 +6,24 @@ namespace POSApp.Utilities
 {
     public static class ThemeHelper
     {
-        // Modern Professional Color Palette
-        public static readonly Color PrimaryDark = Color.FromArgb(30, 30, 35);
-        public static readonly Color SecondaryDark = Color.FromArgb(22, 22, 26);
-        public static readonly Color AccentBlue = Color.FromArgb(0, 150, 255);
-        public static readonly Color AccentGreen = Color.FromArgb(0, 200, 100);
-        public static readonly Color AccentRed = Color.FromArgb(255, 70, 70);
-        public static readonly Color TextWhite = Color.FromArgb(240, 240, 245);
-        public static readonly Color TextLightGray = Color.FromArgb(160, 160, 175);
+        // Modern Light Professional Color Palette (Mockup inspired)
+        public static readonly Color PrimaryLight = Color.White;
+        public static readonly Color SecondaryLight = Color.FromArgb(235, 242, 250);
+        public static readonly Color AccentBlue = Color.FromArgb(0, 120, 215);
+        public static readonly Color AccentGreen = Color.FromArgb(0, 180, 80);
+        public static readonly Color AccentRed = Color.FromArgb(220, 50, 50);
+        public static readonly Color TextDark = Color.FromArgb(30, 30, 30);
+        public static readonly Color TextGray = Color.FromArgb(100, 100, 100);
 
         // Level-based Colors
-        public static readonly Color LevelCritical = Color.FromArgb(180, 30, 30);
-        public static readonly Color LevelWarning = Color.FromArgb(200, 150, 0);
-        public static readonly Color LevelSafe = Color.FromArgb(30, 150, 30);
+        public static readonly Color LevelCritical = Color.FromArgb(255, 200, 200);
+        public static readonly Color LevelWarning = Color.FromArgb(255, 240, 200);
+        public static readonly Color LevelSafe = Color.FromArgb(200, 255, 200);
 
         public static void ApplyTheme(Form form)
         {
-            form.BackColor = SecondaryDark;
-            form.ForeColor = TextWhite;
+            form.BackColor = SecondaryLight;
+            form.ForeColor = TextDark;
             form.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             form.StartPosition = FormStartPosition.CenterScreen;
 
@@ -32,11 +32,11 @@ namespace POSApp.Utilities
 
         public static void ApplyCardStyle(Panel pnl)
         {
-            pnl.BackColor = Color.FromArgb(38, 38, 42);
+            pnl.BackColor = PrimaryLight;
             pnl.BorderStyle = BorderStyle.None;
             pnl.Paint += (s, e) =>
             {
-                using (var pen = new Pen(Color.FromArgb(60, 60, 65), 1))
+                using (var pen = new Pen(Color.FromArgb(200, 200, 200), 1))
                 {
                     e.Graphics.DrawRectangle(pen, 0, 0, pnl.Width - 1, pnl.Height - 1);
                 }
@@ -46,9 +46,10 @@ namespace POSApp.Utilities
         public static void ApplyModernButton(Button btn, Color backColor)
         {
             btn.FlatStyle = FlatStyle.Flat;
-            btn.FlatAppearance.BorderSize = 0;
-            btn.BackColor = backColor;
-            btn.ForeColor = Color.White;
+            btn.FlatAppearance.BorderSize = 1;
+            btn.FlatAppearance.BorderColor = backColor;
+            btn.BackColor = Color.White;
+            btn.ForeColor = backColor;
             btn.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btn.Cursor = Cursors.Hand;
         }
@@ -60,83 +61,83 @@ namespace POSApp.Utilities
                 if (control is Button btn)
                 {
                     btn.FlatStyle = FlatStyle.Flat;
-                    btn.FlatAppearance.BorderSize = 0;
 
                     if (btn.Text == "←")
                     {
-                        btn.BackColor = Color.FromArgb(60, 60, 65);
+                        btn.FlatAppearance.BorderSize = 0;
+                        btn.BackColor = Color.Transparent;
                         btn.ForeColor = AccentBlue;
                         btn.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-                        btn.Padding = new Padding(0);
                     }
-                    else if (btn.BackColor == SystemColors.Control || btn.BackColor == Color.Transparent || btn.BackColor == SecondaryDark || btn.BackColor == Color.White)
+                    else if (btn.BackColor == SystemColors.Control || btn.BackColor == Color.Transparent || btn.BackColor == PrimaryLight || btn.BackColor == Color.FromArgb(22, 22, 26))
                     {
-                        btn.BackColor = PrimaryDark;
+                        btn.BackColor = AccentBlue;
+                        btn.ForeColor = Color.White;
+                        btn.FlatAppearance.BorderSize = 0;
                     }
-                    btn.ForeColor = btn.Text == "←" ? AccentBlue : TextWhite;
                     btn.Cursor = Cursors.Hand;
                 }
                 else if (control is Label lbl)
                 {
-                    if (lbl.ForeColor == SystemColors.ControlText || lbl.ForeColor == Color.Black)
-                        lbl.ForeColor = TextWhite;
+                    if (lbl.ForeColor == Color.White || lbl.ForeColor == Color.FromArgb(240, 240, 245))
+                        lbl.ForeColor = TextDark;
 
-                    if (lbl.BackColor == SystemColors.Control || lbl.BackColor == Color.White)
+                    if (lbl.BackColor == Color.FromArgb(22, 22, 26))
                         lbl.BackColor = Color.Transparent;
                 }
                 else if (control is TextBox txt)
                 {
-                    control.BackColor = PrimaryDark;
-                    control.ForeColor = TextWhite;
+                    control.BackColor = PrimaryLight;
+                    control.ForeColor = TextDark;
                     txt.BorderStyle = BorderStyle.FixedSingle;
                 }
                 else if (control is ComboBox cmb)
                 {
                     try
                     {
-                        cmb.BackColor = PrimaryDark;
-                        cmb.ForeColor = TextWhite;
+                        cmb.BackColor = PrimaryLight;
+                        cmb.ForeColor = TextDark;
                     }
                     catch { }
                 }
                 else if (control is NumericUpDown num)
                 {
-                    control.BackColor = PrimaryDark;
-                    control.ForeColor = TextWhite;
+                    control.BackColor = PrimaryLight;
+                    control.ForeColor = TextDark;
                 }
                 else if (control is DataGridView dgv)
                 {
-                    dgv.BackgroundColor = PrimaryDark;
-                    dgv.ForeColor = TextWhite;
-                    dgv.BorderStyle = BorderStyle.None;
+                    dgv.BackgroundColor = Color.White;
+                    dgv.ForeColor = TextDark;
+                    dgv.BorderStyle = BorderStyle.FixedSingle;
                     dgv.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-                    dgv.GridColor = Color.FromArgb(50, 50, 60);
+                    dgv.GridColor = Color.FromArgb(230, 230, 230);
 
                     dgv.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-                    dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(40, 40, 50);
-                    dgv.ColumnHeadersDefaultCellStyle.ForeColor = TextWhite;
+                    dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
+                    dgv.ColumnHeadersDefaultCellStyle.ForeColor = TextDark;
                     dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI Semibold", 10F);
                     dgv.ColumnHeadersHeight = 40;
                     dgv.RowTemplate.Height = 35;
                     dgv.EnableHeadersVisualStyles = false;
 
-                    dgv.DefaultCellStyle.BackColor = PrimaryDark;
-                    dgv.DefaultCellStyle.ForeColor = TextWhite;
-                    dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(60, 60, 80);
+                    dgv.DefaultCellStyle.BackColor = Color.White;
+                    dgv.DefaultCellStyle.ForeColor = TextDark;
+                    dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(235, 245, 255);
                     dgv.DefaultCellStyle.SelectionForeColor = AccentBlue;
                     dgv.DefaultCellStyle.Padding = new Padding(10, 0, 10, 0);
-                    dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(35, 35, 42);
+                    dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(250, 250, 250);
                     dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 }
                 else if (control is Panel pnl)
                 {
-                    if (pnl.BackColor == SystemColors.Control || pnl.BackColor == Color.White)
-                        pnl.BackColor = SecondaryDark;
+                    if (pnl.BackColor == Color.FromArgb(22, 22, 26) || pnl.BackColor == Color.FromArgb(30, 30, 35))
+                        pnl.BackColor = PrimaryLight;
                 }
                 else if (control is ListBox lst)
                 {
-                    lst.BackColor = PrimaryDark;
-                    lst.ForeColor = TextWhite;
+                    lst.BackColor = PrimaryLight;
+                    lst.ForeColor = TextDark;
                     lst.BorderStyle = BorderStyle.None;
                 }
 

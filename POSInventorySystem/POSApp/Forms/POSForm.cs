@@ -40,12 +40,12 @@ namespace POSApp.Forms
 
         private void CustomizeComponents()
         {
-            pnlSearch.BackColor = ThemeHelper.PrimaryDark;
-            pnlPayment.BackColor = ThemeHelper.PrimaryDark;
+            pnlSearch.BackColor = Color.White;
+            pnlPayment.BackColor = Color.White;
             btnCheckout.BackColor = ThemeHelper.AccentBlue;
             btnAddToCart.BackColor = ThemeHelper.AccentGreen;
-            btnRedeemPoints.BackColor = ThemeHelper.AccentBlue;
-            btnUseWallet.BackColor = ThemeHelper.AccentBlue;
+            ThemeHelper.ApplyModernButton(btnRedeemPoints, ThemeHelper.AccentBlue);
+            ThemeHelper.ApplyModernButton(btnUseWallet, ThemeHelper.AccentBlue);
             lblTotalValue.ForeColor = ThemeHelper.AccentGreen;
 
             // Remove global AcceptButton to allow context-sensitive Enter handling

@@ -23,30 +23,31 @@ namespace POSApp.Forms
             this.lblUsername = new System.Windows.Forms.Label();
             this.lblPassword = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
+            this.lblIcon = new System.Windows.Forms.Label();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.pnlMain.SuspendLayout();
             this.SuspendLayout();
             //
             // txtUsername
             //
-            this.txtUsername.Location = new System.Drawing.Point(30, 100);
+            this.txtUsername.Location = new System.Drawing.Point(40, 110);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(290, 23);
+            this.txtUsername.Size = new System.Drawing.Size(320, 30);
             this.txtUsername.TabIndex = 0;
             //
             // txtPassword
             //
-            this.txtPassword.Location = new System.Drawing.Point(30, 150);
+            this.txtPassword.Location = new System.Drawing.Point(40, 180);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(290, 23);
+            this.txtPassword.Size = new System.Drawing.Size(320, 30);
             this.txtPassword.TabIndex = 1;
             //
             // btnLogin
             //
-            this.btnLogin.Location = new System.Drawing.Point(30, 200);
+            this.btnLogin.Location = new System.Drawing.Point(40, 240);
             this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(290, 40);
+            this.btnLogin.Size = new System.Drawing.Size(320, 50);
             this.btnLogin.TabIndex = 2;
             this.btnLogin.Text = "LOGIN";
             this.btnLogin.UseVisualStyleBackColor = true;
@@ -55,42 +56,53 @@ namespace POSApp.Forms
             // lblUsername
             //
             this.lblUsername.AutoSize = true;
-            this.lblUsername.Location = new System.Drawing.Point(30, 80);
+            this.lblUsername.Location = new System.Drawing.Point(40, 90);
             this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(60, 15);
+            this.lblUsername.Size = new System.Drawing.Size(63, 15);
             this.lblUsername.TabIndex = 3;
             this.lblUsername.Text = "Username:";
             //
             // lblPassword
             //
             this.lblPassword.AutoSize = true;
-            this.lblPassword.Location = new System.Drawing.Point(30, 130);
+            this.lblPassword.Location = new System.Drawing.Point(40, 160);
             this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(57, 15);
+            this.lblPassword.Size = new System.Drawing.Size(60, 15);
             this.lblPassword.TabIndex = 4;
             this.lblPassword.Text = "Password:";
             //
             // lblTitle
             //
             this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblTitle.Location = new System.Drawing.Point(30, 20);
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 32F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblTitle.Location = new System.Drawing.Point(40, 20);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(107, 45);
+            this.lblTitle.Size = new System.Drawing.Size(138, 59);
             this.lblTitle.TabIndex = 5;
             this.lblTitle.Text = "SRMS";
             //
+            // lblIcon
+            //
+            this.lblIcon.AutoSize = true;
+            this.lblIcon.Font = new System.Drawing.Font("Segoe UI", 32F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblIcon.Location = new System.Drawing.Point(180, 20);
+            this.lblIcon.Name = "lblIcon";
+            this.lblIcon.Size = new System.Drawing.Size(67, 59);
+            this.lblIcon.TabIndex = 7;
+            this.lblIcon.Text = "🏪";
+            //
             // pnlMain
             //
+            this.pnlMain.Controls.Add(this.lblIcon);
             this.pnlMain.Controls.Add(this.lblTitle);
             this.pnlMain.Controls.Add(this.lblPassword);
             this.pnlMain.Controls.Add(this.lblUsername);
             this.pnlMain.Controls.Add(this.btnLogin);
             this.pnlMain.Controls.Add(this.txtPassword);
             this.pnlMain.Controls.Add(this.txtUsername);
-            this.pnlMain.Location = new System.Drawing.Point(50, 50);
+            this.pnlMain.Location = new System.Drawing.Point(25, 25);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(350, 300);
+            this.pnlMain.Size = new System.Drawing.Size(400, 350);
             this.pnlMain.TabIndex = 6;
             //
             // LoginForm
@@ -116,6 +128,7 @@ namespace POSApp.Forms
         private System.Windows.Forms.Label lblUsername;
         private System.Windows.Forms.Label lblPassword;
         private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.Label lblIcon;
         private System.Windows.Forms.Panel pnlMain;
     }
 }

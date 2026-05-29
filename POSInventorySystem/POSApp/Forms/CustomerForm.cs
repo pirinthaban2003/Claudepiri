@@ -24,8 +24,8 @@ namespace POSApp.Forms
 
         private void CustomizeComponents()
         {
-            pnlForm.BackColor = ThemeHelper.SecondaryDark;
-            pnlGrid.BackColor = ThemeHelper.PrimaryDark;
+            pnlForm.BackColor = Color.White;
+            pnlGrid.BackColor = Color.White;
             btnSave.BackColor = ThemeHelper.AccentBlue;
             btnDelete.BackColor = ThemeHelper.AccentRed;
             btnViewHistory.BackColor = ThemeHelper.AccentBlue;

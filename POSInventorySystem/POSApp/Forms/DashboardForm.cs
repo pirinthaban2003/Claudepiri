@@ -29,11 +29,11 @@ namespace POSApp.Forms
 
         private void CustomizeComponents()
         {
-            pnlSidebar.BackColor = ThemeHelper.PrimaryDark;
-            pnlHeader.BackColor = ThemeHelper.SecondaryDark;
+            pnlSidebar.BackColor = ThemeHelper.AccentBlue;
+            pnlHeader.BackColor = Color.White;
             lblTitle.ForeColor = ThemeHelper.AccentBlue;
-            lstAlerts.BackColor = ThemeHelper.PrimaryDark;
-            lstAlerts.ForeColor = ThemeHelper.TextWhite;
+            lstAlerts.BackColor = Color.White;
+            lstAlerts.ForeColor = ThemeHelper.TextDark;
 
             foreach (Control ctrl in pnlSidebar.Controls)
             {
@@ -41,6 +41,9 @@ namespace POSApp.Forms
                 {
                     btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
                     btn.Padding = new Padding(20, 0, 0, 0);
+                    btn.BackColor = ThemeHelper.AccentBlue;
+                    btn.ForeColor = Color.White;
+                    btn.FlatAppearance.BorderSize = 0;
                 }
             }
 
@@ -193,14 +196,14 @@ namespace POSApp.Forms
 
                 if (rect.Width > 0 && rect.Height > 0)
                 {
-                    using (var brush = new System.Drawing.Drawing2D.LinearGradientBrush(rect, ThemeHelper.AccentBlue, Color.FromArgb(0, 80, 150), 90F))
+                    using (var brush = new System.Drawing.Drawing2D.LinearGradientBrush(rect, ThemeHelper.AccentBlue, Color.FromArgb(100, 180, 255), 90F))
                     {
                         g.FillRectangle(brush, rect);
                     }
                 }
 
-                g.DrawString(_salesTrend[i].ToString("N0"), this.Font, Brushes.White, rect.X, rect.Y - 20);
-                g.DrawString(DateTime.Now.AddDays(i - 6).ToString("dd/MM"), this.Font, Brushes.LightGray, rect.X, pnlChart.Height - 20);
+                g.DrawString(_salesTrend[i].ToString("N0"), this.Font, Brushes.DimGray, rect.X, rect.Y - 20);
+                g.DrawString(DateTime.Now.AddDays(i - 6).ToString("dd/MM"), this.Font, Brushes.Gray, rect.X, pnlChart.Height - 20);
             }
         }
 
