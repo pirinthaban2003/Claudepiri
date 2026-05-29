@@ -26,6 +26,7 @@ namespace POSApp.Forms
             this.btnSave = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
+            this.btnViewHistory = new System.Windows.Forms.Button();
             this.lblCustomerName = new System.Windows.Forms.Label();
             this.lblPhone = new System.Windows.Forms.Label();
             this.lblEmail = new System.Windows.Forms.Label();
@@ -65,6 +66,7 @@ namespace POSApp.Forms
             this.pnlForm.Controls.Add(this.lblEmail);
             this.pnlForm.Controls.Add(this.lblPhone);
             this.pnlForm.Controls.Add(this.lblCustomerName);
+            this.pnlForm.Controls.Add(this.btnViewHistory);
             this.pnlForm.Controls.Add(this.btnClear);
             this.pnlForm.Controls.Add(this.btnDelete);
             this.pnlForm.Controls.Add(this.btnSave);
@@ -172,6 +174,16 @@ namespace POSApp.Forms
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             //
+            // btnViewHistory
+            //
+            this.btnViewHistory.Location = new System.Drawing.Point(20, 325);
+            this.btnViewHistory.Name = "btnViewHistory";
+            this.btnViewHistory.Size = new System.Drawing.Size(260, 35);
+            this.btnViewHistory.TabIndex = 23;
+            this.btnViewHistory.Text = "📜 View Sales History";
+            this.btnViewHistory.UseVisualStyleBackColor = true;
+            this.btnViewHistory.Click += new System.EventHandler(this.btnViewHistory_Click);
+            //
             // btnBack
             //
             this.btnBack.Location = new System.Drawing.Point(5, 5);
@@ -271,6 +283,7 @@ namespace POSApp.Forms
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Button btnViewHistory;
         private System.Windows.Forms.Label lblCustomerName;
         private System.Windows.Forms.Label lblPhone;
         private System.Windows.Forms.Label lblEmail;

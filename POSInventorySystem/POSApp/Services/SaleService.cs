@@ -74,8 +74,8 @@ namespace POSApp.Services
                     try
                     {
                         // Insert Sale
-                        string saleQuery = @"INSERT INTO Sales (CustomerID, UserID, TotalAmount, DiscountAmount, TaxAmount, FinalAmount)
-                                           VALUES (@custId, @userId, @total, @discount, @tax, @final);
+                        string saleQuery = @"INSERT INTO Sales (CustomerID, UserID, TotalAmount, DiscountAmount, TaxAmount, FinalAmount, RedeemedPoints, WalletDeduction)
+                                           VALUES (@custId, @userId, @total, @discount, @tax, @final, @redeemed, @walletDed);
                                            SELECT LAST_INSERT_ID();";
                         MySqlCommand saleCmd = new MySqlCommand(saleQuery, conn, trans);
                         saleCmd.Parameters.AddWithValue("@custId", sale.CustomerID ?? (object)DBNull.Value);
@@ -84,6 +84,8 @@ namespace POSApp.Services
                         saleCmd.Parameters.AddWithValue("@discount", sale.DiscountAmount);
                         saleCmd.Parameters.AddWithValue("@tax", sale.TaxAmount);
                         saleCmd.Parameters.AddWithValue("@final", sale.FinalAmount);
+                        saleCmd.Parameters.AddWithValue("@redeemed", sale.RedeemedPoints);
+                        saleCmd.Parameters.AddWithValue("@walletDed", sale.WalletDeduction);
                         int saleId = Convert.ToInt32(saleCmd.ExecuteScalar());
                         sale.SaleID = saleId;
 
@@ -140,9 +142,21 @@ namespace POSApp.Services
                             stockCmd.ExecuteNonQuery();
                         }
 
-                        // Handle Loyalty Points (1 point for every 100 spent)
-                        if (sale.CustomerID.HasValue && sale.FinalAmount > 0)
+                    // Handle Customer Updates (Points redemption, Wallet usage, and new points earning)
+                    if (sale.CustomerID.HasValue)
                         {
+                        // 1. Apply deductions (Points redeemed and Wallet used)
+                        if (sale.RedeemedPoints > 0 || sale.WalletDeduction > 0)
+                        {
+                            string deductQuery = "UPDATE Customers SET LoyaltyPoints = LoyaltyPoints - @redeemed, WalletBalance = WalletBalance - @wallet WHERE CustomerID = @id";
+                            MySqlCommand deductCmd = new MySqlCommand(deductQuery, conn, trans);
+                            deductCmd.Parameters.AddWithValue("@redeemed", (int)sale.RedeemedPoints);
+                            deductCmd.Parameters.AddWithValue("@wallet", sale.WalletDeduction);
+                            deductCmd.Parameters.AddWithValue("@id", sale.CustomerID.Value);
+                            deductCmd.ExecuteNonQuery();
+                        }
+
+                        // 2. Earn new points (1 point for every 100 spent in final amount)
                             int pointsEarned = (int)(sale.FinalAmount / 100);
                             if (pointsEarned > 0)
                             {

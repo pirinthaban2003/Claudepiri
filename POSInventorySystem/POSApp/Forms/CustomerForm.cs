@@ -28,6 +28,8 @@ namespace POSApp.Forms
             pnlGrid.BackColor = ThemeHelper.PrimaryDark;
             btnSave.BackColor = ThemeHelper.AccentBlue;
             btnDelete.BackColor = ThemeHelper.AccentRed;
+            btnViewHistory.BackColor = ThemeHelper.AccentBlue;
+            btnViewHistory.Enabled = false;
             txtSearch.TextChanged += (s, e) => LoadCustomers(txtSearch.Text.Trim());
         }
 
@@ -157,6 +159,7 @@ namespace POSApp.Forms
             txtLevel.Clear();
             selectedCustomerId = -1;
             btnSave.Text = "Save (F2)";
+            btnViewHistory.Enabled = false;
         }
 
         private void dgvCustomers_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -172,6 +175,16 @@ namespace POSApp.Forms
                 txtWallet.Text = row.Cells["WalletBalance"].Value?.ToString();
                 txtLevel.Text = row.Cells["LoyaltyLevel"].Value?.ToString();
                 btnSave.Text = "Update (F2)";
+                btnViewHistory.Enabled = true;
+            }
+        }
+
+        private void btnViewHistory_Click(object sender, EventArgs e)
+        {
+            if (selectedCustomerId != -1)
+            {
+                SalesHistoryForm historyForm = new SalesHistoryForm(selectedCustomerId);
+                historyForm.ShowDialog();
             }
         }
     }

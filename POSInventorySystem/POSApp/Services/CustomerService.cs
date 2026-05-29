@@ -86,5 +86,24 @@ namespace POSApp.Services
             string query = "SELECT * FROM Customers WHERE Phone = @phone";
             return _dbHelper.ExecuteQuery(query, new MySqlParameter[] { new MySqlParameter("@phone", phone) });
         }
+
+        public DataTable GetCustomerByID(int id)
+        {
+            string query = "SELECT * FROM Customers WHERE CustomerID = @id";
+            return _dbHelper.ExecuteQuery(query, new MySqlParameter[] { new MySqlParameter("@id", id) });
+        }
+
+        public void UpdateLoyaltyPoints(int customerId, int pointsAdjustment)
+        {
+            _dbHelper.ExecuteNonQuery("UPDATE Customers SET LoyaltyPoints = LoyaltyPoints + @points WHERE CustomerID = @id",
+                new MySqlParameter[] { new MySqlParameter("@points", pointsAdjustment), new MySqlParameter("@id", customerId) });
+            UpdateLoyaltyLevel(customerId);
+        }
+
+        public void UpdateWalletBalance(int customerId, decimal balanceAdjustment)
+        {
+            _dbHelper.ExecuteNonQuery("UPDATE Customers SET WalletBalance = WalletBalance + @balance WHERE CustomerID = @id",
+                new MySqlParameter[] { new MySqlParameter("@balance", balanceAdjustment), new MySqlParameter("@id", customerId) });
+        }
     }
 }

@@ -22,6 +22,9 @@ namespace POSApp.Forms
         private decimal autoDiscount = 0;
         private decimal taxTotal = 0;
         private decimal manualDiscount = 0;
+        private decimal redeemedDiscount = 0;
+        private decimal walletDeduction = 0;
+        private DataRow? currentCustomerRow = null;
 
         public POSForm()
         {
@@ -41,6 +44,8 @@ namespace POSApp.Forms
             pnlPayment.BackColor = ThemeHelper.PrimaryDark;
             btnCheckout.BackColor = ThemeHelper.AccentBlue;
             btnAddToCart.BackColor = ThemeHelper.AccentGreen;
+            btnRedeemPoints.BackColor = ThemeHelper.AccentBlue;
+            btnUseWallet.BackColor = ThemeHelper.AccentBlue;
             lblTotalValue.ForeColor = ThemeHelper.AccentGreen;
 
             // Remove global AcceptButton to allow context-sensitive Enter handling
@@ -61,6 +66,45 @@ namespace POSApp.Forms
             txtCustomerContact.TextChanged += TxtCustomerContact_TextChanged;
             txtBarcodeScan.TextChanged += TxtBarcodeScan_TextChanged;
             txtProductSearch.TextChanged += TxtProductSearch_TextChanged;
+            cmbCustomer.SelectedIndexChanged += CmbCustomer_SelectedIndexChanged;
+
+            btnRedeemPoints.Enabled = false;
+            btnUseWallet.Enabled = false;
+        }
+
+        private void CmbCustomer_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            UpdateCustomerDisplay();
+        }
+
+        private void UpdateCustomerDisplay()
+        {
+            currentCustomerRow = null;
+            lblPointsValue.Text = "0";
+            lblWalletValue.Text = "Rs. 0.00";
+            btnRedeemPoints.Enabled = false;
+            btnUseWallet.Enabled = false;
+            redeemedDiscount = 0;
+            walletDeduction = 0;
+
+            if (cmbCustomer.SelectedValue != null && cmbCustomer.SelectedValue != DBNull.Value)
+            {
+                int customerId = Convert.ToInt32(cmbCustomer.SelectedValue);
+                var dt = _customerService.GetCustomerByID(customerId);
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    currentCustomerRow = dt.Rows[0];
+                    int points = Convert.ToInt32(currentCustomerRow["LoyaltyPoints"]);
+                    decimal wallet = Convert.ToDecimal(currentCustomerRow["WalletBalance"]);
+
+                    lblPointsValue.Text = points.ToString();
+                    lblWalletValue.Text = "Rs. " + wallet.ToString("N2");
+
+                    btnRedeemPoints.Enabled = points > 0;
+                    btnUseWallet.Enabled = wallet > 0;
+                }
+            }
+            UpdateCartGrid();
         }
 
         private void TxtProductSearch_TextChanged(object? sender, EventArgs e)
@@ -447,10 +491,43 @@ namespace POSApp.Forms
 
             decimal.TryParse(txtDiscount.Text, out manualDiscount);
 
-            decimal finalTotal = (total - autoDiscount + taxTotal) - manualDiscount;
+            decimal finalTotal = (total - autoDiscount + taxTotal) - manualDiscount - redeemedDiscount - walletDeduction;
             if (finalTotal < 0) finalTotal = 0;
 
             lblTotalValue.Text = "Rs. " + finalTotal.ToString("N2");
+        }
+
+        private void btnRedeemPoints_Click(object sender, EventArgs e)
+        {
+            if (currentCustomerRow == null) return;
+
+            int points = Convert.ToInt32(currentCustomerRow["LoyaltyPoints"]);
+            decimal finalTotalBeforeRedeem = (total - autoDiscount + taxTotal) - manualDiscount - redeemedDiscount - walletDeduction;
+
+            if (finalTotalBeforeRedeem <= 0) return;
+
+            // Simple rule: 1 point = 1 Rupee
+            decimal maxRedeemable = Math.Min((decimal)points, finalTotalBeforeRedeem);
+
+            redeemedDiscount += maxRedeemable;
+            UpdateCartGrid();
+            MessageBox.Show($"Redeemed {maxRedeemable:N0} points (Rs. {maxRedeemable:N2} discount).");
+        }
+
+        private void btnUseWallet_Click(object sender, EventArgs e)
+        {
+            if (currentCustomerRow == null) return;
+
+            decimal wallet = Convert.ToDecimal(currentCustomerRow["WalletBalance"]);
+            decimal finalTotalBeforeWallet = (total - autoDiscount + taxTotal) - manualDiscount - redeemedDiscount - walletDeduction;
+
+            if (finalTotalBeforeWallet <= 0) return;
+
+            decimal maxDeductible = Math.Min(wallet, finalTotalBeforeWallet);
+
+            walletDeduction += maxDeductible;
+            UpdateCartGrid();
+            MessageBox.Show($"Using Rs. {maxDeductible:N2} from wallet.");
         }
 
         private void txtDiscount_TextChanged(object? sender, EventArgs e)
@@ -466,6 +543,8 @@ namespace POSApp.Forms
             cart.Clear();
             txtCustomerContact.Clear();
             txtBarcodeScan.Clear();
+            redeemedDiscount = 0;
+            walletDeduction = 0;
             UpdateCartGrid();
             txtCustomerContact.Focus();
         }
@@ -552,13 +631,18 @@ namespace POSApp.Forms
                     customerId = Convert.ToInt32(cmbCustomer.SelectedValue);
                 }
 
+                decimal finalAmount = (total - autoDiscount + taxTotal) - manualDiscount - redeemedDiscount - walletDeduction;
+                if (finalAmount < 0) finalAmount = 0;
+
                 Sale sale = new Sale
                 {
                     CustomerID = customerId,
                     TotalAmount = total,
-                    DiscountAmount = autoDiscount + manualDiscount,
+                    DiscountAmount = autoDiscount + manualDiscount + redeemedDiscount,
                     TaxAmount = taxTotal,
-                    FinalAmount = (total - autoDiscount + taxTotal) - manualDiscount > 0 ? (total - autoDiscount + taxTotal) - manualDiscount : 0,
+                    FinalAmount = finalAmount,
+                    RedeemedPoints = redeemedDiscount,
+                    WalletDeduction = walletDeduction,
                     Items = new List<SaleItem>(cart)
                 };
 

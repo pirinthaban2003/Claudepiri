@@ -31,6 +31,12 @@ namespace POSApp.Forms
             this.lblDiscount = new System.Windows.Forms.Label();
             this.lblSubtotal = new System.Windows.Forms.Label();
             this.lblSubtotalValue = new System.Windows.Forms.Label();
+            this.lblLoyaltyPoints = new System.Windows.Forms.Label();
+            this.lblPointsValue = new System.Windows.Forms.Label();
+            this.lblWalletBalance = new System.Windows.Forms.Label();
+            this.lblWalletValue = new System.Windows.Forms.Label();
+            this.btnRedeemPoints = new System.Windows.Forms.Button();
+            this.btnUseWallet = new System.Windows.Forms.Button();
             this.lblProductSearch = new System.Windows.Forms.Label();
             this.txtProductSearch = new System.Windows.Forms.TextBox();
             this.pnlSearch = new System.Windows.Forms.Panel();
@@ -269,6 +275,12 @@ namespace POSApp.Forms
             //
             this.pnlPayment.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlPayment.Controls.Add(this.lblSubtotal);
+            this.pnlPayment.Controls.Add(this.btnUseWallet);
+            this.pnlPayment.Controls.Add(this.btnRedeemPoints);
+            this.pnlPayment.Controls.Add(this.lblWalletValue);
+            this.pnlPayment.Controls.Add(this.lblWalletBalance);
+            this.pnlPayment.Controls.Add(this.lblPointsValue);
+            this.pnlPayment.Controls.Add(this.lblLoyaltyPoints);
             this.pnlPayment.Controls.Add(this.lblSubtotalValue);
             this.pnlPayment.Controls.Add(this.lblDiscount);
             this.pnlPayment.Controls.Add(this.txtDiscount);
@@ -377,6 +389,64 @@ namespace POSApp.Forms
             this.lblSubtotalValue.TabIndex = 16;
             this.lblSubtotalValue.Text = "Rs. 0.00";
             //
+            // lblLoyaltyPoints
+            //
+            this.lblLoyaltyPoints.AutoSize = true;
+            this.lblLoyaltyPoints.Location = new System.Drawing.Point(20, 420);
+            this.lblLoyaltyPoints.Name = "lblLoyaltyPoints";
+            this.lblLoyaltyPoints.Size = new System.Drawing.Size(84, 15);
+            this.lblLoyaltyPoints.TabIndex = 17;
+            this.lblLoyaltyPoints.Text = "Loyalty Points:";
+            //
+            // lblPointsValue
+            //
+            this.lblPointsValue.AutoSize = true;
+            this.lblPointsValue.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblPointsValue.Location = new System.Drawing.Point(20, 440);
+            this.lblPointsValue.Name = "lblPointsValue";
+            this.lblPointsValue.Size = new System.Drawing.Size(17, 19);
+            this.lblPointsValue.TabIndex = 18;
+            this.lblPointsValue.Text = "0";
+            //
+            // btnRedeemPoints
+            //
+            this.btnRedeemPoints.Location = new System.Drawing.Point(130, 430);
+            this.btnRedeemPoints.Name = "btnRedeemPoints";
+            this.btnRedeemPoints.Size = new System.Drawing.Size(100, 30);
+            this.btnRedeemPoints.TabIndex = 19;
+            this.btnRedeemPoints.Text = "Redeem";
+            this.btnRedeemPoints.UseVisualStyleBackColor = true;
+            this.btnRedeemPoints.Click += new System.EventHandler(this.btnRedeemPoints_Click);
+            //
+            // lblWalletBalance
+            //
+            this.lblWalletBalance.AutoSize = true;
+            this.lblWalletBalance.Location = new System.Drawing.Point(20, 470);
+            this.lblWalletBalance.Name = "lblWalletBalance";
+            this.lblWalletBalance.Size = new System.Drawing.Size(87, 15);
+            this.lblWalletBalance.TabIndex = 20;
+            this.lblWalletBalance.Text = "Wallet Balance:";
+            //
+            // lblWalletValue
+            //
+            this.lblWalletValue.AutoSize = true;
+            this.lblWalletValue.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblWalletValue.Location = new System.Drawing.Point(20, 490);
+            this.lblWalletValue.Name = "lblWalletValue";
+            this.lblWalletValue.Size = new System.Drawing.Size(58, 19);
+            this.lblWalletValue.TabIndex = 21;
+            this.lblWalletValue.Text = "Rs. 0.00";
+            //
+            // btnUseWallet
+            //
+            this.btnUseWallet.Location = new System.Drawing.Point(130, 480);
+            this.btnUseWallet.Name = "btnUseWallet";
+            this.btnUseWallet.Size = new System.Drawing.Size(100, 30);
+            this.btnUseWallet.TabIndex = 22;
+            this.btnUseWallet.Text = "Use Wallet";
+            this.btnUseWallet.UseVisualStyleBackColor = true;
+            this.btnUseWallet.Click += new System.EventHandler(this.btnUseWallet_Click);
+            //
             // POSForm
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -417,6 +487,12 @@ namespace POSApp.Forms
         private System.Windows.Forms.Label lblDiscount;
         private System.Windows.Forms.Label lblSubtotal;
         private System.Windows.Forms.Label lblSubtotalValue;
+        private System.Windows.Forms.Label lblLoyaltyPoints;
+        private System.Windows.Forms.Label lblPointsValue;
+        private System.Windows.Forms.Label lblWalletBalance;
+        private System.Windows.Forms.Label lblWalletValue;
+        private System.Windows.Forms.Button btnRedeemPoints;
+        private System.Windows.Forms.Button btnUseWallet;
         private System.Windows.Forms.Panel pnlSearch;
         private System.Windows.Forms.Panel pnlCart;
         private System.Windows.Forms.Panel pnlPayment;

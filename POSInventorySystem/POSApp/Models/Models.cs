@@ -116,6 +116,8 @@ namespace POSApp.Models
         public decimal DiscountAmount { get; set; }
         public decimal TaxAmount { get; set; }
         public decimal FinalAmount { get; set; }
+        public decimal RedeemedPoints { get; set; }
+        public decimal WalletDeduction { get; set; }
         public List<SaleItem> Items { get; set; } = new List<SaleItem>();
     }
 

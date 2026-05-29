@@ -73,9 +73,25 @@ namespace POSApp.Services
 
                     // 4. Ensure other vital tables for POS/Sales/Inventory
                     ExecuteNonQuery(conn, "CREATE TABLE IF NOT EXISTS Sales (SaleID INT AUTO_INCREMENT PRIMARY KEY, SaleDate DATETIME DEFAULT CURRENT_TIMESTAMP, TotalAmount DECIMAL(10,2), FinalAmount DECIMAL(10,2), CustomerID INT, UserID INT, BranchID INT, DiscountAmount DECIMAL(10,2), TaxAmount DECIMAL(10,2))");
+
+                    // Add RedeemedPoints and WalletDeduction to Sales if missing
+                    if (!ColumnExists(conn, "Sales", "RedeemedPoints"))
+                    {
+                        ExecuteNonQuery(conn, "ALTER TABLE Sales ADD COLUMN RedeemedPoints DECIMAL(10,2) DEFAULT 0.00");
+                    }
+                    if (!ColumnExists(conn, "Sales", "WalletDeduction"))
+                    {
+                        ExecuteNonQuery(conn, "ALTER TABLE Sales ADD COLUMN WalletDeduction DECIMAL(10,2) DEFAULT 0.00");
+                    }
+
                     ExecuteNonQuery(conn, "CREATE TABLE IF NOT EXISTS SaleItems (SaleItemID INT AUTO_INCREMENT PRIMARY KEY, SaleID INT, ProductID INT, Quantity INT, Subtotal DECIMAL(10,2), UnitPrice DECIMAL(10,2), Discount DECIMAL(10,2))");
                     ExecuteNonQuery(conn, "CREATE TABLE IF NOT EXISTS InventoryBatches (BatchID INT AUTO_INCREMENT PRIMARY KEY, ProductID INT, Quantity INT, InitialQuantity INT, CostPrice DECIMAL(10,2), SellingPrice DECIMAL(10,2), BatchNumber VARCHAR(50), ExpiryDate DATE, ReceivedDate DATETIME DEFAULT CURRENT_TIMESTAMP)");
                     ExecuteNonQuery(conn, "CREATE TABLE IF NOT EXISTS Customers (CustomerID INT AUTO_INCREMENT PRIMARY KEY, CustomerName VARCHAR(100) NOT NULL, Phone VARCHAR(20) UNIQUE, LoyaltyPoints INT DEFAULT 0, LoyaltyLevel VARCHAR(50) DEFAULT 'Bronze')");
+
+                    if (!ColumnExists(conn, "Customers", "WalletBalance"))
+                    {
+                        ExecuteNonQuery(conn, "ALTER TABLE Customers ADD COLUMN WalletBalance DECIMAL(10,2) DEFAULT 0.00");
+                    }
                     ExecuteNonQuery(conn, "CREATE TABLE IF NOT EXISTS AuditLogs (LogID INT AUTO_INCREMENT PRIMARY KEY, UserID INT, Action VARCHAR(255), ModuleName VARCHAR(100), Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)");
                     ExecuteNonQuery(conn, "CREATE TABLE IF NOT EXISTS Roles (RoleID INT AUTO_INCREMENT PRIMARY KEY, RoleName VARCHAR(50) NOT NULL UNIQUE)");
                     ExecuteNonQuery(conn, "CREATE TABLE IF NOT EXISTS Users (UserID INT AUTO_INCREMENT PRIMARY KEY, Username VARCHAR(50) NOT NULL UNIQUE, PasswordHash VARCHAR(255) NOT NULL, RoleID INT, FullName VARCHAR(100), IsActive BOOLEAN DEFAULT TRUE)");
