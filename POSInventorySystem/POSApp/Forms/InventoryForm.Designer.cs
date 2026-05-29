@@ -245,7 +245,7 @@ namespace POSApp.Forms
             //
             // txtProductName
             //
-            this.txtProductName.Location = new System.Drawing.Point(120, 20);
+            this.txtProductName.Location = new System.Drawing.Point(120, 40);
             this.txtProductName.Name = "txtProductName";
             this.txtProductName.Size = new System.Drawing.Size(160, 23);
             this.txtProductName.TabIndex = 1;
@@ -346,7 +346,7 @@ namespace POSApp.Forms
             // lblProductName
             //
             this.lblProductName.AutoSize = true;
-            this.lblProductName.Location = new System.Drawing.Point(20, 23);
+            this.lblProductName.Location = new System.Drawing.Point(20, 43);
             this.lblProductName.Name = "lblProductName";
             this.lblProductName.Size = new System.Drawing.Size(109, 15);
             this.lblProductName.TabIndex = 12;

@@ -68,7 +68,7 @@ namespace POSApp.Forms
             //
             this.lblFormTitle.AutoSize = true;
             this.lblFormTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblFormTitle.Location = new System.Drawing.Point(20, 20);
+            this.lblFormTitle.Location = new System.Drawing.Point(50, 10);
             this.lblFormTitle.Name = "lblFormTitle";
             this.lblFormTitle.Size = new System.Drawing.Size(130, 25);
             this.lblFormTitle.TabIndex = 11;

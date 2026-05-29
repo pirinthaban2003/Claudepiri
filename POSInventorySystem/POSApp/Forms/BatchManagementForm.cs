@@ -108,7 +108,7 @@ namespace POSApp.Forms
 
             this.lblProduct.AutoSize = true;
             this.lblProduct.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.lblProduct.Location = new System.Drawing.Point(20, 20);
+            this.lblProduct.Location = new System.Drawing.Point(50, 10);
             this.lblProduct.Size = new System.Drawing.Size(400, 21);
 
             this.dgvBatches.Location = new System.Drawing.Point(20, 60);

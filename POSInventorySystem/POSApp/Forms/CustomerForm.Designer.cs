@@ -109,7 +109,7 @@ namespace POSApp.Forms
             //
             // txtCustomerName
             //
-            this.txtCustomerName.Location = new System.Drawing.Point(120, 20);
+            this.txtCustomerName.Location = new System.Drawing.Point(120, 40);
             this.txtCustomerName.Name = "txtCustomerName";
             this.txtCustomerName.Size = new System.Drawing.Size(160, 23);
             this.txtCustomerName.TabIndex = 1;

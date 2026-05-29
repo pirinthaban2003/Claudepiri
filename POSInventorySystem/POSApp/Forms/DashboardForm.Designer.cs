@@ -93,7 +93,7 @@ namespace POSApp.Forms
             this.btnUsers.FlatAppearance.BorderSize = 0;
             this.btnUsers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUsers.ForeColor = System.Drawing.Color.White;
-            this.btnUsers.Location = new System.Drawing.Point(0, 410);
+            this.btnUsers.Location = new System.Drawing.Point(0, 460);
             this.btnUsers.Name = "btnUsers";
             this.btnUsers.Size = new System.Drawing.Size(220, 50);
             this.btnUsers.TabIndex = 9;
@@ -106,7 +106,7 @@ namespace POSApp.Forms
             this.btnReturns.FlatAppearance.BorderSize = 0;
             this.btnReturns.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReturns.ForeColor = System.Drawing.Color.White;
-            this.btnReturns.Location = new System.Drawing.Point(0, 360);
+            this.btnReturns.Location = new System.Drawing.Point(0, 410);
             this.btnReturns.Name = "btnReturns";
             this.btnReturns.Size = new System.Drawing.Size(220, 50);
             this.btnReturns.TabIndex = 7;
@@ -119,7 +119,7 @@ namespace POSApp.Forms
             this.btnExpenses.FlatAppearance.BorderSize = 0;
             this.btnExpenses.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExpenses.ForeColor = System.Drawing.Color.White;
-            this.btnExpenses.Location = new System.Drawing.Point(0, 310);
+            this.btnExpenses.Location = new System.Drawing.Point(0, 360);
             this.btnExpenses.Name = "btnExpenses";
             this.btnExpenses.Size = new System.Drawing.Size(220, 50);
             this.btnExpenses.TabIndex = 6;
@@ -158,7 +158,7 @@ namespace POSApp.Forms
             this.btnCustomers.FlatAppearance.BorderSize = 0;
             this.btnCustomers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCustomers.ForeColor = System.Drawing.Color.White;
-            this.btnCustomers.Location = new System.Drawing.Point(0, 210);
+            this.btnCustomers.Location = new System.Drawing.Point(0, 260);
             this.btnCustomers.Name = "btnCustomers";
             this.btnCustomers.Size = new System.Drawing.Size(220, 50);
             this.btnCustomers.TabIndex = 4;
@@ -171,7 +171,7 @@ namespace POSApp.Forms
             this.btnSuppliers.FlatAppearance.BorderSize = 0;
             this.btnSuppliers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSuppliers.ForeColor = System.Drawing.Color.White;
-            this.btnSuppliers.Location = new System.Drawing.Point(0, 160);
+            this.btnSuppliers.Location = new System.Drawing.Point(0, 210);
             this.btnSuppliers.Name = "btnSuppliers";
             this.btnSuppliers.Size = new System.Drawing.Size(220, 50);
             this.btnSuppliers.TabIndex = 3;
@@ -265,7 +265,7 @@ namespace POSApp.Forms
             this.lblChartTitle.ForeColor = System.Drawing.Color.White;
             this.lblChartTitle.Location = new System.Drawing.Point(10, 10);
             this.lblChartTitle.Name = "lblChartTitle";
-            this.lblChartTitle.Size = new System.Drawing.Size(121, 15);
+            this.lblChartTitle.Size = new System.Drawing.Size(111, 15);
             this.lblChartTitle.TabIndex = 0;
             this.lblChartTitle.Text = "Sales Trend (7 Days)";
             //
@@ -299,7 +299,7 @@ namespace POSApp.Forms
             this.lblAlertsTitle.Location = new System.Drawing.Point(20, 20);
             this.lblAlertsTitle.Name = "lblAlertsTitle";
             this.lblAlertsTitle.Padding = new System.Windows.Forms.Padding(0, 0, 0, 7);
-            this.lblAlertsTitle.Size = new System.Drawing.Size(117, 32);
+            this.lblAlertsTitle.Size = new System.Drawing.Size(103, 32);
             this.lblAlertsTitle.TabIndex = 0;
             this.lblAlertsTitle.Text = "Live Alerts";
             //
@@ -352,7 +352,7 @@ namespace POSApp.Forms
             this.lblSalesTodayAmount.ForeColor = System.Drawing.Color.White;
             this.lblSalesTodayAmount.Location = new System.Drawing.Point(20, 40);
             this.lblSalesTodayAmount.Name = "lblSalesTodayAmount";
-            this.lblSalesTodayAmount.Size = new System.Drawing.Size(121, 51);
+            this.lblSalesTodayAmount.Size = new System.Drawing.Size(161, 51);
             this.lblSalesTodayAmount.TabIndex = 1;
             this.lblSalesTodayAmount.Text = "Rs. 0.00";
             //

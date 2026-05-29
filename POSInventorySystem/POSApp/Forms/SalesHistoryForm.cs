@@ -131,7 +131,7 @@ namespace POSApp.Forms
 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.Location = new System.Drawing.Point(20, 20);
+            this.lblTitle.Location = new System.Drawing.Point(50, 10);
             this.lblTitle.Text = "Sales Records";
 
             this.pnlSearch.Controls.Add(this.btnRefresh);
