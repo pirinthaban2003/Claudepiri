@@ -96,6 +96,7 @@ namespace POSApp.Forms
             //
             // cmbCustomer
             //
+            this.cmbCustomer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCustomer.FormattingEnabled = true;
             this.cmbCustomer.Location = new System.Drawing.Point(20, 75);
             this.cmbCustomer.Name = "cmbCustomer";

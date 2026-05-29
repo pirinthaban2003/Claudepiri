@@ -52,7 +52,19 @@ namespace POSApp.Services
             return dt.Rows.Count > 0 ? dt.Rows[0] : null;
         }
 
-        public bool ProcessSale(Sale sale)
+        public DataRow? GetProductByID(int productID)
+        {
+            string query = @"
+                SELECT p.ProductID, p.ProductName, p.Price, p.StockQuantity, p.UnitType, p.DiscountRate, p.IsBOGO, t.TaxPercentage
+                FROM Products p
+                LEFT JOIN TaxCategories t ON p.TaxCategoryID = t.TaxCategoryID
+                WHERE p.ProductID = @id AND p.IsActive = 1";
+            MySqlParameter[] parameters = { new MySqlParameter("@id", productID) };
+            DataTable dt = _dbHelper.ExecuteQuery(query, parameters);
+            return dt.Rows.Count > 0 ? dt.Rows[0] : null;
+        }
+
+        public int ProcessSale(Sale sale)
         {
             using (var conn = _dbHelper.GetConnection())
             {
@@ -73,6 +85,7 @@ namespace POSApp.Services
                         saleCmd.Parameters.AddWithValue("@tax", sale.TaxAmount);
                         saleCmd.Parameters.AddWithValue("@final", sale.FinalAmount);
                         int saleId = Convert.ToInt32(saleCmd.ExecuteScalar());
+                        sale.SaleID = saleId;
 
                         foreach (var item in sale.Items)
                         {
@@ -159,7 +172,7 @@ namespace POSApp.Services
 
                         trans.Commit();
                         _auditService.LogAction($"Completed Sale ID: {saleId}", "POS");
-                        return true;
+                        return saleId;
                     }
                     catch (Exception)
                     {

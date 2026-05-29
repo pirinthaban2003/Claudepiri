@@ -79,9 +79,15 @@ namespace POSApp.Forms
 
             try
             {
+                string category = "Other";
+                if (cmbCategory.SelectedIndex != -1)
+                {
+                    category = cmbCategory.SelectedItem?.ToString() ?? "Other";
+                }
+
                 _expenseService.AddExpense(
                     txtTitle.Text.Trim(),
-                    cmbCategory.SelectedItem?.ToString() ?? "Other",
+                    category,
                     amount,
                     dtpDate.Value,
                     txtDescription.Text.Trim()

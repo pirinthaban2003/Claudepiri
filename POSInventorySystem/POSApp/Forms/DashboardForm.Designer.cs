@@ -24,6 +24,7 @@ namespace POSApp.Forms
             this.btnReturns = new System.Windows.Forms.Button();
             this.btnExpenses = new System.Windows.Forms.Button();
             this.btnReports = new System.Windows.Forms.Button();
+            this.btnSalesHistory = new System.Windows.Forms.Button();
             this.btnCustomers = new System.Windows.Forms.Button();
             this.btnSuppliers = new System.Windows.Forms.Button();
             this.btnInventory = new System.Windows.Forms.Button();
@@ -61,6 +62,7 @@ namespace POSApp.Forms
             this.pnlSidebar.Controls.Add(this.btnReturns);
             this.pnlSidebar.Controls.Add(this.btnExpenses);
             this.pnlSidebar.Controls.Add(this.btnReports);
+            this.pnlSidebar.Controls.Add(this.btnSalesHistory);
             this.pnlSidebar.Controls.Add(this.btnCustomers);
             this.pnlSidebar.Controls.Add(this.btnSuppliers);
             this.pnlSidebar.Controls.Add(this.btnInventory);
@@ -130,13 +132,26 @@ namespace POSApp.Forms
             this.btnReports.FlatAppearance.BorderSize = 0;
             this.btnReports.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReports.ForeColor = System.Drawing.Color.White;
-            this.btnReports.Location = new System.Drawing.Point(0, 260);
+            this.btnReports.Location = new System.Drawing.Point(0, 310);
             this.btnReports.Name = "btnReports";
             this.btnReports.Size = new System.Drawing.Size(220, 50);
             this.btnReports.TabIndex = 5;
             this.btnReports.Text = "📊 Analytics (Alt+R)";
             this.btnReports.UseVisualStyleBackColor = true;
             this.btnReports.Click += new System.EventHandler(this.btnReports_Click);
+            //
+            // btnSalesHistory
+            //
+            this.btnSalesHistory.FlatAppearance.BorderSize = 0;
+            this.btnSalesHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSalesHistory.ForeColor = System.Drawing.Color.White;
+            this.btnSalesHistory.Location = new System.Drawing.Point(0, 260);
+            this.btnSalesHistory.Name = "btnSalesHistory";
+            this.btnSalesHistory.Size = new System.Drawing.Size(220, 50);
+            this.btnSalesHistory.TabIndex = 10;
+            this.btnSalesHistory.Text = "📑 Sales Rec (Alt+H)";
+            this.btnSalesHistory.UseVisualStyleBackColor = true;
+            this.btnSalesHistory.Click += new System.EventHandler(this.btnSalesHistory_Click);
             //
             // btnCustomers
             //
@@ -388,6 +403,7 @@ namespace POSApp.Forms
 
         private System.Windows.Forms.Panel pnlSidebar;
         private System.Windows.Forms.Button btnReports;
+        private System.Windows.Forms.Button btnSalesHistory;
         private System.Windows.Forms.Button btnCustomers;
         private System.Windows.Forms.Button btnSuppliers;
         private System.Windows.Forms.Button btnInventory;

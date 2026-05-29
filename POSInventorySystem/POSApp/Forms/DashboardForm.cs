@@ -57,6 +57,7 @@ namespace POSApp.Forms
             btnReports.Visible = AccessControl.CanAccess(role, "Reports");
             btnExpenses.Visible = AccessControl.CanAccess(role, "Expenses");
             btnReturns.Visible = AccessControl.CanAccess(role, "Returns");
+            btnSalesHistory.Visible = AccessControl.CanAccess(role, "Reports") || role == "Admin";
             btnUsers.Visible = role == "Admin";
         }
 
@@ -85,6 +86,11 @@ namespace POSApp.Forms
             else if (e.Alt && e.KeyCode == Keys.R && btnReports.Visible)
             {
                 btnReports.PerformClick();
+                e.Handled = true;
+            }
+            else if (e.Alt && e.KeyCode == Keys.H && btnSalesHistory.Visible)
+            {
+                btnSalesHistory.PerformClick();
                 e.Handled = true;
             }
             else if (e.Alt && e.KeyCode == Keys.E && btnExpenses.Visible)
@@ -226,6 +232,11 @@ namespace POSApp.Forms
         private void btnReports_Click(object? sender, EventArgs e)
         {
             new ReportForm().Show();
+        }
+
+        private void btnSalesHistory_Click(object? sender, EventArgs e)
+        {
+            new SalesHistoryForm().Show();
         }
 
         private void btnExpenses_Click(object? sender, EventArgs e)

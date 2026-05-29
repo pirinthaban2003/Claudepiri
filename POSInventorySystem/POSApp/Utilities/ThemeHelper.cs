@@ -84,9 +84,12 @@ namespace POSApp.Utilities
                 }
                 else if (control is ComboBox cmb)
                 {
-                    control.BackColor = PrimaryDark;
-                    control.ForeColor = TextWhite;
-                    cmb.FlatStyle = FlatStyle.Flat;
+                    try
+                    {
+                        cmb.BackColor = PrimaryDark;
+                        cmb.ForeColor = TextWhite;
+                    }
+                    catch { }
                 }
                 else if (control is NumericUpDown num)
                 {

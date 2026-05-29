@@ -69,20 +69,21 @@ namespace POSApp.Forms
             if (search.Length >= 2)
             {
                 var dt = _saleService.SearchProducts(search);
-                cmbProducts.DataSource = dt;
+
+                // Safe binding pattern to prevent ArgumentOutOfRangeException
+                cmbProducts.SelectedIndex = -1;
                 cmbProducts.DisplayMember = "ProductName";
                 cmbProducts.ValueMember = "ProductID";
+                cmbProducts.DataSource = dt;
 
-                if (dt.Rows.Count > 0)
+                if (dt != null && dt.Rows.Count > 0)
                 {
                     cmbProducts.DroppedDown = true;
-                    // Auto-select the first result for quick Enter key addition
-                    if (cmbProducts.Items.Count > 0)
-                        cmbProducts.SelectedIndex = 0;
                 }
             }
             else
             {
+                cmbProducts.SelectedIndex = -1;
                 cmbProducts.DataSource = null;
             }
         }
@@ -99,9 +100,13 @@ namespace POSApp.Forms
 
         private void TxtProductSearch_KeyDown(object? sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter && cmbProducts.Items.Count > 0)
+            if (e.KeyCode == Keys.Enter)
             {
-                btnAddToCart.PerformClick();
+                if (cmbProducts.Items.Count > 0)
+                {
+                    if (cmbProducts.SelectedIndex == -1) cmbProducts.SelectedIndex = 0;
+                    btnAddToCart.PerformClick();
+                }
                 e.Handled = true;
                 e.SuppressKeyPress = true;
             }
@@ -187,19 +192,16 @@ namespace POSApp.Forms
                 if (productRow != null)
                 {
                     // Exact match found!
-
-                    // Select for visual feedback
-                    cmbProducts.SelectedValue = Convert.ToInt32(productRow["ProductID"]);
-
                     if (!silent)
                     {
                         // Explicit search (Enter key): Add to cart immediately
-                        btnAddToCart.PerformClick();
+                        AddRowToCart(productRow);
                         txtBarcodeScan.Clear();
                     }
                     else
                     {
-                        // Silent search (typing): Just select and move focus for confirmation
+                        // Silent search (typing): Select for feedback and move focus
+                        cmbProducts.SelectedValue = Convert.ToInt32(productRow["ProductID"]);
                         numQuantity.Focus();
                         numQuantity.Select(0, numQuantity.Text.Length);
                     }
@@ -304,14 +306,17 @@ namespace POSApp.Forms
             try
             {
                 var dt = _customerService.GetAllCustomers();
-                DataRow dr = dt.NewRow();
-                dr["CustomerID"] = DBNull.Value;
-                dr["CustomerName"] = "Walk-in Customer";
-                dt.Rows.InsertAt(dr, 0);
+                if (dt != null)
+                {
+                    DataRow dr = dt.NewRow();
+                    dr["CustomerID"] = DBNull.Value;
+                    dr["CustomerName"] = "Walk-in Customer";
+                    dt.Rows.InsertAt(dr, 0);
 
-                cmbCustomer.DataSource = dt;
-                cmbCustomer.DisplayMember = "CustomerName";
-                cmbCustomer.ValueMember = "CustomerID";
+                    cmbCustomer.DisplayMember = "CustomerName";
+                    cmbCustomer.ValueMember = "CustomerID";
+                    cmbCustomer.DataSource = dt;
+                }
             }
             catch (Exception ex)
             {
@@ -325,12 +330,28 @@ namespace POSApp.Forms
 
             int productId = Convert.ToInt32(cmbProducts.SelectedValue);
 
-            // Re-fetch product data from DataSource to ensure fresh stock levels
-            if (cmbProducts.DataSource is not DataTable dt) return;
-            DataRow[] rows = dt.Select($"ProductID = {productId}");
-            if (rows.Length == 0) return;
-            DataRow selectedProduct = rows[0];
+            // Re-fetch product data from DataSource if available
+            if (cmbProducts.DataSource is DataTable dt)
+            {
+                DataRow[] rows = dt.Select($"ProductID = {productId}");
+                if (rows.Length > 0)
+                {
+                    AddRowToCart(rows[0]);
+                    return;
+                }
+            }
 
+            // If not in DataSource, fetch fresh from DB
+            var productRow = _saleService.GetProductByID(productId);
+            if (productRow != null)
+            {
+                AddRowToCart(productRow);
+            }
+        }
+
+        private void AddRowToCart(DataRow selectedProduct)
+        {
+            int productId = Convert.ToInt32(selectedProduct["ProductID"]);
             string productName = selectedProduct["ProductName"].ToString()!;
             decimal price = Convert.ToDecimal(selectedProduct["Price"]);
             int quantity = (int)numQuantity.Value;
@@ -362,9 +383,9 @@ namespace POSApp.Forms
                     Quantity = quantity,
                     UnitPrice = price,
                     Subtotal = quantity * price,
-                    TaxPercentage = selectedProduct["TaxPercentage"] != DBNull.Value ? Convert.ToDecimal(selectedProduct["TaxPercentage"]) : 0,
-                    DiscountRate = selectedProduct["DiscountRate"] != DBNull.Value ? Convert.ToDecimal(selectedProduct["DiscountRate"]) : 0,
-                    IsBOGO = selectedProduct["IsBOGO"] != DBNull.Value && Convert.ToBoolean(selectedProduct["IsBOGO"])
+                    TaxPercentage = selectedProduct.Table.Columns.Contains("TaxPercentage") && selectedProduct["TaxPercentage"] != DBNull.Value ? Convert.ToDecimal(selectedProduct["TaxPercentage"]) : 0,
+                    DiscountRate = selectedProduct.Table.Columns.Contains("DiscountRate") && selectedProduct["DiscountRate"] != DBNull.Value ? Convert.ToDecimal(selectedProduct["DiscountRate"]) : 0,
+                    IsBOGO = selectedProduct.Table.Columns.Contains("IsBOGO") && selectedProduct["IsBOGO"] != DBNull.Value && Convert.ToBoolean(selectedProduct["IsBOGO"])
                 });
             }
 
@@ -536,19 +557,20 @@ namespace POSApp.Forms
                     Items = new List<SaleItem>(cart)
                 };
 
-                // Open Receipt Preview
-                using (var receipt = new ReceiptForm(sale))
+                // Process Sale First to get ID
+                int saleId = _saleService.ProcessSale(sale);
+                if (saleId > 0)
                 {
-                    if (receipt.ShowDialog() == DialogResult.OK)
+                    // Open Receipt Preview with persistent SaleID
+                    using (var receipt = new ReceiptForm(sale))
                     {
-                        if (_saleService.ProcessSale(sale))
-                        {
-                            MessageBox.Show("Sale completed successfully!");
-                            cart.Clear();
-                            txtDiscount.Text = "0";
-                            UpdateCartGrid();
-                            LoadProducts();
-                        }
+                        receipt.ShowDialog();
+
+                        MessageBox.Show($"Sale #{saleId} completed successfully!");
+                        cart.Clear();
+                        txtDiscount.Text = "0";
+                        UpdateCartGrid();
+                        LoadProducts();
                     }
                 }
             }

@@ -95,9 +95,11 @@ namespace POSApp.Forms
         {
             try
             {
-                cmbCategory.DataSource = _inventoryService.GetCategories();
+                var dt = _inventoryService.GetCategories();
+                cmbCategory.SelectedIndex = -1;
                 cmbCategory.DisplayMember = "CategoryName";
                 cmbCategory.ValueMember = "CategoryID";
+                cmbCategory.DataSource = dt;
             }
             catch (Exception ex)
             {
@@ -109,9 +111,11 @@ namespace POSApp.Forms
         {
             try
             {
-                cmbTaxCategory.DataSource = _inventoryService.GetTaxCategories();
+                var dt = _inventoryService.GetTaxCategories();
+                cmbTaxCategory.SelectedIndex = -1;
                 cmbTaxCategory.DisplayMember = "TaxName";
                 cmbTaxCategory.ValueMember = "TaxCategoryID";
+                cmbTaxCategory.DataSource = dt;
             }
             catch (Exception ex)
             {
@@ -123,9 +127,11 @@ namespace POSApp.Forms
         {
             try
             {
-                cmbSupplier.DataSource = _supplierService.GetAllSuppliers();
+                var dt = _supplierService.GetAllSuppliers();
+                cmbSupplier.SelectedIndex = -1;
                 cmbSupplier.DisplayMember = "SupplierName";
                 cmbSupplier.ValueMember = "SupplierID";
+                cmbSupplier.DataSource = dt;
             }
             catch (Exception ex)
             {

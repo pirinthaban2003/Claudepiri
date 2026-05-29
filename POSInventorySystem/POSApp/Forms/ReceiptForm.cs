@@ -54,6 +54,7 @@ namespace POSApp.Forms
             sb.AppendLine("   SUPERMARKET RETAIL SYSTEM    ");
             sb.AppendLine("        SRMS TERMINAL           ");
             sb.AppendLine("********************************");
+            sb.AppendLine(string.Format("INVOICE #: {0:D6}", _sale.SaleID));
             sb.AppendLine($"Date: {DateTime.Now:dd/MM/yyyy HH:mm}");
             sb.AppendLine($"Cashier: {Session.CurrentUser?.FullName ?? "Staff"}");
 

@@ -42,9 +42,11 @@ namespace POSApp.Forms
 
         private void LoadRoles()
         {
-            cmbRole.DataSource = _userService.GetRoles();
+            var dt = _userService.GetRoles();
+            cmbRole.SelectedIndex = -1;
             cmbRole.DisplayMember = "RoleName";
             cmbRole.ValueMember = "RoleID";
+            cmbRole.DataSource = dt;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
