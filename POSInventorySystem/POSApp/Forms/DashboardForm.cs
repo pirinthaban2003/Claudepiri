@@ -29,7 +29,7 @@ namespace POSApp.Forms
 
         private void CustomizeComponents()
         {
-            pnlSidebar.BackColor = ThemeHelper.AccentBlue;
+            pnlSidebar.BackColor = ThemeHelper.SecondaryLight;
             pnlHeader.BackColor = Color.White;
             lblTitle.ForeColor = ThemeHelper.AccentBlue;
             lstAlerts.BackColor = Color.White;
@@ -43,7 +43,8 @@ namespace POSApp.Forms
                     btn.Padding = new Padding(20, 0, 0, 0);
                     btn.BackColor = ThemeHelper.AccentBlue;
                     btn.ForeColor = Color.White;
-                    btn.FlatAppearance.BorderSize = 0;
+                    btn.FlatAppearance.BorderSize = 1;
+                    btn.FlatAppearance.BorderColor = Color.White;
                 }
             }
 

@@ -7,9 +7,9 @@ namespace POSApp.Utilities
         private static readonly Dictionary<string, List<string>> RolePermissions = new Dictionary<string, List<string>>
         {
             { "Admin", new List<string> { "POS", "Inventory", "Suppliers", "Customers", "Reports", "Expenses", "Returns" } },
-            { "Manager", new List<string> { "Inventory", "Suppliers", "Reports", "Expenses" } },
-            { "Cashier", new List<string> { "POS", "Returns" } },
-            { "Inventory Staff", new List<string> { "Inventory", "Suppliers" } }
+            { "Manager", new List<string> { "Inventory", "Suppliers", "Customers", "Reports", "Expenses" } },
+            { "Cashier", new List<string> { "POS", "Customers", "Returns" } },
+            { "Inventory Staff", new List<string> { "Inventory", "Suppliers", "Customers" } }
         };
 
         public static bool CanAccess(string roleName, string moduleName)

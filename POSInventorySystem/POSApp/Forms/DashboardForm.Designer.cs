@@ -93,7 +93,7 @@ namespace POSApp.Forms
             this.btnUsers.FlatAppearance.BorderSize = 0;
             this.btnUsers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUsers.ForeColor = System.Drawing.Color.White;
-            this.btnUsers.Location = new System.Drawing.Point(0, 460);
+            this.btnUsers.Location = new System.Drawing.Point(0, 520);
             this.btnUsers.Name = "btnUsers";
             this.btnUsers.Size = new System.Drawing.Size(220, 50);
             this.btnUsers.TabIndex = 9;
@@ -106,7 +106,7 @@ namespace POSApp.Forms
             this.btnReturns.FlatAppearance.BorderSize = 0;
             this.btnReturns.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReturns.ForeColor = System.Drawing.Color.White;
-            this.btnReturns.Location = new System.Drawing.Point(0, 410);
+            this.btnReturns.Location = new System.Drawing.Point(0, 465);
             this.btnReturns.Name = "btnReturns";
             this.btnReturns.Size = new System.Drawing.Size(220, 50);
             this.btnReturns.TabIndex = 7;
@@ -119,7 +119,7 @@ namespace POSApp.Forms
             this.btnExpenses.FlatAppearance.BorderSize = 0;
             this.btnExpenses.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExpenses.ForeColor = System.Drawing.Color.White;
-            this.btnExpenses.Location = new System.Drawing.Point(0, 360);
+            this.btnExpenses.Location = new System.Drawing.Point(0, 410);
             this.btnExpenses.Name = "btnExpenses";
             this.btnExpenses.Size = new System.Drawing.Size(220, 50);
             this.btnExpenses.TabIndex = 6;
@@ -132,7 +132,7 @@ namespace POSApp.Forms
             this.btnReports.FlatAppearance.BorderSize = 0;
             this.btnReports.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReports.ForeColor = System.Drawing.Color.White;
-            this.btnReports.Location = new System.Drawing.Point(0, 310);
+            this.btnReports.Location = new System.Drawing.Point(0, 355);
             this.btnReports.Name = "btnReports";
             this.btnReports.Size = new System.Drawing.Size(220, 50);
             this.btnReports.TabIndex = 5;
@@ -145,7 +145,7 @@ namespace POSApp.Forms
             this.btnSalesHistory.FlatAppearance.BorderSize = 0;
             this.btnSalesHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSalesHistory.ForeColor = System.Drawing.Color.White;
-            this.btnSalesHistory.Location = new System.Drawing.Point(0, 260);
+            this.btnSalesHistory.Location = new System.Drawing.Point(0, 300);
             this.btnSalesHistory.Name = "btnSalesHistory";
             this.btnSalesHistory.Size = new System.Drawing.Size(220, 50);
             this.btnSalesHistory.TabIndex = 10;
@@ -158,11 +158,11 @@ namespace POSApp.Forms
             this.btnCustomers.FlatAppearance.BorderSize = 0;
             this.btnCustomers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCustomers.ForeColor = System.Drawing.Color.White;
-            this.btnCustomers.Location = new System.Drawing.Point(0, 260);
+            this.btnCustomers.Location = new System.Drawing.Point(0, 245);
             this.btnCustomers.Name = "btnCustomers";
             this.btnCustomers.Size = new System.Drawing.Size(220, 50);
             this.btnCustomers.TabIndex = 4;
-            this.btnCustomers.Text = "👥 Customers (Alt+C)";
+            this.btnCustomers.Text = "👥 Customer Mgt (Alt+C)";
             this.btnCustomers.UseVisualStyleBackColor = true;
             this.btnCustomers.Click += new System.EventHandler(this.btnCustomers_Click);
             //
@@ -171,7 +171,7 @@ namespace POSApp.Forms
             this.btnSuppliers.FlatAppearance.BorderSize = 0;
             this.btnSuppliers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSuppliers.ForeColor = System.Drawing.Color.White;
-            this.btnSuppliers.Location = new System.Drawing.Point(0, 210);
+            this.btnSuppliers.Location = new System.Drawing.Point(0, 190);
             this.btnSuppliers.Name = "btnSuppliers";
             this.btnSuppliers.Size = new System.Drawing.Size(220, 50);
             this.btnSuppliers.TabIndex = 3;
@@ -184,7 +184,7 @@ namespace POSApp.Forms
             this.btnInventory.FlatAppearance.BorderSize = 0;
             this.btnInventory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnInventory.ForeColor = System.Drawing.Color.White;
-            this.btnInventory.Location = new System.Drawing.Point(0, 110);
+            this.btnInventory.Location = new System.Drawing.Point(0, 135);
             this.btnInventory.Name = "btnInventory";
             this.btnInventory.Size = new System.Drawing.Size(220, 50);
             this.btnInventory.TabIndex = 2;
@@ -197,7 +197,7 @@ namespace POSApp.Forms
             this.btnPOS.FlatAppearance.BorderSize = 0;
             this.btnPOS.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPOS.ForeColor = System.Drawing.Color.White;
-            this.btnPOS.Location = new System.Drawing.Point(0, 60);
+            this.btnPOS.Location = new System.Drawing.Point(0, 80);
             this.btnPOS.Name = "btnPOS";
             this.btnPOS.Size = new System.Drawing.Size(220, 50);
             this.btnPOS.TabIndex = 1;
