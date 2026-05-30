@@ -87,7 +87,7 @@ namespace POSApp.Forms
             // lblUsername
             //
             this.lblUsername.AutoSize = true;
-            this.lblUsername.Location = new System.Drawing.Point(20, 40);
+            this.lblUsername.Location = new System.Drawing.Point(20, 43);
             this.lblUsername.Name = "lblUsername";
             this.lblUsername.Size = new System.Drawing.Size(63, 15);
             this.lblUsername.TabIndex = 1;
@@ -95,15 +95,15 @@ namespace POSApp.Forms
             //
             // txtUsername
             //
-            this.txtUsername.Location = new System.Drawing.Point(20, 90);
+            this.txtUsername.Location = new System.Drawing.Point(120, 40);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(260, 23);
+            this.txtUsername.Size = new System.Drawing.Size(160, 23);
             this.txtUsername.TabIndex = 2;
             //
             // lblPassword
             //
             this.lblPassword.AutoSize = true;
-            this.lblPassword.Location = new System.Drawing.Point(20, 130);
+            this.lblPassword.Location = new System.Drawing.Point(20, 78);
             this.lblPassword.Name = "lblPassword";
             this.lblPassword.Size = new System.Drawing.Size(60, 15);
             this.lblPassword.TabIndex = 3;
@@ -111,16 +111,16 @@ namespace POSApp.Forms
             //
             // txtPassword
             //
-            this.txtPassword.Location = new System.Drawing.Point(20, 150);
+            this.txtPassword.Location = new System.Drawing.Point(120, 75);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(260, 23);
+            this.txtPassword.Size = new System.Drawing.Size(160, 23);
             this.txtPassword.TabIndex = 4;
             //
             // lblFullName
             //
             this.lblFullName.AutoSize = true;
-            this.lblFullName.Location = new System.Drawing.Point(20, 190);
+            this.lblFullName.Location = new System.Drawing.Point(20, 113);
             this.lblFullName.Name = "lblFullName";
             this.lblFullName.Size = new System.Drawing.Size(64, 15);
             this.lblFullName.TabIndex = 5;
@@ -128,15 +128,15 @@ namespace POSApp.Forms
             //
             // txtFullName
             //
-            this.txtFullName.Location = new System.Drawing.Point(20, 210);
+            this.txtFullName.Location = new System.Drawing.Point(120, 110);
             this.txtFullName.Name = "txtFullName";
-            this.txtFullName.Size = new System.Drawing.Size(260, 23);
+            this.txtFullName.Size = new System.Drawing.Size(160, 23);
             this.txtFullName.TabIndex = 6;
             //
             // lblEmail
             //
             this.lblEmail.AutoSize = true;
-            this.lblEmail.Location = new System.Drawing.Point(20, 250);
+            this.lblEmail.Location = new System.Drawing.Point(20, 148);
             this.lblEmail.Name = "lblEmail";
             this.lblEmail.Size = new System.Drawing.Size(39, 15);
             this.lblEmail.TabIndex = 7;
@@ -144,15 +144,15 @@ namespace POSApp.Forms
             //
             // txtEmail
             //
-            this.txtEmail.Location = new System.Drawing.Point(20, 270);
+            this.txtEmail.Location = new System.Drawing.Point(120, 145);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(260, 23);
+            this.txtEmail.Size = new System.Drawing.Size(160, 23);
             this.txtEmail.TabIndex = 8;
             //
             // lblRole
             //
             this.lblRole.AutoSize = true;
-            this.lblRole.Location = new System.Drawing.Point(20, 310);
+            this.lblRole.Location = new System.Drawing.Point(20, 183);
             this.lblRole.Name = "lblRole";
             this.lblRole.Size = new System.Drawing.Size(33, 15);
             this.lblRole.TabIndex = 9;
@@ -162,14 +162,14 @@ namespace POSApp.Forms
             //
             this.cmbRole.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRole.FormattingEnabled = true;
-            this.cmbRole.Location = new System.Drawing.Point(20, 330);
+            this.cmbRole.Location = new System.Drawing.Point(120, 180);
             this.cmbRole.Name = "cmbRole";
-            this.cmbRole.Size = new System.Drawing.Size(260, 23);
+            this.cmbRole.Size = new System.Drawing.Size(160, 23);
             this.cmbRole.TabIndex = 10;
             //
             // btnSave
             //
-            this.btnSave.Location = new System.Drawing.Point(20, 380);
+            this.btnSave.Location = new System.Drawing.Point(20, 230);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(260, 40);
             this.btnSave.TabIndex = 0;

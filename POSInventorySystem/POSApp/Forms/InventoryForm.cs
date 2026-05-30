@@ -49,7 +49,7 @@ namespace POSApp.Forms
                     else if (stock <= minStock)
                         dgvProducts.Rows[e.RowIndex].DefaultCellStyle.BackColor = ThemeHelper.LevelWarning;
                     else
-                        dgvProducts.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(50, 50, 50);
+                        dgvProducts.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
                 }
             }
         }

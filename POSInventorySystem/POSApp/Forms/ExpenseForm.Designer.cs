@@ -85,12 +85,32 @@ namespace POSApp.Forms
             this.lblFormTitle.TabIndex = 12;
             this.lblFormTitle.Text = "Add Expense";
             //
+            // lblTitle
+            //
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.ForeColor = System.Drawing.Color.White;
+            this.lblTitle.Location = new System.Drawing.Point(20, 45);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(32, 15);
+            this.lblTitle.TabIndex = 7;
+            this.lblTitle.Text = "Title:";
+            //
             // txtTitle
             //
-            this.txtTitle.Location = new System.Drawing.Point(20, 80);
+            this.txtTitle.Location = new System.Drawing.Point(120, 40);
             this.txtTitle.Name = "txtTitle";
-            this.txtTitle.Size = new System.Drawing.Size(260, 23);
+            this.txtTitle.Size = new System.Drawing.Size(160, 23);
             this.txtTitle.TabIndex = 0;
+            //
+            // lblCategory
+            //
+            this.lblCategory.AutoSize = true;
+            this.lblCategory.ForeColor = System.Drawing.Color.White;
+            this.lblCategory.Location = new System.Drawing.Point(20, 80);
+            this.lblCategory.Name = "lblCategory";
+            this.lblCategory.Size = new System.Drawing.Size(58, 15);
+            this.lblCategory.TabIndex = 8;
+            this.lblCategory.Text = "Category:";
             //
             // cmbCategory
             //
@@ -104,31 +124,61 @@ namespace POSApp.Forms
             "Maintenance",
             "Marketing",
             "Other"});
-            this.cmbCategory.Location = new System.Drawing.Point(20, 130);
+            this.cmbCategory.Location = new System.Drawing.Point(120, 75);
             this.cmbCategory.Name = "cmbCategory";
-            this.cmbCategory.Size = new System.Drawing.Size(260, 23);
+            this.cmbCategory.Size = new System.Drawing.Size(160, 23);
             this.cmbCategory.TabIndex = 1;
+            //
+            // lblAmount
+            //
+            this.lblAmount.AutoSize = true;
+            this.lblAmount.ForeColor = System.Drawing.Color.White;
+            this.lblAmount.Location = new System.Drawing.Point(20, 115);
+            this.lblAmount.Name = "lblAmount";
+            this.lblAmount.Size = new System.Drawing.Size(54, 15);
+            this.lblAmount.TabIndex = 9;
+            this.lblAmount.Text = "Amount:";
             //
             // txtAmount
             //
-            this.txtAmount.Location = new System.Drawing.Point(20, 180);
+            this.txtAmount.Location = new System.Drawing.Point(120, 110);
             this.txtAmount.Name = "txtAmount";
-            this.txtAmount.Size = new System.Drawing.Size(260, 23);
+            this.txtAmount.Size = new System.Drawing.Size(160, 23);
             this.txtAmount.TabIndex = 2;
+            //
+            // lblDate
+            //
+            this.lblDate.AutoSize = true;
+            this.lblDate.ForeColor = System.Drawing.Color.White;
+            this.lblDate.Location = new System.Drawing.Point(20, 150);
+            this.lblDate.Name = "lblDate";
+            this.lblDate.Size = new System.Drawing.Size(34, 15);
+            this.lblDate.TabIndex = 10;
+            this.lblDate.Text = "Date:";
             //
             // dtpDate
             //
-            this.dtpDate.Location = new System.Drawing.Point(20, 230);
+            this.dtpDate.Location = new System.Drawing.Point(120, 145);
             this.dtpDate.Name = "dtpDate";
-            this.dtpDate.Size = new System.Drawing.Size(260, 23);
+            this.dtpDate.Size = new System.Drawing.Size(160, 23);
             this.dtpDate.TabIndex = 3;
+            //
+            // lblDesc
+            //
+            this.lblDesc.AutoSize = true;
+            this.lblDesc.ForeColor = System.Drawing.Color.White;
+            this.lblDesc.Location = new System.Drawing.Point(20, 185);
+            this.lblDesc.Name = "lblDesc";
+            this.lblDesc.Size = new System.Drawing.Size(70, 15);
+            this.lblDesc.TabIndex = 11;
+            this.lblDesc.Text = "Description:";
             //
             // txtDescription
             //
-            this.txtDescription.Location = new System.Drawing.Point(20, 280);
+            this.txtDescription.Location = new System.Drawing.Point(120, 180);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(260, 60);
+            this.txtDescription.Size = new System.Drawing.Size(160, 60);
             this.txtDescription.TabIndex = 4;
             //
             // btnSave
@@ -137,63 +187,13 @@ namespace POSApp.Forms
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnSave.ForeColor = System.Drawing.Color.White;
-            this.btnSave.Location = new System.Drawing.Point(20, 360);
+            this.btnSave.Location = new System.Drawing.Point(20, 260);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(260, 40);
             this.btnSave.TabIndex = 5;
             this.btnSave.Text = "SAVE EXPENSE";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            //
-            // lblTitle
-            //
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(20, 60);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(32, 15);
-            this.lblTitle.TabIndex = 7;
-            this.lblTitle.Text = "Title:";
-            //
-            // lblCategory
-            //
-            this.lblCategory.AutoSize = true;
-            this.lblCategory.ForeColor = System.Drawing.Color.White;
-            this.lblCategory.Location = new System.Drawing.Point(20, 110);
-            this.lblCategory.Name = "lblCategory";
-            this.lblCategory.Size = new System.Drawing.Size(58, 15);
-            this.lblCategory.TabIndex = 8;
-            this.lblCategory.Text = "Category:";
-            //
-            // lblAmount
-            //
-            this.lblAmount.AutoSize = true;
-            this.lblAmount.ForeColor = System.Drawing.Color.White;
-            this.lblAmount.Location = new System.Drawing.Point(20, 160);
-            this.lblAmount.Name = "lblAmount";
-            this.lblAmount.Size = new System.Drawing.Size(54, 15);
-            this.lblAmount.TabIndex = 9;
-            this.lblAmount.Text = "Amount:";
-            //
-            // lblDate
-            //
-            this.lblDate.AutoSize = true;
-            this.lblDate.ForeColor = System.Drawing.Color.White;
-            this.lblDate.Location = new System.Drawing.Point(20, 210);
-            this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(34, 15);
-            this.lblDate.TabIndex = 10;
-            this.lblDate.Text = "Date:";
-            //
-            // lblDesc
-            //
-            this.lblDesc.AutoSize = true;
-            this.lblDesc.ForeColor = System.Drawing.Color.White;
-            this.lblDesc.Location = new System.Drawing.Point(20, 260);
-            this.lblDesc.Name = "lblDesc";
-            this.lblDesc.Size = new System.Drawing.Size(70, 15);
-            this.lblDesc.TabIndex = 11;
-            this.lblDesc.Text = "Description:";
             //
             // pnlRight
             //

@@ -76,7 +76,7 @@ namespace POSApp.Forms
             //
             this.lblSaleID.AutoSize = true;
             this.lblSaleID.ForeColor = System.Drawing.Color.White;
-            this.lblSaleID.Location = new System.Drawing.Point(20, 70);
+            this.lblSaleID.Location = new System.Drawing.Point(20, 45);
             this.lblSaleID.Name = "lblSaleID";
             this.lblSaleID.Size = new System.Drawing.Size(45, 15);
             this.lblSaleID.TabIndex = 5;
@@ -84,9 +84,9 @@ namespace POSApp.Forms
             //
             // txtSaleID
             //
-            this.txtSaleID.Location = new System.Drawing.Point(20, 90);
+            this.txtSaleID.Location = new System.Drawing.Point(120, 40);
             this.txtSaleID.Name = "txtSaleID";
-            this.txtSaleID.Size = new System.Drawing.Size(260, 23);
+            this.txtSaleID.Size = new System.Drawing.Size(160, 23);
             this.txtSaleID.TabIndex = 0;
             //
             // btnSearchSale
@@ -95,9 +95,9 @@ namespace POSApp.Forms
             this.btnSearchSale.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSearchSale.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnSearchSale.ForeColor = System.Drawing.Color.White;
-            this.btnSearchSale.Location = new System.Drawing.Point(20, 120);
+            this.btnSearchSale.Location = new System.Drawing.Point(20, 80);
             this.btnSearchSale.Name = "btnSearchSale";
-            this.btnSearchSale.Size = new System.Drawing.Size(260, 30);
+            this.btnSearchSale.Size = new System.Drawing.Size(260, 35);
             this.btnSearchSale.TabIndex = 1;
             this.btnSearchSale.Text = "SEARCH SALE";
             this.btnSearchSale.UseVisualStyleBackColor = false;
@@ -107,7 +107,7 @@ namespace POSApp.Forms
             //
             this.lblReason.AutoSize = true;
             this.lblReason.ForeColor = System.Drawing.Color.White;
-            this.lblReason.Location = new System.Drawing.Point(20, 180);
+            this.lblReason.Location = new System.Drawing.Point(20, 130);
             this.lblReason.Name = "lblReason";
             this.lblReason.Size = new System.Drawing.Size(89, 15);
             this.lblReason.TabIndex = 6;
@@ -115,7 +115,7 @@ namespace POSApp.Forms
             //
             // txtReason
             //
-            this.txtReason.Location = new System.Drawing.Point(20, 200);
+            this.txtReason.Location = new System.Drawing.Point(20, 150);
             this.txtReason.Multiline = true;
             this.txtReason.Name = "txtReason";
             this.txtReason.Size = new System.Drawing.Size(260, 100);
@@ -127,7 +127,7 @@ namespace POSApp.Forms
             this.btnProcessRefund.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnProcessRefund.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.btnProcessRefund.ForeColor = System.Drawing.Color.White;
-            this.btnProcessRefund.Location = new System.Drawing.Point(20, 320);
+            this.btnProcessRefund.Location = new System.Drawing.Point(20, 270);
             this.btnProcessRefund.Name = "btnProcessRefund";
             this.btnProcessRefund.Size = new System.Drawing.Size(260, 50);
             this.btnProcessRefund.TabIndex = 4;

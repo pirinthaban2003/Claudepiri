@@ -118,21 +118,21 @@ namespace POSApp.Forms
             //
             // txtPhone
             //
-            this.txtPhone.Location = new System.Drawing.Point(120, 60);
+            this.txtPhone.Location = new System.Drawing.Point(120, 75);
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.Size = new System.Drawing.Size(160, 23);
             this.txtPhone.TabIndex = 2;
             //
             // txtEmail
             //
-            this.txtEmail.Location = new System.Drawing.Point(120, 100);
+            this.txtEmail.Location = new System.Drawing.Point(120, 110);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(160, 23);
             this.txtEmail.TabIndex = 3;
             //
             // txtPoints
             //
-            this.txtPoints.Location = new System.Drawing.Point(120, 140);
+            this.txtPoints.Location = new System.Drawing.Point(120, 145);
             this.txtPoints.Name = "txtPoints";
             this.txtPoints.Size = new System.Drawing.Size(160, 23);
             this.txtPoints.TabIndex = 4;
@@ -197,7 +197,7 @@ namespace POSApp.Forms
             // lblCustomerName
             //
             this.lblCustomerName.AutoSize = true;
-            this.lblCustomerName.Location = new System.Drawing.Point(20, 40);
+            this.lblCustomerName.Location = new System.Drawing.Point(20, 43);
             this.lblCustomerName.Name = "lblCustomerName";
             this.lblCustomerName.Size = new System.Drawing.Size(115, 15);
             this.lblCustomerName.TabIndex = 9;
@@ -206,7 +206,7 @@ namespace POSApp.Forms
             // lblPhone
             //
             this.lblPhone.AutoSize = true;
-            this.lblPhone.Location = new System.Drawing.Point(20, 63);
+            this.lblPhone.Location = new System.Drawing.Point(20, 78);
             this.lblPhone.Name = "lblPhone";
             this.lblPhone.Size = new System.Drawing.Size(44, 15);
             this.lblPhone.TabIndex = 10;
@@ -215,7 +215,7 @@ namespace POSApp.Forms
             // lblEmail
             //
             this.lblEmail.AutoSize = true;
-            this.lblEmail.Location = new System.Drawing.Point(20, 103);
+            this.lblEmail.Location = new System.Drawing.Point(20, 113);
             this.lblEmail.Name = "lblEmail";
             this.lblEmail.Size = new System.Drawing.Size(39, 15);
             this.lblEmail.TabIndex = 11;
@@ -224,7 +224,7 @@ namespace POSApp.Forms
             // lblPoints
             //
             this.lblPoints.AutoSize = true;
-            this.lblPoints.Location = new System.Drawing.Point(20, 143);
+            this.lblPoints.Location = new System.Drawing.Point(20, 148);
             this.lblPoints.Name = "lblPoints";
             this.lblPoints.Size = new System.Drawing.Size(43, 15);
             this.lblPoints.TabIndex = 12;
@@ -242,7 +242,7 @@ namespace POSApp.Forms
             // lblLevel
             //
             this.lblLevel.AutoSize = true;
-            this.lblLevel.Location = new System.Drawing.Point(20, 223);
+            this.lblLevel.Location = new System.Drawing.Point(20, 218);
             this.lblLevel.Name = "lblLevel";
             this.lblLevel.Size = new System.Drawing.Size(37, 15);
             this.lblLevel.TabIndex = 14;
@@ -250,7 +250,7 @@ namespace POSApp.Forms
             //
             // txtLevel
             //
-            this.txtLevel.Location = new System.Drawing.Point(120, 220);
+            this.txtLevel.Location = new System.Drawing.Point(120, 215);
             this.txtLevel.Name = "txtLevel";
             this.txtLevel.ReadOnly = true;
             this.txtLevel.Size = new System.Drawing.Size(160, 23);

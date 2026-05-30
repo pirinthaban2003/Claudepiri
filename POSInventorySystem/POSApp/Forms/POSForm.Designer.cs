@@ -98,15 +98,15 @@ namespace POSApp.Forms
             // lblCustomerContact
             //
             this.lblCustomerContact.AutoSize = true;
-            this.lblCustomerContact.Location = new System.Drawing.Point(20, 40);
+            this.lblCustomerContact.Location = new System.Drawing.Point(20, 45);
             this.lblCustomerContact.Name = "lblCustomerContact";
-            this.lblCustomerContact.Size = new System.Drawing.Size(107, 15);
+            this.lblCustomerContact.Size = new System.Drawing.Size(126, 15);
             this.lblCustomerContact.TabIndex = 16;
-            this.lblCustomerContact.Text = "Customer Contact (F1):";
+            this.lblCustomerContact.Text = "Customer Phone (F1):";
             //
             // txtCustomerContact
             //
-            this.txtCustomerContact.Location = new System.Drawing.Point(20, 60);
+            this.txtCustomerContact.Location = new System.Drawing.Point(20, 65);
             this.txtCustomerContact.Name = "txtCustomerContact";
             this.txtCustomerContact.Size = new System.Drawing.Size(200, 23);
             this.txtCustomerContact.TabIndex = 17;
@@ -116,7 +116,7 @@ namespace POSApp.Forms
             //
             this.cmbCustomer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCustomer.FormattingEnabled = true;
-            this.cmbCustomer.Location = new System.Drawing.Point(20, 110);
+            this.cmbCustomer.Location = new System.Drawing.Point(20, 115);
             this.cmbCustomer.Name = "cmbCustomer";
             this.cmbCustomer.Size = new System.Drawing.Size(200, 23);
             this.cmbCustomer.TabIndex = 11;
@@ -124,7 +124,7 @@ namespace POSApp.Forms
             // lblCustomer
             //
             this.lblCustomer.AutoSize = true;
-            this.lblCustomer.Location = new System.Drawing.Point(20, 90);
+            this.lblCustomer.Location = new System.Drawing.Point(20, 95);
             this.lblCustomer.Name = "lblCustomer";
             this.lblCustomer.Size = new System.Drawing.Size(130, 15);
             this.lblCustomer.TabIndex = 12;
@@ -133,7 +133,7 @@ namespace POSApp.Forms
             // lblBarcodeScan
             //
             this.lblBarcodeScan.AutoSize = true;
-            this.lblBarcodeScan.Location = new System.Drawing.Point(20, 145);
+            this.lblBarcodeScan.Location = new System.Drawing.Point(20, 155);
             this.lblBarcodeScan.Name = "lblBarcodeScan";
             this.lblBarcodeScan.Size = new System.Drawing.Size(104, 15);
             this.lblBarcodeScan.TabIndex = 15;
@@ -141,7 +141,7 @@ namespace POSApp.Forms
             //
             // txtBarcodeScan
             //
-            this.txtBarcodeScan.Location = new System.Drawing.Point(20, 165);
+            this.txtBarcodeScan.Location = new System.Drawing.Point(20, 175);
             this.txtBarcodeScan.Name = "txtBarcodeScan";
             this.txtBarcodeScan.Size = new System.Drawing.Size(200, 23);
             this.txtBarcodeScan.TabIndex = 0;
@@ -149,7 +149,7 @@ namespace POSApp.Forms
             // lblProductSearch
             //
             this.lblProductSearch.AutoSize = true;
-            this.lblProductSearch.Location = new System.Drawing.Point(20, 200);
+            this.lblProductSearch.Location = new System.Drawing.Point(20, 215);
             this.lblProductSearch.Name = "lblProductSearch";
             this.lblProductSearch.Size = new System.Drawing.Size(111, 15);
             this.lblProductSearch.TabIndex = 18;
@@ -157,7 +157,7 @@ namespace POSApp.Forms
             //
             // txtProductSearch
             //
-            this.txtProductSearch.Location = new System.Drawing.Point(20, 220);
+            this.txtProductSearch.Location = new System.Drawing.Point(20, 235);
             this.txtProductSearch.Name = "txtProductSearch";
             this.txtProductSearch.Size = new System.Drawing.Size(200, 23);
             this.txtProductSearch.TabIndex = 19;
@@ -166,7 +166,7 @@ namespace POSApp.Forms
             //
             this.cmbProducts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbProducts.FormattingEnabled = true;
-            this.cmbProducts.Location = new System.Drawing.Point(20, 275);
+            this.cmbProducts.Location = new System.Drawing.Point(20, 285);
             this.cmbProducts.Name = "cmbProducts";
             this.cmbProducts.Size = new System.Drawing.Size(200, 23);
             this.cmbProducts.TabIndex = 1;
@@ -174,7 +174,7 @@ namespace POSApp.Forms
             // lblProduct
             //
             this.lblProduct.AutoSize = true;
-            this.lblProduct.Location = new System.Drawing.Point(20, 255);
+            this.lblProduct.Location = new System.Drawing.Point(20, 265);
             this.lblProduct.Name = "lblProduct";
             this.lblProduct.Size = new System.Drawing.Size(81, 15);
             this.lblProduct.TabIndex = 2;
@@ -183,7 +183,7 @@ namespace POSApp.Forms
             // lblQuantity
             //
             this.lblQuantity.AutoSize = true;
-            this.lblQuantity.Location = new System.Drawing.Point(20, 315);
+            this.lblQuantity.Location = new System.Drawing.Point(20, 320);
             this.lblQuantity.Name = "lblQuantity";
             this.lblQuantity.Size = new System.Drawing.Size(56, 15);
             this.lblQuantity.TabIndex = 4;
@@ -194,7 +194,7 @@ namespace POSApp.Forms
             this.pnlQtyActions.Controls.Add(this.btnQtyPlus);
             this.pnlQtyActions.Controls.Add(this.btnQtyMinus);
             this.pnlQtyActions.Controls.Add(this.numQuantity);
-            this.pnlQtyActions.Location = new System.Drawing.Point(20, 335);
+            this.pnlQtyActions.Location = new System.Drawing.Point(20, 340);
             this.pnlQtyActions.Name = "pnlQtyActions";
             this.pnlQtyActions.Size = new System.Drawing.Size(200, 30);
             this.pnlQtyActions.TabIndex = 5;
@@ -234,7 +234,7 @@ namespace POSApp.Forms
             this.btnAddToCart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddToCart.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnAddToCart.ForeColor = System.Drawing.Color.White;
-            this.btnAddToCart.Location = new System.Drawing.Point(20, 380);
+            this.btnAddToCart.Location = new System.Drawing.Point(20, 390);
             this.btnAddToCart.Name = "btnAddToCart";
             this.btnAddToCart.Size = new System.Drawing.Size(200, 45);
             this.btnAddToCart.TabIndex = 6;

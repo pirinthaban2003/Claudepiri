@@ -31,10 +31,10 @@ namespace POSApp.Forms
             this.dgvReports.AllowUserToAddRows = false;
             this.dgvReports.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvReports.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvReports.Location = new System.Drawing.Point(20, 100);
+            this.dgvReports.Location = new System.Drawing.Point(20, 115);
             this.dgvReports.Name = "dgvReports";
             this.dgvReports.ReadOnly = true;
-            this.dgvReports.Size = new System.Drawing.Size(760, 330);
+            this.dgvReports.Size = new System.Drawing.Size(760, 315);
             this.dgvReports.TabIndex = 0;
             //
             // btnBack
@@ -49,9 +49,9 @@ namespace POSApp.Forms
             //
             // btnDailySales
             //
-            this.btnDailySales.Location = new System.Drawing.Point(20, 60);
+            this.btnDailySales.Location = new System.Drawing.Point(20, 65);
             this.btnDailySales.Name = "btnDailySales";
-            this.btnDailySales.Size = new System.Drawing.Size(120, 30);
+            this.btnDailySales.Size = new System.Drawing.Size(130, 35);
             this.btnDailySales.TabIndex = 1;
             this.btnDailySales.Text = "Daily Sales";
             this.btnDailySales.UseVisualStyleBackColor = true;
@@ -59,9 +59,9 @@ namespace POSApp.Forms
             //
             // btnLowStock
             //
-            this.btnLowStock.Location = new System.Drawing.Point(150, 60);
+            this.btnLowStock.Location = new System.Drawing.Point(160, 65);
             this.btnLowStock.Name = "btnLowStock";
-            this.btnLowStock.Size = new System.Drawing.Size(120, 30);
+            this.btnLowStock.Size = new System.Drawing.Size(130, 35);
             this.btnLowStock.TabIndex = 2;
             this.btnLowStock.Text = "Low Stock";
             this.btnLowStock.UseVisualStyleBackColor = true;
@@ -69,9 +69,9 @@ namespace POSApp.Forms
             //
             // btnTopProducts
             //
-            this.btnTopProducts.Location = new System.Drawing.Point(280, 60);
+            this.btnTopProducts.Location = new System.Drawing.Point(300, 65);
             this.btnTopProducts.Name = "btnTopProducts";
-            this.btnTopProducts.Size = new System.Drawing.Size(120, 30);
+            this.btnTopProducts.Size = new System.Drawing.Size(130, 35);
             this.btnTopProducts.TabIndex = 3;
             this.btnTopProducts.Text = "Top Products";
             this.btnTopProducts.UseVisualStyleBackColor = true;
@@ -81,7 +81,7 @@ namespace POSApp.Forms
             //
             this.lblReportTitle.AutoSize = true;
             this.lblReportTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblReportTitle.Location = new System.Drawing.Point(20, 15);
+            this.lblReportTitle.Location = new System.Drawing.Point(50, 10);
             this.lblReportTitle.Name = "lblReportTitle";
             this.lblReportTitle.Size = new System.Drawing.Size(242, 32);
             this.lblReportTitle.TabIndex = 4;

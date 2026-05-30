@@ -41,7 +41,7 @@ namespace POSApp.Forms
             this.btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPrint.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnPrint.ForeColor = System.Drawing.Color.White;
-            this.btnPrint.Location = new System.Drawing.Point(20, 510);
+            this.btnPrint.Location = new System.Drawing.Point(20, 515);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(170, 40);
             this.btnPrint.TabIndex = 1;
@@ -55,7 +55,7 @@ namespace POSApp.Forms
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(210, 510);
+            this.btnCancel.Location = new System.Drawing.Point(210, 515);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(170, 40);
             this.btnCancel.TabIndex = 2;
@@ -67,7 +67,7 @@ namespace POSApp.Forms
             //
             this.lblPreview.AutoSize = true;
             this.lblPreview.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblPreview.Location = new System.Drawing.Point(20, 15);
+            this.lblPreview.Location = new System.Drawing.Point(50, 10);
             this.lblPreview.Name = "lblPreview";
             this.lblPreview.Size = new System.Drawing.Size(157, 25);
             this.lblPreview.TabIndex = 3;
