@@ -1,0 +1,200 @@
+using System.Data;
+using MySql.Data.MySqlClient;
+using POSApp.Data;
+using POSApp.Models;
+using POSApp.Forms;
+
+namespace POSApp.Services
+{
+    public class SaleService
+    {
+        private readonly DatabaseHelper _dbHelper;
+        private readonly AuditService _auditService;
+        private readonly CustomerService _customerService;
+
+        public SaleService()
+        {
+            _dbHelper = new DatabaseHelper();
+            _auditService = new AuditService();
+            _customerService = new CustomerService();
+        }
+
+        public DataTable GetAvailableProducts()
+        {
+            return _dbHelper.ExecuteQuery(@"
+                SELECT p.ProductID, p.ProductName, p.Price, p.StockQuantity, p.Barcode, p.UnitType, p.DiscountRate, p.IsBOGO, t.TaxPercentage
+                FROM Products p
+                LEFT JOIN TaxCategories t ON p.TaxCategoryID = t.TaxCategoryID
+                WHERE p.StockQuantity > 0 AND p.IsActive = 1");
+        }
+
+        public DataTable SearchProducts(string search)
+        {
+            string query = @"
+                SELECT p.ProductID, p.ProductName, p.Price, p.StockQuantity, p.Barcode, p.UnitType, p.DiscountRate, p.IsBOGO, t.TaxPercentage
+                FROM Products p
+                LEFT JOIN TaxCategories t ON p.TaxCategoryID = t.TaxCategoryID
+                WHERE (p.ProductName LIKE @search OR p.Barcode LIKE @search OR p.SKU LIKE @search)
+                AND p.StockQuantity > 0 AND p.IsActive = 1";
+            MySqlParameter[] parameters = { new MySqlParameter("@search", $"%{search}%") };
+            return _dbHelper.ExecuteQuery(query, parameters);
+        }
+
+        public DataRow? GetProductByBarcode(string barcode)
+        {
+            string query = @"
+                SELECT p.ProductID, p.ProductName, p.Price, p.StockQuantity, p.UnitType, p.DiscountRate, p.IsBOGO, t.TaxPercentage
+                FROM Products p
+                LEFT JOIN TaxCategories t ON p.TaxCategoryID = t.TaxCategoryID
+                WHERE p.Barcode = @barcode AND p.IsActive = 1";
+            MySqlParameter[] parameters = { new MySqlParameter("@barcode", barcode) };
+            DataTable dt = _dbHelper.ExecuteQuery(query, parameters);
+            return dt.Rows.Count > 0 ? dt.Rows[0] : null;
+        }
+
+        public DataRow? GetProductByID(int productID)
+        {
+            string query = @"
+                SELECT p.ProductID, p.ProductName, p.Price, p.StockQuantity, p.UnitType, p.DiscountRate, p.IsBOGO, t.TaxPercentage
+                FROM Products p
+                LEFT JOIN TaxCategories t ON p.TaxCategoryID = t.TaxCategoryID
+                WHERE p.ProductID = @id AND p.IsActive = 1";
+            MySqlParameter[] parameters = { new MySqlParameter("@id", productID) };
+            DataTable dt = _dbHelper.ExecuteQuery(query, parameters);
+            return dt.Rows.Count > 0 ? dt.Rows[0] : null;
+        }
+
+        public int ProcessSale(Sale sale)
+        {
+            using (var conn = _dbHelper.GetConnection())
+            {
+                conn.Open();
+                using (var trans = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        // Insert Sale
+                        string saleQuery = @"INSERT INTO Sales (CustomerID, UserID, TotalAmount, DiscountAmount, TaxAmount, FinalAmount, RedeemedPoints, WalletDeduction)
+                                           VALUES (@custId, @userId, @total, @discount, @tax, @final, @redeemed, @walletDed);
+                                           SELECT LAST_INSERT_ID();";
+                        MySqlCommand saleCmd = new MySqlCommand(saleQuery, conn, trans);
+                        saleCmd.Parameters.AddWithValue("@custId", sale.CustomerID ?? (object)DBNull.Value);
+                        saleCmd.Parameters.AddWithValue("@userId", (object?)Session.CurrentUser?.UserID ?? DBNull.Value);
+                        saleCmd.Parameters.AddWithValue("@total", sale.TotalAmount);
+                        saleCmd.Parameters.AddWithValue("@discount", sale.DiscountAmount);
+                        saleCmd.Parameters.AddWithValue("@tax", sale.TaxAmount);
+                        saleCmd.Parameters.AddWithValue("@final", sale.FinalAmount);
+                        saleCmd.Parameters.AddWithValue("@redeemed", sale.RedeemedPoints);
+                        saleCmd.Parameters.AddWithValue("@walletDed", sale.WalletDeduction);
+                        int saleId = Convert.ToInt32(saleCmd.ExecuteScalar());
+                        sale.SaleID = saleId;
+
+                        foreach (var item in sale.Items)
+                        {
+                            // Insert Sale Item
+                            string itemQuery = "INSERT INTO SaleItems (SaleID, ProductID, Quantity, UnitPrice, Discount, Subtotal) VALUES (@saleId, @prodId, @qty, @price, @discount, @subtotal)";
+                            MySqlCommand itemCmd = new MySqlCommand(itemQuery, conn, trans);
+                            itemCmd.Parameters.AddWithValue("@saleId", saleId);
+                            itemCmd.Parameters.AddWithValue("@prodId", item.ProductID);
+                            itemCmd.Parameters.AddWithValue("@qty", item.Quantity);
+                            itemCmd.Parameters.AddWithValue("@price", item.UnitPrice);
+                            itemCmd.Parameters.AddWithValue("@discount", item.Discount);
+                            itemCmd.Parameters.AddWithValue("@subtotal", item.Subtotal);
+                            itemCmd.ExecuteNonQuery();
+
+                            // Update Stock using FIFO Logic (Deduct from oldest batches first)
+                            int remainingQty = item.Quantity;
+
+                            string batchQuery = "SELECT BatchID, Quantity FROM InventoryBatches WHERE ProductID = @prodId AND Quantity > 0 ORDER BY ReceivedDate ASC";
+                            MySqlCommand batchCmd = new MySqlCommand(batchQuery, conn, trans);
+                            batchCmd.Parameters.AddWithValue("@prodId", item.ProductID);
+
+                            using (MySqlDataReader reader = batchCmd.ExecuteReader())
+                            {
+                                List<(int BatchID, int Quantity)> batches = new List<(int, int)>();
+                                while (reader.Read())
+                                {
+                                    batches.Add((reader.GetInt32(0), reader.GetInt32(1)));
+                                }
+                                reader.Close();
+
+                                foreach (var batch in batches)
+                                {
+                                    if (remainingQty <= 0) break;
+
+                                    int deductQty = Math.Min(remainingQty, batch.Quantity);
+
+                                    string updateBatchQuery = "UPDATE InventoryBatches SET Quantity = Quantity - @qty WHERE BatchID = @batchId";
+                                    MySqlCommand updateBatchCmd = new MySqlCommand(updateBatchQuery, conn, trans);
+                                    updateBatchCmd.Parameters.AddWithValue("@qty", deductQty);
+                                    updateBatchCmd.Parameters.AddWithValue("@batchId", batch.BatchID);
+                                    updateBatchCmd.ExecuteNonQuery();
+
+                                    remainingQty -= deductQty;
+                                }
+                            }
+
+                            // Update overall product stock
+                            string stockQuery = "UPDATE Products SET StockQuantity = StockQuantity - @qty WHERE ProductID = @prodId";
+                            MySqlCommand stockCmd = new MySqlCommand(stockQuery, conn, trans);
+                            stockCmd.Parameters.AddWithValue("@qty", item.Quantity);
+                            stockCmd.Parameters.AddWithValue("@prodId", item.ProductID);
+                            stockCmd.ExecuteNonQuery();
+                        }
+
+                    // Handle Customer Updates (Points redemption, Wallet usage, and new points earning)
+                    if (sale.CustomerID.HasValue)
+                        {
+                        // 1. Apply deductions (Points redeemed and Wallet used)
+                        if (sale.RedeemedPoints > 0 || sale.WalletDeduction > 0)
+                        {
+                            string deductQuery = "UPDATE Customers SET LoyaltyPoints = LoyaltyPoints - @redeemed, WalletBalance = WalletBalance - @wallet WHERE CustomerID = @id";
+                            MySqlCommand deductCmd = new MySqlCommand(deductQuery, conn, trans);
+                            deductCmd.Parameters.AddWithValue("@redeemed", (int)sale.RedeemedPoints);
+                            deductCmd.Parameters.AddWithValue("@wallet", sale.WalletDeduction);
+                            deductCmd.Parameters.AddWithValue("@id", sale.CustomerID.Value);
+                            deductCmd.ExecuteNonQuery();
+                        }
+
+                        // 2. Earn new points (1 point for every 100 spent in final amount)
+                            int pointsEarned = (int)(sale.FinalAmount / 100);
+                            if (pointsEarned > 0)
+                            {
+                                string loyaltyQuery = "UPDATE Customers SET LoyaltyPoints = LoyaltyPoints + @points WHERE CustomerID = @id";
+                                MySqlCommand loyaltyCmd = new MySqlCommand(loyaltyQuery, conn, trans);
+                                loyaltyCmd.Parameters.AddWithValue("@points", pointsEarned);
+                                loyaltyCmd.Parameters.AddWithValue("@id", sale.CustomerID.Value);
+                                loyaltyCmd.ExecuteNonQuery();
+
+                                // Update Level within transaction
+                                var levelCheckQuery = "SELECT LoyaltyPoints FROM Customers WHERE CustomerID = @id";
+                                MySqlCommand levelCheckCmd = new MySqlCommand(levelCheckQuery, conn, trans);
+                                levelCheckCmd.Parameters.AddWithValue("@id", sale.CustomerID.Value);
+                                int totalPoints = Convert.ToInt32(levelCheckCmd.ExecuteScalar());
+
+                                string level = "Bronze";
+                                if (totalPoints >= 5000) level = "Gold";
+                                else if (totalPoints >= 1000) level = "Silver";
+
+                                string updateLevelQuery = "UPDATE Customers SET LoyaltyLevel = @level WHERE CustomerID = @id";
+                                MySqlCommand updateLevelCmd = new MySqlCommand(updateLevelQuery, conn, trans);
+                                updateLevelCmd.Parameters.AddWithValue("@level", level);
+                                updateLevelCmd.Parameters.AddWithValue("@id", sale.CustomerID.Value);
+                                updateLevelCmd.ExecuteNonQuery();
+                            }
+                        }
+
+                        trans.Commit();
+                        _auditService.LogAction($"Completed Sale ID: {saleId}", "POS");
+                        return saleId;
+                    }
+                    catch (Exception)
+                    {
+                        trans.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+    }
+}
