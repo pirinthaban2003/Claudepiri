@@ -1,0 +1,22 @@
+# .NET
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# IDE - Visual Studio Code
+.vscode/
+
+# IDE - Visual Studio
+.vs/
+
+# MySQL / Local DB
+*.mdf
+*.ldf
+*.sqlproj.user
+
+# OS Files
+.DS_Store
+Thumbs.db
